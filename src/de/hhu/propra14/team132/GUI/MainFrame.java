@@ -6,6 +6,8 @@ import javax.swing.*;
  * Created by fabian on 02.05.14.
  */
 public class MainFrame extends JFrame{
+    //this class creates a frame which contains the MainPanel
+
     MainPanel mainPanel;
 
     public MainFrame()

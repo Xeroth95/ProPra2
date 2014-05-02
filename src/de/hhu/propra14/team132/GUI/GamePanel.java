@@ -10,6 +10,9 @@ import java.awt.event.MouseListener;
  * Created by fabian on 02.05.14.
  */
 public class GamePanel extends JPanel {
+    //this is where the action will take place
+    //but for now there is not much to show
+
     MainPanel mainPanel;
 
     public GamePanel(MainPanel mainPanel) {

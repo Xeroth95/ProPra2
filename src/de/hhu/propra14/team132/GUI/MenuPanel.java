@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
  * Created by fabian on 02.05.14.
  */
 public class MenuPanel extends JPanel{
+    //this panel contains the Main Menu of the game
+
     MainPanel mainPanel;
     CardLayout mainPanelLayout;
 
@@ -51,7 +53,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.mainPanel.showPanel("2");
+            MenuPanel.this.mainPanel.showPanel("2");//switch to GamePanel
         }
 
     }
@@ -62,10 +64,10 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
             try {
                 chooser.showOpenDialog(null);
-                MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();
+                MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();//open a filechooser dialog
             }
             catch(Exception ex) {
-                JOptionPane.showMessageDialog(null,"An error occured!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"An error occured!", "Error", JOptionPane.ERROR_MESSAGE);//show an error message when something goes wrong
             }
 
         }
@@ -76,7 +78,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.mainPanel.showPanel("3");
+            MenuPanel.this.mainPanel.showPanel("3");//switch to SettingsPanel
         }
 
     }
@@ -85,7 +87,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.mainPanel.showPanel("4");
+            MenuPanel.this.mainPanel.showPanel("4");//switch to AboutPanel
         }
 
     }
