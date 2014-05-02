@@ -60,8 +60,14 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            chooser.showOpenDialog(null);
-            MenuPanel.this.path_to_saved_game=chooser.getSelectedFile().getPath();
+            try {
+                chooser.showOpenDialog(null);
+                MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();
+            }
+            catch(Exception ex) {
+                JOptionPane.showMessageDialog(null,"An error occured!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
     }

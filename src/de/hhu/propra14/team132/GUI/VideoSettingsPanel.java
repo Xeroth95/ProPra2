@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
  * Created by fabian on 02.05.14.
  */
 public class VideoSettingsPanel extends JPanel{
+
     MainPanel mainPanel;
 
     JButton button_go_back;
