@@ -27,10 +27,10 @@ public class Vector2D {
 		this.y=yb-ya;
 	}
 	//need the methods: computeUnitVector(),computeLength,computeRightHandNormal,computeLeftHandNormal
-	//streamline: probably  updateXXX() methods are better than computeXXX() returning a whole Object. Should make the computeXXX() methods static.
+	//streamline: probably  updateXXX() methods are better than computeXXX() returning an Object everytime they are called. Should make the computeXXX() methods static.
 	//streamline: preprocess all the values for one frame if it is needed more than once! If it is needed only once just compute it directly!
 	public void computeLength(){
-		//preprocess length for one frame. No multiple computations!
+		//preprocess length for one frame. No multiple computations! (if possible. We will see..)
 		this.length=Math.sqrt(x*x+y*y);
 	}
 	public double getLength(){
@@ -89,7 +89,7 @@ public class Vector2D {
 	} 
 	//static methods
 	public static boolean isCDcrossingAB(Vector2D a,Vector2D b,Vector2D c,Vector2D d){
-		
+		//best explained with a graphic. This is probably not very efficient, but it works. This method is hopefully not needed performant.
 		if(isPointOnRightHandOfVector(a,b,c)^isPointOnRightHandOfVector(a,b,d)){
 			//one point on left side, one on right side
 			//maybe return true
