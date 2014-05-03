@@ -108,13 +108,101 @@ public abstract class CollisionObject {
 			}
 		}
 	}
-	public void mtvCalculationsWith(Vector2D mtv, CollisionObject o){}
+	private void mtvCalculationsWith(Vector2D mtv,CollisionObject o){ 
+		// this one is large. I hate to have this much redundant code. Maybe I can find a way around this.
+		
+		if(o.getCollisionTranslationBehaviour()==this.collisionTranslationBehaviour){//both want to behave the same way, so treat them equally
+			mtv.multiplyWith(0.5);
+			this.getPosition().addVector(mtv);//get out of that collision
+			this.recalcPosition();// I hate to do this. this looks really overcomplicated. This code should not be responsible for doing this.
+			mtv.multiplyWith(-1.01); // sometimes things can get stuck because of the imprecision of floating point arithmetics, so this trickery might be needed.
+			o.getPosition().addVector(mtv);// you too, get out of that collision
+			o.recalcPosition();
+			try {
+				mtv.makeUnitVector();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//vector magic!!
+			//I made the math and then took away the parts that were redundant and I am left with this code.
+			//In all honesty I don't know the equation I began with, so you just have to hope it does what it does correctly			
+			
+			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();//read as: (dot product of this.speed and mtv)*mtv.x
+			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
+			
+			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
+			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
+			
+			//set both
+			this.speed.setX(oSpeedDotMtvTimesMtvX+this.speed.getX()-thisSpeedDotMtvTimesMtvX);
+			this.speed.setY(oSpeedDotMtvTimesMtvY+this.speed.getY()-thisSpeedDotMtvTimesMtvY);
+			
+			o.getSpeed().setX(thisSpeedDotMtvTimesMtvX+o.getSpeed().getX()-oSpeedDotMtvTimesMtvX);
+			o.getSpeed().setY(thisSpeedDotMtvTimesMtvY+o.getSpeed().getY()-oSpeedDotMtvTimesMtvY);
+			
+			
+		}
+		else if(this.collisionTranslationBehaviour<o.getCollisionTranslationBehaviour()){
+			mtv.multiplyWith(-1.01);
+			o.getPosition().addVector(mtv);// get out of the collision completely on your own.
+			o.recalcPosition();
+			try {
+				mtv.makeUnitVector();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
+			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
+			
+			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
+			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
+
+			//set only the other object
+			o.getSpeed().setX(thisSpeedDotMtvTimesMtvX+o.getSpeed().getX()-oSpeedDotMtvTimesMtvX);
+			o.getSpeed().setY(thisSpeedDotMtvTimesMtvY+o.getSpeed().getY()-oSpeedDotMtvTimesMtvY);
+			
+		}
+		else{
+			this.getPosition().addVector(mtv);// get out of the collision completely on your own.
+			this.recalcPosition();
+			mtv.multiplyWith(-1.01);
+			try {
+				mtv.makeUnitVector();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
+			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
+			
+			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
+			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
+			
+			//set only this object
+			this.speed.setX(oSpeedDotMtvTimesMtvX+this.speed.getX()-thisSpeedDotMtvTimesMtvX);
+			this.speed.setY(oSpeedDotMtvTimesMtvY+this.speed.getY()-thisSpeedDotMtvTimesMtvY);
+			
+		}
+		this.furtherCollisionWith(o);
+	}
 	abstract void furtherCollisionWith(CollisionObject o);
 	
+	public void recalcPosition(){
+		for(ConvexCollisionShape s:this.collisionShapes){
+			s.setPositionX(this.position.getX());
+			s.setPositionY(this.position.getY());
+		}
+	}
 	
-	
-	
-	//getter/setter
+	public void setPosition(Vector2D position) { // this one is special. it needs to traverse through all the ConvexCollisionShapes in order to set the position in them.
+		this.position = position;
+		for(ConvexCollisionShape s:this.collisionShapes){
+			s.setPositionX(this.position.getX());
+			s.setPositionY(this.position.getY());
+		}
+	}
+	//regular getter/setter
 	public Vector2D getSpeed() {
 		return speed;
 	}
@@ -123,9 +211,6 @@ public abstract class CollisionObject {
 	}
 	public Vector2D getPosition() {
 		return position;
-	}
-	public void setPosition(Vector2D position) {
-		this.position = position;
 	}
 	public Vector2D getAcceleration() {
 		return acceleration;
