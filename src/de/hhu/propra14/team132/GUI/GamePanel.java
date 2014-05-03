@@ -13,18 +13,58 @@ public class GamePanel extends JPanel {
     //but for now there is not much to show
 
     MainPanel mainPanel;
+    MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
+    JScrollBar hbar;
+    JScrollBar vbar;
+    double mouseLocationX, mouseLocationY;
 
-    public GamePanel(MainPanel mainPanel, WeaponsPanel weaponsPanel) {
+    public GamePanel(MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel) {
         this.mainPanel=mainPanel;
+        this.mainGamePanel=mainGamePanel;
         this.weaponsPanel=weaponsPanel;
+
+        this.setPreferredSize(new Dimension(1500, 1500));
 
         this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawString("This is the GamePanel. It will contain all the game graphics later on.", 0, this.getHeight()/2);
+        g.drawString("This is the GamePanel. It will contain all the game graphics later on. This is a very long string to test the scrolling functionality. Later on in the developement it will be replaced by cool graphics and stuff.", 0, 100);
+        g.fillRect(100,150,200,200);
+        g.fillRect(300,500,200,200);
+        g.fillRect(600,700,200,200);
+        g.fillRect(700,300,200,200);
+        g.fillRect(1000,500,200,200);
+        g.fillRect(1200,1000,200,200);
+        g.fillRect(1100,150,200,200);
+        g.fillRect(350,200,200,200);
+        g.fillRect(100,1200,200,200);
+        g.fillRect(500,1100,200,200);
+        hbar = mainGamePanel.scroll.getHorizontalScrollBar();
+        vbar = mainGamePanel.scroll.getVerticalScrollBar();
+        //get x and y coordinates of the moues relatively to MainGamePanel
+        mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getX();
+        mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getY();
+
+        System.out.println(mouseLocationX+", "+mouseLocationY);
+
+        if (mouseLocationX >= mainGamePanel.scroll.getViewport().getWidth() - 50) {
+            hbar.setValue(hbar.getValue() + 1);//scroll to the right
+        }
+        if (mouseLocationX <= 50 && mouseLocationX >= 0) {
+            hbar.setValue(hbar.getValue() - 1);//scroll to the left
+        }
+
+        if (mouseLocationY >= mainGamePanel.scroll.getViewport().getHeight() - 50) {
+            vbar.setValue(vbar.getValue() + 1);//scroll down
+        }
+        if (mouseLocationY <= 50 && mouseLocationY>=0) {
+            vbar.setValue(vbar.getValue() - 1);//scroll up
+        }
+
+        this.repaint();
     }
 
     class GameMouseListener implements MouseListener {
