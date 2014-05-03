@@ -31,6 +31,8 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        //draw some rects and a string for testing purposes
         g.drawString("This is the GamePanel. It will contain all the game graphics later on. This is a very long string to test the scrolling functionality. Later on in the developement it will be replaced by cool graphics and stuff.", 0, 100);
         g.fillRect(100,150,200,200);
         g.fillRect(300,500,200,200);
@@ -42,25 +44,25 @@ public class GamePanel extends JPanel {
         g.fillRect(350,200,200,200);
         g.fillRect(100,1200,200,200);
         g.fillRect(500,1100,200,200);
+
         hbar = mainGamePanel.scroll.getHorizontalScrollBar();
         vbar = mainGamePanel.scroll.getVerticalScrollBar();
+
         //get x and y coordinates of the moues relatively to MainGamePanel
         mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getX();
         mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getY();
 
-        System.out.println(mouseLocationX+", "+mouseLocationY);
-
         if (mouseLocationX >= mainGamePanel.scroll.getViewport().getWidth() - 50) {
             hbar.setValue(hbar.getValue() + 1);//scroll to the right
         }
-        if (mouseLocationX <= 50 && mouseLocationX >= 0) {
+        if (mouseLocationX <= 50) {
             hbar.setValue(hbar.getValue() - 1);//scroll to the left
         }
 
         if (mouseLocationY >= mainGamePanel.scroll.getViewport().getHeight() - 50) {
             vbar.setValue(vbar.getValue() + 1);//scroll down
         }
-        if (mouseLocationY <= 50 && mouseLocationY>=0) {
+        if (mouseLocationY <= 50) {
             vbar.setValue(vbar.getValue() - 1);//scroll up
         }
 
