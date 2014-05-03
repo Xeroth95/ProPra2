@@ -80,7 +80,13 @@ public abstract class CollisionObject {
 						if (mtv != null) {
 							this.setLastCollidedWith(o.getPhysicsID());
 							o.setLastCollidedWith(this.physicsID);
-							mtvCalculationsWith(mtv, o);//includes further collisions. No call of furtherCollisionWith() necessary. Maybe I should get that out of there.
+							mtvCalculationsWith(mtv, o);
+							/*includes further collisions. No call of furtherCollisionWith()!
+							this is because the object might want to use the mtv in further CollisionWith..
+							Maybe I still should get that out of there and let furtherCollisionWith take the mtv as a Vector2D.
+							Or split it into 2 methods. furtherCollisionWithMtv() that takes the mtv and then calls furtherCollisionWith after it is done
+							using the mtv as furtherCollisionWith is abstract and MUST be implemented.
+							This is ugly. Maybe I have a better idea later.*/
 							return;
 						}
 						

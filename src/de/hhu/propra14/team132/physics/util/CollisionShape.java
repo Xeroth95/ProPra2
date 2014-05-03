@@ -2,6 +2,7 @@ package de.hhu.propra14.team132.physics.util;
 
 import java.util.ArrayList;
 
+//this class might be unnecessary
 
 public class CollisionShape {
 	double[] xPoints;
