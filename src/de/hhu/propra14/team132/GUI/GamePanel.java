@@ -13,9 +13,13 @@ public class GamePanel extends JPanel {
     //but for now there is not much to show
 
     MainPanel mainPanel;
+    WeaponsPanel weaponsPanel;
 
-    public GamePanel(MainPanel mainPanel) {
+    public GamePanel(MainPanel mainPanel, WeaponsPanel weaponsPanel) {
         this.mainPanel=mainPanel;
+        this.weaponsPanel=weaponsPanel;
+
+        this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
@@ -26,8 +30,11 @@ public class GamePanel extends JPanel {
     class GameMouseListener implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
-
+            if(e.getButton()==e.BUTTON3) {
+                GamePanel.this.weaponsPanel.setVisible(!weaponsPanel.isVisible());
+            }
         }
+
 
         public void mousePressed(MouseEvent e) {
 
