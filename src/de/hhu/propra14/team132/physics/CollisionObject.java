@@ -239,7 +239,7 @@ public abstract class CollisionObject {
 	public int getPhysicsID() {
 		return physicsID;
 	}
-	protected void setPhysicsID(int physicsID) {
+	public void setPhysicsID(int physicsID) {
 		this.physicsID = physicsID;
 	}
 	public int getLastCollidedWith() {
