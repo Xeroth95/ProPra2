@@ -128,7 +128,7 @@ public class WGrid extends CollisionSystem{
 	ArrayList<Integer> IDs;
 	
 	static final double LN2=Math.log(2);
-	static final double LN2MULT=1/LN2;
+	static final double ONE_OVER_LN2=1/LN2;
 	
 	int subLevels;
 	int rowcount;
@@ -336,10 +336,10 @@ public class WGrid extends CollisionSystem{
 			double lratio = this.length/(y[1]-y[0]);
 			
 			if(lratio<wratio){
-				level= (int)  ( Math.log(wratio) * WGrid.LN2MULT );
+				level= (int)  ( Math.log(wratio) * WGrid.ONE_OVER_LN2 );
 			}
 			else{
-				level= (int)  ( Math.log(lratio) * WGrid.LN2MULT );
+				level= (int)  ( Math.log(lratio) * WGrid.ONE_OVER_LN2 );
 			}
 
 			int cellnum = this.cellsBeforeLevel[level] + (int)(y[0] / (this.length / this.linecountAtLevel[level])) * this.linecountAtLevel[level] + (int)(x[0] / (this.width / this.linecountAtLevel[level]));

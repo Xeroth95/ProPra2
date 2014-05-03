@@ -43,8 +43,6 @@ public class Map {
 		
 		IdCounter=1; // zero is reserved!
 
-		this.sizeX=10000;
-		this.sizeY=10000;
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
 
 	}
@@ -63,6 +61,7 @@ public class Map {
 	public void nextTick(){
 		moveAllObjects();
 		//TODO:Apply Rules, or something?!
+		//this migth be a good Idea. I should delegate all of this to a set of Rules. This is the next thing to do !
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){
