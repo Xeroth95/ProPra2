@@ -210,6 +210,15 @@ public abstract class CollisionObject {
 			s.setPositionY(this.position.getY());
 		}
 	}
+	
+	public void OOBReactX(){
+		this.speed.setX(-this.speed.getX()*1.001);
+		
+	}
+	public void OOBReactY(){
+		this.speed.setY(-this.speed.getY()*1.001);
+	}
+	
 	//regular getter/setter
 	public Vector2D getSpeed() {
 		return speed;

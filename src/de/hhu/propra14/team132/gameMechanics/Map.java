@@ -14,7 +14,7 @@ public class Map {
 	int IdCounter;
 	ArrayList<Integer> aviableIds;
 	
-	private  CollisionObject[] levelObjects;
+	private  CollisionObject[] mapObjects;
 	
 	double sizeX;
 	double sizeY;
@@ -35,7 +35,7 @@ public class Map {
 	}
 	private void initializeBasics(){
 
-		levelObjects=new CollisionObject[MAX_OBJECT_COUNT];
+		mapObjects=new CollisionObject[MAX_OBJECT_COUNT];
 		
 		isActive=false;
 		
@@ -66,8 +66,8 @@ public class Map {
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){
-			this.levelObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
-			this.levelObjects[i].move();
+			this.mapObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
+			this.mapObjects[i].move();
 		}
 	}
 	public void detectCollision(){//delegate
@@ -77,19 +77,37 @@ public class Map {
 		int newID = this.getNewMapID();
 		o.setPhysicsID(newID);
 		this.objectIds.add(newID);
-		this.levelObjects[newID]=o;
+		this.mapObjects[newID]=o;
 	}
 	
 	public void removeObject(CollisionObject o){
 		this.objectIds.remove(o.getPhysicsID());
-		this.levelObjects[o.getPhysicsID()]=null;
+		this.mapObjects[o.getPhysicsID()]=null;
 		this.aviableIds.add(o.getPhysicsID());
 	}
 	
 	public void removeObject(int objectID){
 		this.objectIds.remove(objectID);
-		this.levelObjects[objectID]=null;
+		this.mapObjects[objectID]=null;
 		this.aviableIds.add(objectID);
+	}
+	public CollisionObject[] getMapObjects() {
+		return mapObjects;
+	}
+	public void setMapObjects(CollisionObject[] mapObjects) {
+		this.mapObjects = mapObjects;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public double getSizeX() {
+		return sizeX;
+	}
+	public double getSizeY() {
+		return sizeY;
 	}
 	
 	
