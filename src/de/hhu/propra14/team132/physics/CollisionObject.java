@@ -202,6 +202,14 @@ public abstract class CollisionObject {
 			s.setPositionY(this.position.getY());
 		}
 	}
+	public void move(){
+		this.speed.addVector(this.acceleration);
+		this.position.addVector(this.speed);
+		for(ConvexCollisionShape s:this.collisionShapes){
+			s.setPositionX(this.position.getX());
+			s.setPositionY(this.position.getY());
+		}
+	}
 	//regular getter/setter
 	public Vector2D getSpeed() {
 		return speed;

@@ -255,12 +255,10 @@ public class ConvexCollisionShape {
 	
 	public Vector2D[] getComputedCollisionAxes(){
 		Vector2D[] axes=new Vector2D[xPoints.length-1];
-		double[] slopes= new double[xPoints.length-1];
 		for(int i=0;i<this.xPoints.length-1;i++){
 			//obtaining the edge: vectorb-vectora?????
 			// edge is an relative Vector, describing the distance between the two vertices. It does NOT describe a Point on its own!
 			Vector2D edge = new Vector2D(xPoints[i+1]-xPoints[i],yPoints[i+1]-yPoints[i]);
-			
 			
 			Vector2D axis = edge.getLeftHandNormal();
 			axes[i]=axis;
