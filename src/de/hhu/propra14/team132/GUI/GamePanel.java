@@ -2,6 +2,7 @@ package de.hhu.propra14.team132.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
@@ -20,5 +21,28 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawString("This is the GamePanel. It will contain all the game graphics later on.", 0, this.getHeight()/2);
+    }
+
+    class GameMouseListener implements MouseListener {
+
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }

@@ -17,6 +17,7 @@ public class MainFrame extends JFrame{
         this.setTitle("ProPra14 - Team 132");
         this.setSize(640, 480);
         this.setResizable(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(mainPanel);
         this.setVisible(true);
     }
