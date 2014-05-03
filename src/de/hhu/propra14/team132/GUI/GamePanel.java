@@ -1,7 +1,5 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.Main;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;

@@ -10,7 +10,7 @@ public class MainPanel extends JPanel {
     //the MainPanel contains all other panels
     //and because it uses a CardLayout it is easy to switch between all these panels
 
-    GamePanel gamePanel;
+    MainGamePanel mainGamePanel;
     MenuPanel menuPanel;
     SettingsPanel settingsPanel;
     AboutPanel aboutPanel;
@@ -23,7 +23,7 @@ public class MainPanel extends JPanel {
     public MainPanel() {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
-        gamePanel=new GamePanel(this);
+        mainGamePanel=new MainGamePanel(this);
         menuPanel=new MenuPanel(this);
         settingsPanel=new SettingsPanel(this);
         aboutPanel=new AboutPanel(this);
@@ -38,7 +38,7 @@ public class MainPanel extends JPanel {
         //every panel gets ID-number, so that it can be identified
         //by the CardLayout mainPanelLayout
         this.add(menuPanel, "1");
-        this.add(gamePanel, "2");
+        this.add(mainGamePanel, "2");
         this.add(settingsPanel, "3");
         this.add(aboutPanel, "4");
         this.add(videoSettingsPanel, "5");
