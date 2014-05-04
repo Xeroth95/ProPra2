@@ -1,6 +1,6 @@
 package de.hhu.propra14.team132.physics.util;
 
-public class Vector2D {
+public strictfp class Vector2D {
 	double x;
 	double y;
 	double length;

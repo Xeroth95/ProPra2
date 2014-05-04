@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //this class might be unnecessary
 
-public class CollisionShape {
+public strictfp class CollisionShape {
 	double[] xPoints;
 	double[] yPoints;
 	Vector2D position;
