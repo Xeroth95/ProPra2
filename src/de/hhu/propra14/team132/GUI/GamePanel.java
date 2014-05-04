@@ -45,23 +45,23 @@ public class GamePanel extends JPanel {
         g.fillRect(100,1200,200,200);
         g.fillRect(500,1100,200,200);
 
-        hbar = mainGamePanel.scroll.getHorizontalScrollBar();
-        vbar = mainGamePanel.scroll.getVerticalScrollBar();
+        hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
+        vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
 
         //get x and y coordinates of the moues relatively to MainGamePanel
-        mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getX();
-        mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scroll.getViewport().getLocationOnScreen().getY();
+        mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getX();
+        mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getY();
 
         if(!weaponsPanel.isVisible())//only scroll if WeaponsPanel is not visible
-         {
-            if (mouseLocationX >= mainGamePanel.scroll.getViewport().getWidth() - 50) {
+        {
+            if (mouseLocationX >= mainGamePanel.scrollPane.getViewport().getWidth() - 50) {
                 hbar.setValue(hbar.getValue() + 1);//scroll to the right
             }
             if (mouseLocationX <= 50) {
                 hbar.setValue(hbar.getValue() - 1);//scroll to the left
             }
 
-            if (mouseLocationY >= mainGamePanel.scroll.getViewport().getHeight() - 50) {
+            if (mouseLocationY >= mainGamePanel.scrollPane.getViewport().getHeight() - 50) {
                 vbar.setValue(vbar.getValue() + 1);//scroll down
             }
             if (mouseLocationY <= 50) {

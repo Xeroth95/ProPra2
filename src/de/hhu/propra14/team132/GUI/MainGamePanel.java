@@ -12,7 +12,7 @@ public class MainGamePanel extends JPanel{
     MainPanel mainPanel;
     GamePanel gamePanel;
     WeaponsPanel weaponsPanel;
-    JScrollPane scroll;
+    JScrollPane scrollPane;
 
     public MainGamePanel(MainPanel mainPanel) {
         //this panel contains all in-game related panels
@@ -21,13 +21,13 @@ public class MainGamePanel extends JPanel{
 
         weaponsPanel=new WeaponsPanel(mainPanel);
         gamePanel=new GamePanel(mainPanel, this, weaponsPanel);
-        scroll=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);//we just need a horizontal scrollbar
-        scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));//make that ugly scrollbar invisible
-        scroll.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));//and the other one too
+        scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);//we just need a horizontal scrollbar
+        scrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));//make that ugly scrollbar invisible
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));//and the other one too
 
         this.setLayout(new BorderLayout());
 
-        this.add(scroll, BorderLayout.CENTER);
+        this.add(scrollPane, BorderLayout.CENTER);
         this.add(weaponsPanel, BorderLayout.SOUTH);
     }
 }
