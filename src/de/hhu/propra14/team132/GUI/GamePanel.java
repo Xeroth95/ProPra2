@@ -75,12 +75,38 @@ public class GamePanel extends JPanel {
         this.repaint();
     }
 
+    public void scroll(JScrollBar hbar, JScrollBar vbar, int targetX, int targetY) {
+        while(hbar.getValue() != targetX || vbar.getValue() != targetY) {
+            if(hbar.getValue() < targetX) {
+                hbar.setValue(hbar.getValue() + 1);
+                this.update(this.getGraphics());
+            }
+            else if(hbar.getValue() > targetX) {
+                hbar.setValue(hbar.getValue() - 1);
+                this.update(this.getGraphics());
+            }
+
+            if(vbar.getValue() < targetY) {
+                vbar.setValue(vbar.getValue() + 1);
+                this.update(this.getGraphics());
+            }
+            else if(vbar.getValue() > targetY) {
+                vbar.setValue(vbar.getValue() - 1);
+                this.update(this.getGraphics());
+            }
+        }
+    }
+
     class GameMouseListener implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
             //show weaponsPanel when the right mouse button has been clicked
             if(e.getButton()==e.BUTTON3) {
                 GamePanel.this.weaponsPanel.setVisible(!weaponsPanel.isVisible());
+            }
+
+            if(e.getButton()==e.BUTTON1) {
+                GamePanel.this.scroll(GamePanel.this.mainGamePanel.scrollPane.getHorizontalScrollBar(), GamePanel.this.mainGamePanel.scrollPane.getVerticalScrollBar(), 0, 0);
             }
         }
 
