@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
  * Created by fabian on 02.05.14.
  */
 public class SettingsPanel extends JPanel {
+        //this panel is an undermenu just for the settings
+        //for now, it contains Video-, Audio-, and Controlsettings
+
         MainPanel mainPanel;
 
         JButton button_video;
@@ -39,7 +42,7 @@ public class SettingsPanel extends JPanel {
     {
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.mainPanel.showPanel("5");
+            SettingsPanel.this.mainPanel.showPanel("5");//switch to VideoSettingsPanel
         }
     }
 
@@ -47,7 +50,7 @@ public class SettingsPanel extends JPanel {
     {
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.mainPanel.showPanel("6");
+            SettingsPanel.this.mainPanel.showPanel("6");//switch to AudioSettingsPanel
         }
     }
 
@@ -55,7 +58,7 @@ public class SettingsPanel extends JPanel {
     {
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.mainPanel.showPanel("7");
+            SettingsPanel.this.mainPanel.showPanel("7");//switch to ControlSettingsPanel
         }
     }
 
@@ -63,7 +66,7 @@ public class SettingsPanel extends JPanel {
     {
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.mainPanel.showPanel("1");
+            SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel
         }
     }
 }
