@@ -24,7 +24,7 @@ public class GamePanel extends JPanel {
         this.mainGamePanel=mainGamePanel;
         this.weaponsPanel=weaponsPanel;
 
-        this.setPreferredSize(new Dimension(1500, 1500));
+        this.setPreferredSize(new Dimension(1500, 1500));//scrollPane needs to know the size of the panel it scrolls
 
         this.addMouseListener(new GameMouseListener());
     }
@@ -49,6 +49,9 @@ public class GamePanel extends JPanel {
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
 
         //get x and y coordinates of the moues relatively to MainGamePanel
+        //MouseInfo.getPointerInfo().getLocation() returns a Point with the cursor position relatively to the screen
+        //mainGamePanel.scrollPane.getViewport().getLocationOnScreen() returns a point with the position of scrollPane relatively to the screen
+        //by subtracting the position of scrollPane from the cursorposition, we get the position of the cursor relatively to scrollPane
         mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getX();
         mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getY();
 
@@ -75,6 +78,7 @@ public class GamePanel extends JPanel {
     class GameMouseListener implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
+            //show weaponsPanel when the right mouse button has been clicked
             if(e.getButton()==e.BUTTON3) {
                 GamePanel.this.weaponsPanel.setVisible(!weaponsPanel.isVisible());
             }

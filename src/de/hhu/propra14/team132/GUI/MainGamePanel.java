@@ -16,12 +16,12 @@ public class MainGamePanel extends JPanel{
 
     public MainGamePanel(MainPanel mainPanel) {
         //this panel contains all in-game related panels
-        //for now that would be scroll(GamePanel) and WeaponsPanel
+        //for now that would be scrollPane(GamePanel) and WeaponsPanel
         this.mainPanel=mainPanel;
 
         weaponsPanel=new WeaponsPanel(mainPanel);
         gamePanel=new GamePanel(mainPanel, this, weaponsPanel);
-        scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);//we just need a horizontal scrollbar
+        scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));//make that ugly scrollbar invisible
         scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));//and the other one too
 
