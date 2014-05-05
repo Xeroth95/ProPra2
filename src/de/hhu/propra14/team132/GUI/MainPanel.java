@@ -7,7 +7,10 @@ import java.awt.*;
  * Created by fabian on 02.05.14.
  */
 public class MainPanel extends JPanel {
-    GamePanel gamePanel;
+    //the MainPanel contains all other panels
+    //and because it uses a CardLayout it is easy to switch between all these panels
+
+    MainGamePanel mainGamePanel;
     MenuPanel menuPanel;
     SettingsPanel settingsPanel;
     AboutPanel aboutPanel;
@@ -18,7 +21,9 @@ public class MainPanel extends JPanel {
     CardLayout mainPanelLayout;
 
     public MainPanel() {
-        gamePanel=new GamePanel(this);
+        //all other panels get this panel as parameter for their constructors
+        //so that they can use the showPanel method to switch to another panel
+        mainGamePanel=new MainGamePanel(this);
         menuPanel=new MenuPanel(this);
         settingsPanel=new SettingsPanel(this);
         aboutPanel=new AboutPanel(this);
@@ -30,8 +35,10 @@ public class MainPanel extends JPanel {
 
         this.setLayout(mainPanelLayout);
 
+        //every panel gets ID-number, so that it can be identified
+        //by the CardLayout mainPanelLayout
         this.add(menuPanel, "1");
-        this.add(gamePanel, "2");
+        this.add(mainGamePanel, "2");
         this.add(settingsPanel, "3");
         this.add(aboutPanel, "4");
         this.add(videoSettingsPanel, "5");

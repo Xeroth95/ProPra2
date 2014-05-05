@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
  * Created by fabian on 02.05.14.
  */
 public class AboutPanel extends JPanel{
+    //this panel shows the credits
+    //it has just a few labels and a button to go back to the main menu
+    //therefore, it should be pretty self explanatory
+
     MainPanel mainPanel;
 
     JLabel about_label1;
@@ -37,7 +41,7 @@ public class AboutPanel extends JPanel{
     class GoBackListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e) {
-            AboutPanel.this.mainPanel.showPanel("1");
+            AboutPanel.this.mainPanel.showPanel("1");//switch back to main menu
         }
     }
 }

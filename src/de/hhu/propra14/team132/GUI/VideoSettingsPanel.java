@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
  * Created by fabian on 02.05.14.
  */
 public class VideoSettingsPanel extends JPanel{
+    //this panel will contain the audio settings
+    //but for now it is just a placeholder
+
     MainPanel mainPanel;
 
     JButton button_go_back;
@@ -28,7 +31,7 @@ public class VideoSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e) {
-            VideoSettingsPanel.this.mainPanel.showPanel("3");
+            VideoSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }
 }
