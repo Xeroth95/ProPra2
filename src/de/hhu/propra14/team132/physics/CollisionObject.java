@@ -5,7 +5,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 
-public abstract class CollisionObject {
+public abstract strictfp class CollisionObject {
 	//constants
 	public static final int TRANSLATION_BEHAVIOUR_NORMAL=1;
 	public static final int TRANSLATION_BEHAVIOUR_UNMOVING=0;

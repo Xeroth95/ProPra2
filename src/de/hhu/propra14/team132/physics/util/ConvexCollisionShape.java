@@ -3,7 +3,7 @@ package de.hhu.propra14.team132.physics.util;
 import java.awt.Polygon;
 
 
-public class ConvexCollisionShape {
+public strictfp class ConvexCollisionShape {
 	
 //probably really nasty class with a lot of attributes and a lot of algorithms for collision. Think thrice before changing!
 	double[] xPoints;

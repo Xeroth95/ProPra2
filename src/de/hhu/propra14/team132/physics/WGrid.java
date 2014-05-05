@@ -10,7 +10,7 @@ import de.hhu.propra14.team132.gameMechanics.Map;
 // It uses multi-dimensional arrays as associative memory using the IDs as hashes that are directly mapped at array Positions
 // Just one instance of this class will waste Memory like hell.
 // It uses CollThreads to actually calculate the Collision.
-public class WGrid extends CollisionSystem{
+public strictfp class WGrid extends CollisionSystem{
 	
 	class CollThread extends Thread{
 		CountDownLatch startSignal;
