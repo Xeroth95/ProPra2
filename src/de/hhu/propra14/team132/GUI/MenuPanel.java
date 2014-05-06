@@ -53,7 +53,9 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
+
             MenuPanel.this.mainPanel.showPanel("2");//switch to GamePanel
+
         }
 
     }

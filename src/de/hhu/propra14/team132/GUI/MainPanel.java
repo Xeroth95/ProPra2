@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,9 +22,11 @@ public class MainPanel extends JPanel {
 
     CardLayout mainPanelLayout;
 
-    public MainPanel() {
+    GameManager g; //Instanz of GameManager
+    public MainPanel(GameManager g) {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
+        this.g=g;
         mainGamePanel=new MainGamePanel(this);
         menuPanel=new MenuPanel(this);
         settingsPanel=new SettingsPanel(this);
