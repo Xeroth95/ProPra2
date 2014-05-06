@@ -186,7 +186,7 @@ public abstract strictfp class CollisionObject {
 		}
 		this.furtherCollisionWith(o);
 	}
-	abstract void furtherCollisionWith(CollisionObject o);
+	public abstract void furtherCollisionWith(CollisionObject o);
 	
 	public void recalcPosition(){
 		for(ConvexCollisionShape s:this.collisionShapes){
