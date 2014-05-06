@@ -11,10 +11,12 @@ public class MainFrame extends JFrame{
     //this class creates a frame which contains the MainPanel
 
     MainPanel mainPanel;
+    GameManager gameManager;
 
-    public MainFrame(GameManager g)
+    public MainFrame(GameManager gameManager)
     {
-        mainPanel=new MainPanel(g);
+        this.gameManager=gameManager;
+        mainPanel=new MainPanel(gameManager);
 
         this.setTitle("ProPra14 - Team 132");
         this.setSize(640, 480);

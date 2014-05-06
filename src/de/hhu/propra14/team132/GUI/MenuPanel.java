@@ -1,5 +1,8 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.gameSystem.MessageType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -55,6 +58,7 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
 
             MenuPanel.this.mainPanel.showPanel("2");//switch to GamePanel
+            MenuPanel.this.mainPanel.gameManager.receiveMessage(new Message(MessageType.BLAB));
 
         }
 

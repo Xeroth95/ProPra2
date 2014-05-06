@@ -30,11 +30,11 @@ public class GameManager {
     public void receiveMessage(Message m) {
         //the GameManager receives the Message, inteprets the Type and decides what to do with it
         MessageType type=m.getType();
-        switch (type) {
-            case BLA:
-                System.out.println("Das hat funktioniert! Der MessageType ist" +m.getType()+" und der Code ist "+m.getType().ordinal());
-                break;
-        }
+       // switch (type) {
+           // case BLA:
+                System.out.println("Das hat funktioniert! Der MessageType ist " +m.getType()+" und der Code ist "+m.getType().ordinal());
+            //    break;
+        //}
     }
 
 }

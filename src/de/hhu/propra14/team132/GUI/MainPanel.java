@@ -22,11 +22,11 @@ public class MainPanel extends JPanel {
 
     CardLayout mainPanelLayout;
 
-    GameManager g; //Instanz of GameManager
+    GameManager gameManager; //Instanz of GameManager
     public MainPanel(GameManager g) {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
-        this.g=g;
+        this.gameManager=g;
         mainGamePanel=new MainGamePanel(this);
         menuPanel=new MenuPanel(this);
         settingsPanel=new SettingsPanel(this);
