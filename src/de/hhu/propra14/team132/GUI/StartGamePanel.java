@@ -40,7 +40,7 @@ public class StartGamePanel extends JPanel {
     class NetworkGameListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.mainPanel.showPanel("2");
+            StartGamePanel.this.mainPanel.showPanel("9");
         }
     }
 }
