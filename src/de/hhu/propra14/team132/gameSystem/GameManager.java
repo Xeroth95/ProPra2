@@ -27,6 +27,7 @@ public class GameManager {
     }
     public void start() {
         MainFrame f=new MainFrame();
+        this.sendMessage(new MouseMessage(MessageType.MOUSE, MouseMessage.Button.LEFT));
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
@@ -44,6 +45,21 @@ public class GameManager {
                     System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
                 break;
+            case MOUSE:
+                MouseMessage.Button button=((MouseMessage) m).getButton();
+                switch(button) {
+                    case LEFT:
+                        System.out.println("left");
+                        break;
+                    case RIGHT:
+                        System.out.println("right");
+                        break;
+                    case MIDDEL:
+                        System.out.println("middel");
+                        break;
+
+                }
+
         }
 
     }
