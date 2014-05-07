@@ -25,7 +25,6 @@ public class GameManager {
 
     }
     public void start() {
-
         MainFrame f=new MainFrame(this);
     }
     public void sendMessage(Message m) {
