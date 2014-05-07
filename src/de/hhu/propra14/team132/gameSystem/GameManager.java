@@ -25,7 +25,8 @@ public class GameManager {
 
     }
     public void start() {
-        MainFrame f=new MainFrame(this);
+
+        MainFrame f=new MainFrame();
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
