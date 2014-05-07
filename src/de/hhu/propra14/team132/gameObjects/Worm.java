@@ -3,6 +3,8 @@ package de.hhu.propra14.team132.gameObjects;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.gameSystem.MessageType;
+import de.hhu.propra14.team132.gameSystem.MouseMessage;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
@@ -37,10 +39,29 @@ public class Worm extends GameObject {
 
     @Override
     public void receiveMessage(Message m)  {
+        MessageType messageType=m.getMessageType();
+        switch(messageType) {
+            case MOUSE:
+                MouseMessage.Button button=((MouseMessage)m).getButton();
+                switch(button) {
+                    case LEFT:
+                        System.out.println("left");
+                        break;
+                    case RIGHT:
+                        System.out.println("right");
+                        break;
+                    case MIDDEL:
+                        System.out.println("middel");
+                        break;
+                }
+            case KEYBOARD:
+         }
 
     }
     @Override
     public void addToMessageLists(GameManager gameManager) {
+        gameManager.addToKeyboard(this);
+        gameManager.addToMouse(this);
 
     }
     @Override

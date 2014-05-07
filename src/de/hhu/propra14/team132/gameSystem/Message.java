@@ -5,16 +5,16 @@ package de.hhu.propra14.team132.gameSystem;
  */
 public abstract class Message {
     //with Message-Object one can exchange messages between the Objects
-    MessageType type;
+    MessageType messageType;
     public Message(MessageType type) {
-        this.type=type;
+        this.messageType=type;
     }
 
-    public MessageType getType() {
-        return type;
+    public MessageType getMessageType() {
+        return messageType;
     }
 
-    public void setType(MessageType type) {
-        this.type = type;
+    public void setMessageType(MessageType type) {
+        this.messageType = type;
     }
 }

@@ -12,11 +12,13 @@ import java.util.ArrayList;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
-    public MainFrame mainFrame;
-    public ArrayList<Communicatable> Keyboard; //arrayList with all the Objects who want to receive Message of Type KeyboardMessage
+    public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
+    public ArrayList<Communicatable> Keyboard; // of Type KeyboardMessage
+    public ArrayList<Communicatable> Mouse;     // of Type MouseMessage
     public GameManager() {
         //create all the ArrayLists
         Keyboard=new ArrayList<Communicatable>(5);
+        Mouse=new ArrayList<Communicatable>(5);
 
     }
 
@@ -34,30 +36,22 @@ public class GameManager {
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
         Message message=m;
-        MessageType messageType=message.getType();  //reads the MessageType
+        MessageType messageType=message.getMessageType();  //reads the MessageType
         //makes a Decision what to do with the message
         //for now just an Example with KEYBOARD
         switch(messageType) {
             case KEYBOARD:
                 for(int i=0; i<Keyboard.size();i++) { //Keyboard is a ArrayList
-                    Keyboard.get(i).receiveMessage(m); //Message wird weiter an Object gesendet.
-                    //Soll das schon getypcast werden?
+                    Keyboard.get(i).receiveMessage((KeyboardMessage)m);//Message wird an Objects gesendet
                     System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
                 break;
             case MOUSE:
                 MouseMessage.Button button=((MouseMessage) m).getButton();
-                switch(button) {
-                    case LEFT:
-                        System.out.println("left");
-                        break;
-                    case RIGHT:
-                        System.out.println("right");
-                        break;
-                    case MIDDEL:
-                        System.out.println("middel");
-                        break;
-
+                for(int i=0; i<Mouse.size();i++) {
+                    Mouse.get(i).receiveMessage((MouseMessage) m); //Message wird weiter an Object gesendet.
+                    //Soll das schon getypcast werden?
+                    System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
 
         }
@@ -69,7 +63,7 @@ public class GameManager {
         //cast to the right typ
         //get all the things this class needs
         //do what the message wants
-        MessageType messageType=m.getType();
+        MessageType messageType=m.getMessageType();
         Message message;
         if(messageType==messageType.KEYBOARD) {
             message = (KeyboardMessage) m;
@@ -83,6 +77,17 @@ public class GameManager {
 
     public void addToKeyboard(Communicatable o) {
         Keyboard.add(o);
+    }
+
+    public ArrayList<Communicatable> getMouse() {
+        return Mouse;
+    }
+
+    public void setMouse(ArrayList<Communicatable> mouse) {
+        Mouse = mouse;
+    }
+    public void addToMouse(Communicatable o) {
+        Mouse.add(o);
     }
 }
 

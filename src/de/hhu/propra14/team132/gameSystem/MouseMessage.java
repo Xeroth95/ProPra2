@@ -13,7 +13,7 @@ public class MouseMessage extends Message {
     Button button;
     public MouseMessage(MessageType messageType, Button button) {
         super(messageType);
-        this.messageType=super.getType();
+        this.messageType=super.getMessageType();
         this.button=button;
     }
 

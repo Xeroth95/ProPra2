@@ -9,7 +9,7 @@ public class KeyboardMessage extends Message {
     private String key;
     public KeyboardMessage(MessageType messageType, String key) {
         super(messageType);
-        this.messageType=super.getType();
+        this.messageType=super.getMessageType();
         this.key=key;
     }
 
