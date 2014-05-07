@@ -8,5 +8,5 @@ import java.awt.*;
 public abstract interface Drawable {
     //every object that wants to be drawn on the GamePanel has to implement this interface
 
-    public abstract void draw(Graphics g);
+    public abstract void draw(Graphics g, int posX, int posY);
 }
