@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.gameObjects;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
@@ -13,19 +14,26 @@ public class Weapon extends GameObject {
     private CollisionObject o;
 
     //constructors:
-    public Weapon(int teamID, Map map, int teamID1) {
-        super(teamID, map);
+
+
+    public Weapon(int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+        super(teamID, map, gameManager);
+        map = map1;
+        teamID = teamID1;
+        this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, int teamID1) {
-        super(shapes, teamID, map);
+    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+        super(shapes, teamID, map, gameManager);
+        map = map1;
+        teamID = teamID1;
+        this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape shape, int teamID, Map map, Map map1, int teamID1) {
-        super(shape, teamID, map);
+    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+        super(shape, teamID, map, gameManager);
+        map = map1;
+        teamID = teamID1;
+        this.o = o;
     }
-    @Override public void furtherCollisionWith(CollisionObject o) {
-        //do nothing
-    }
-
 }
