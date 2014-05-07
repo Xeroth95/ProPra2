@@ -26,9 +26,7 @@ public class GameManager {
 
     }
     public void start() {
-
         MainFrame f=new MainFrame();
-        Worm worm=new Worm();
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
