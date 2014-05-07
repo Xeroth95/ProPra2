@@ -5,10 +5,18 @@ package de.hhu.propra14.team132.gameSystem;
  */
 public class KeyboardMessage extends Message {
     MessageType messageType;
-    public String key;
+    private String key;
     public KeyboardMessage(MessageType messageType, String key) {
         super(messageType);
         this.messageType=super.getType();
         this.key=key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

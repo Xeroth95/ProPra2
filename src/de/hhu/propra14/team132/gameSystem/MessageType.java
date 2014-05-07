@@ -9,5 +9,9 @@ public enum MessageType {
     //via ordinate you can get the index
     //maybe we can add some parametes to each MessageType
     //Idea: subtypes like tastatur-buttons?
-    KEYBOARD
+    KEYBOARD,
+    A,
+    B,
+    C,
+    D
 }

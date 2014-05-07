@@ -1,15 +1,13 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
-import de.hhu.propra14.team132.gameSystem.MessageType;
+import de.hhu.propra14.team132.gameSystem.*;
 
 import javax.swing.*;
 
 /**
  * Created by fabian on 02.05.14.
  */
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements Communicatable{
     //this class creates a frame which contains the MainPanel
 
     MainPanel mainPanel;
@@ -26,10 +24,13 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(mainPanel);
         this.setVisible(true);
-        //Test MessageSending
-        gameManager.sendMessage(new KeyboardMessage(MessageType.KEYBOARD,"w"));
+        this.addToMessageLists(gameManager);
+        gameManager.sendMessage(new KeyboardMessage(MessageType.KEYBOARD,"Eine Nachricht wurde gesendet"));
     }
-    public void addToMessageLists(MainFrame mainFrame, GameManager gameManager) {
+    public void addToMessageLists(GameManager gameManager) {
         gameManager.addToKeyboard(this);
+    }
+    public void receiveMessage(Message m)  {
+        System.out.println("Message erhalten");
     }
 }

@@ -4,6 +4,7 @@ import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 
+import java.net.SocketPermission;
 import java.util.ArrayList;
 
 /**
@@ -11,24 +12,40 @@ import java.util.ArrayList;
  */
 public class GameManager {
     public MainFrame mainFrame;
-    public ArrayList<Object> Keyboard; //arrayList with all the Objects who want to receive Message of Type KeyboardMessage
+    public ArrayList<Communicatable> Keyboard; //arrayList with all the Objects who want to receive Message of Type KeyboardMessage
     public GameManager() {
-        Keyboard=new ArrayList<Object>(5);
+        //create all the ArrayLists
+        Keyboard=new ArrayList<Communicatable>(5);
+
     }
 
     public static void main(String[] args) {
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-         gameManager.start();                       //testMethod to start the GUI
+        gameManager.start();                       //testMethod to start the GUI
 
     }
     public void start() {
+
         MainFrame f=new MainFrame(this);
-        f.addToMessageLists(f,this);
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
+        Message message=m;
+        MessageType messageType=message.getType();  //reads the MessageType
+        //makes a Decision what to do with the message
+        //for now just an Example with KEYBOARD
+        switch(messageType) {
+            case KEYBOARD:
+                for(int i=0; i<Keyboard.size();i++) { //Keyboard is a ArrayList
+                    Keyboard.get(i).receiveMessage(m); //Message wird weiter an Object gesendet.
+                    //Soll das schon getypcast werden?
+                    System.out.println("Message wurde weitergeleitet"); //Just for test.
+                }
+                break;
+        }
+
     }
     public void receiveMessage(Message m) {
       //  MessageType type=m.getType();
@@ -36,13 +53,24 @@ public class GameManager {
         //cast to the right typ
         //get all the things this class needs
         //do what the message wants
+        MessageType messageType=m.getType();
+        Message message;
+        if(messageType==messageType.KEYBOARD) {
+            message = (KeyboardMessage) m;
+        }
+
     }
 
-    public ArrayList<Object> getKeyboard() {
+    public ArrayList<Communicatable> getKeyboard() {
         return Keyboard;
     }
 
-    public void addToKeyboard(Object o) {
+    public void addToKeyboard(Communicatable o) {
         Keyboard.add(o);
     }
 }
+
+
+
+
+
