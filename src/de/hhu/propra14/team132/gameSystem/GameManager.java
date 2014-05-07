@@ -3,6 +3,7 @@ package de.hhu.propra14.team132.gameSystem;
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Terrain;
+import de.hhu.propra14.team132.gameObjects.Worm;
 
 import java.net.SocketPermission;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class GameManager {
     public void start() {
 
         MainFrame f=new MainFrame();
+        Worm worm=new Worm();
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
