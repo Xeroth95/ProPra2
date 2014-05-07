@@ -1,11 +1,13 @@
 package de.hhu.propra14.team132.gameObjects;
 
+import de.hhu.propra14.team132.GUI.Drawable;
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameSystem.Communicatable;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
-public abstract class GameObject extends CollisionObject{
+public abstract class GameObject extends CollisionObject implements Communicatable,Drawable {
     private String name;
     private Map map;
     private ConvexCollisionShape shape;
