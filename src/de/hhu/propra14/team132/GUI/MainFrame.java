@@ -1,6 +1,8 @@
 package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
+import de.hhu.propra14.team132.gameSystem.MessageType;
 
 import javax.swing.*;
 
@@ -24,5 +26,10 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(mainPanel);
         this.setVisible(true);
+        //Test MessageSending
+        gameManager.sendMessage(new KeyboardMessage(MessageType.KEYBOARD,"w"));
+    }
+    public void addToMessageLists(MainFrame mainFrame, GameManager gameManager) {
+        gameManager.addToKeyboard(this);
     }
 }

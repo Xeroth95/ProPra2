@@ -58,7 +58,7 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
 
             MenuPanel.this.mainPanel.showPanel("2");//switch to GamePanel
-            MenuPanel.this.mainPanel.gameManager.receiveMessage(new Message(MessageType.BLAB));
+           // MenuPanel.this.mainPanel.gameManager.receiveMessage(new Message(MessageType.BLAB));
 
         }
 
