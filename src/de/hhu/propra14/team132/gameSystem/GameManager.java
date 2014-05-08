@@ -20,8 +20,11 @@ public class GameManager {
     public GameManager() {
         map=new HashMap<MessageType, ArrayList<Communicatable>>();
         //generate the ArrayList for all the MessagesTypes:
-        map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
-        map.put(MessageType.MOUSE,new ArrayList<Communicatable>());
+        //map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
+        //map.put(MessageType.MOUSE,new ArrayList<Communicatable>());
+        for(MessageType t: MessageType.values()){
+            map.put(t,new ArrayList<Communicatable>());
+        }
     }
 
     public static void main(String[] args) {
@@ -48,20 +51,17 @@ public class GameManager {
 
 
     }
-    public void receiveMessage(Message m) {
-      //  MessageType type=m.getType();
-        //do a switch-case with the different Messagetype
-        //cast to the right typ
-        //get all the things this class needs
-        //do what the message wants
-        Message message=m;
-        MessageType messageType=message.getMessageType();
-
-    }
     public void helpSend(MessageType messageType, Message m) {
         for(Communicatable o : map.get(messageType)) {
             o.receiveMessage(m);
         }
+    }
+    public void receiveMessage(Message m) {
+     //this is the receive-Method from Interface Communicatable
+        //Decide what to do with Message.
+        Message message=m;
+        MessageType messageType=message.getMessageType();
+
     }
     public void register(Communicatable o, ArrayList<MessageType> type) {
         //add Communicatable o to all the ArrayLists in type
