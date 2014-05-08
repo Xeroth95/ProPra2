@@ -37,15 +37,7 @@ public class GameManager {
         Message message=m;
         MessageType messageType=message.getMessageType();  //reads the MessageType
         //makes a Decision what to do with the message:s
-        switch(messageType) { //here the different Messages are send to the Objects
-            case KEYBOARD:
-
-
-            case MOUSE:
-
-                }
-
-        }
+     
 
     }
     public void receiveMessage(Message m) {
@@ -56,9 +48,7 @@ public class GameManager {
         //do what the message wants
         MessageType messageType=m.getMessageType();
         Message message;
-        if(messageType==messageType.KEYBOARD) {
-            message = (KeyboardMessage) m;
-        }
+
 
     }
     public void register(Communicatable o, ArrayList<MessageType> type) {
