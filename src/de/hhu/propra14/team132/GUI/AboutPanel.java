@@ -38,8 +38,8 @@ public class AboutPanel extends JPanel{
         this.add(button_go_back);
     }
 
-    class GoBackListener implements ActionListener
-    {
+    class GoBackListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             AboutPanel.this.mainPanel.showPanel("1");//switch back to main menu
         }
