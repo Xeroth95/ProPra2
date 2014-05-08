@@ -53,7 +53,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.mainPanel.showPanel("2");//switch to GamePanel
+            MenuPanel.this.mainPanel.showPanel("8");//switch to GamePanel
         }
 
     }
@@ -67,7 +67,12 @@ public class MenuPanel extends JPanel{
                 MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();//open a filechooser dialog
             }
             catch(Exception ex) {
-                JOptionPane.showMessageDialog(null,"An error occured!", "Error", JOptionPane.ERROR_MESSAGE);//show an error message when something goes wrong
+                if(path_to_saved_game==null) {
+                    JOptionPane.showMessageDialog(null,"No file was chosen!", "Error", JOptionPane.ERROR_MESSAGE);//show an error if no file was chosen
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "An error occured!", "Error", JOptionPane.ERROR_MESSAGE);//show an error message when something went wrong
+                }
             }
 
         }
