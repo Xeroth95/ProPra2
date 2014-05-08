@@ -40,4 +40,13 @@ public class Terrain extends GameObject {
        // g.fillPolygon(this..getPolygonToDraw());
     }
 
+    @Override
+    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
 }

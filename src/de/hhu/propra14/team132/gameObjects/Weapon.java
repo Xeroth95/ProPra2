@@ -55,4 +55,18 @@ public class Weapon extends GameObject {
     public void draw(Graphics g, int posX, int posY) {
 
     }
+
+    public Weapon(int teamID, Map map, GameManager gameManager) {
+        super(teamID, map, gameManager);
+    }
+
+    @Override
+    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
 }

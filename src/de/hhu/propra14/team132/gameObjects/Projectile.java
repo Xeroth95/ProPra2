@@ -41,4 +41,14 @@ public class Projectile extends GameObject{
     public void draw(Graphics g, int posX, int posY) {
 
     }
+
+    @Override
+    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
 }
