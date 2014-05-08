@@ -60,6 +60,7 @@ public class Terrain extends GameObject {
 
     @Override
     public void draw(Graphics g) {
+        g.setColor(Color.BLACK);
         g.fillPolygon(shape.getPolygonToDraw());
     }
 

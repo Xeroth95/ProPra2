@@ -24,10 +24,7 @@ public class MainGamePanel extends JPanel{
 
         weaponsPanel=new WeaponsPanel(mainPanel);
         gamePanel=new GamePanel(mainFrame, mainPanel, this, weaponsPanel, gameManager);
-        scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0,0));//make that ugly scrollbar invisible
-        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));//and the other one too
-        scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+        scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         this.setLayout(new BorderLayout());
 
