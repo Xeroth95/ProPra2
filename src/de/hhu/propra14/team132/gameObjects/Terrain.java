@@ -37,7 +37,7 @@ public class Terrain extends GameObject {
     }
     //Drawable Methods:
     public void draw(Graphics g, int posX, int posY) {
-
+       // g.fillPolygon(this..getPolygonToDraw());
     }
 
 }
