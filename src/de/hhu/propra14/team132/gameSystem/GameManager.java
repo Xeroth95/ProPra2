@@ -1,15 +1,9 @@
 package de.hhu.propra14.team132.gameSystem;
 
 import de.hhu.propra14.team132.GUI.MainFrame;
-import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameObjects.Terrain;
-import de.hhu.propra14.team132.gameObjects.Worm;
 
-import java.lang.reflect.Array;
-import java.net.SocketPermission;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Queue;
 
 /**
  * Created by isabel on 06.05.14.
@@ -17,7 +11,14 @@ import java.util.Queue;
 public class GameManager {
     public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
     HashMap<MessageType,ArrayList<Communicatable>> map;
-    public GameManager() {
+    int ticksPerSecond;
+    long lengthOfTickInNanoSeconds;
+    int currentTick;
+    public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
+    public GameManager(int ticksPerSecond) {
+        currentTick=0;
+        this.ticksPerSecond=ticksPerSecond;
+        this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         map=new HashMap<MessageType, ArrayList<Communicatable>>();
         //generate the ArrayList for all the MessagesTypes:
         //map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
@@ -28,12 +29,31 @@ public class GameManager {
     }
 
     public static void main(String[] args) {
-        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        GameManager gameManager=new GameManager(15); //this is the gameManager. It gives itself to all other Objects it creates
         gameManager.start();                       //testMethod to start the GUI
 
     }
     public void start() {
-        MainFrame f=new MainFrame();
+       // MainFrame f=new MainFrame();
+        this.update();
+    }
+    public void update() {
+        while(true) {
+
+           try {
+               currentTick++;
+                long t1 = System.nanoTime();
+                //Update everything;
+                System.out.println("currentTick: "+currentTick);
+                long t2 = System.nanoTime();
+                if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                    double diff = lengthOfTickInNanoSeconds - (t2 - t1);
+                    /Thread.sleep(((int) (diff / 1000)));
+                }
+            } catch(Exception e) {
+                 System.out.println("exception");
+            }
+        }
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
