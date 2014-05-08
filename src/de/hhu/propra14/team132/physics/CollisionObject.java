@@ -16,6 +16,9 @@ public abstract strictfp class CollisionObject {
 	Vector2D position;
 	Vector2D acceleration;
 	
+	double bounciness;
+	double friction;
+	
 	ConvexCollisionShape[] collisionShapes;
 	
 	Map mapPlacedIn;
@@ -24,6 +27,8 @@ public abstract strictfp class CollisionObject {
 	int lastCollidedWith;
 	private CollisionMode collisionMode;
 	int collisionTranslationBehaviour;
+	
+	
 	
 	private boolean markedForDeletion;
 	
@@ -57,7 +62,7 @@ public abstract strictfp class CollisionObject {
 		this.acceleration=new Vector2D();
 		
 		this.mapPlacedIn=map;
-		
+		this.bounciness=
 		collisionTranslationBehaviour=TRANSLATION_BEHAVIOUR_NORMAL;
 		
 		markedForDeletion=false;
@@ -220,8 +225,20 @@ public abstract strictfp class CollisionObject {
 	}
 	
 	//regular getter/setter
+	
 	public Vector2D getSpeed() {
 		return speed;
+	}
+	public abstract double getBounciness();
+	public void setBounciness(double bounciness) {
+		this.bounciness = bounciness;
+	}
+	public abstract double getFriction();
+	public void setFriction(double friction) {
+		this.friction = friction;
+	}
+	public void setCollisionMode(CollisionMode collisionMode) {
+		this.collisionMode = collisionMode;
 	}
 	public void setSpeed(Vector2D speed) {
 		this.speed = speed;
