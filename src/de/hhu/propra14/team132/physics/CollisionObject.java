@@ -63,7 +63,7 @@ public abstract strictfp class CollisionObject {
 		
 		this.mapPlacedIn=map;
 		this.bounciness=this.getInitialBounciness();
-		this.friction=this.getInitialFrictiion();
+		this.friction=this.getInitialFriction();
 		collisionTranslationBehaviour=TRANSLATION_BEHAVIOUR_NORMAL;
 		
 		markedForDeletion=false;
@@ -227,7 +227,7 @@ public abstract strictfp class CollisionObject {
 	
 	//regular getter/setter
 	public abstract double getInitialBounciness();
-	public abstract double getInitialFrictiion();
+	public abstract double getInitialFriction();
 	public Vector2D getSpeed() {
 		return speed;
 	}
