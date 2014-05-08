@@ -19,13 +19,18 @@ public class GamePanel extends JPanel {
     MainPanel mainPanel;
     MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
+    GameManager gameManager;
     JScrollBar hbar;
     JScrollBar vbar;
+    Image bufferedImage;
+    Graphics bufferedGraphics;
+    Dimension terrainSize;
+    int width, height;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
-    GameManager gameManager;
 
-    public GamePanel(MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
+
+    public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
         //this.mainFrame=mainFrame;
         this.mainPanel=mainPanel;
         this.mainGamePanel=mainGamePanel;
@@ -33,24 +38,36 @@ public class GamePanel extends JPanel {
         this.gameManager=gameManager;
 
         autoscrolling=false;
-        this.setPreferredSize(new Dimension((int)Math.round(gameManager.terrain.shape.getMaxOnX()), (int)Math.round(gameManager.terrain.shape.getMaxOnY())));//scrollPane needs to know the size of the panel it scrolls
+        terrainSize=new Dimension((int)gameManager.terrain.shape.getMaxOnX(), (int)gameManager.terrain.shape.getMaxOnY());
+        this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
+        width=(int)this.getPreferredSize().getWidth();
+        height=(int)this.getPreferredSize().getHeight();
+        mainFrame.setMaximizedBounds(new Rectangle(0,0,width,height));
         this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        gameManager.terrain.draw(this.getGraphics());
+        if(bufferedImage==null) {
+            //check if buffer is empty and if yes, refresh it;
+            bufferedImage=this.createImage(width, height);
+            bufferedGraphics=bufferedImage.getGraphics();
+        }
+
+        gameManager.terrain.draw(bufferedGraphics);
         //draw team1
-        gameManager.worm1_1.draw(this.getGraphics(),100,438);
-        gameManager.worm1_2.draw(this.getGraphics(),120,432);
-        gameManager.worm1_3.draw(this.getGraphics(),132,428);
-        gameManager.worm1_4.draw(this.getGraphics(),150,422);
+        gameManager.worm1_1.draw(bufferedGraphics,100,438);
+        gameManager.worm1_2.draw(bufferedGraphics,120,432);
+        gameManager.worm1_3.draw(bufferedGraphics,132,428);
+        gameManager.worm1_4.draw(bufferedGraphics,150,422);
         //draw team2
-        gameManager.worm2_1.draw(this.getGraphics(),763,306);
-        gameManager.worm2_2.draw(this.getGraphics(),750,300);
-        gameManager.worm2_3.draw(this.getGraphics(),735,293);
-        gameManager.worm2_4.draw(this.getGraphics(),722,287);
+        gameManager.worm2_1.draw(bufferedGraphics,763,306);
+        gameManager.worm2_2.draw(bufferedGraphics,750,300);
+        gameManager.worm2_3.draw(bufferedGraphics,735,293);
+        gameManager.worm2_4.draw(bufferedGraphics,722,287);
+
+        g.drawImage(bufferedImage,0,0,this);
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
@@ -89,20 +106,24 @@ public class GamePanel extends JPanel {
         while(hbar.getValue() != targetX || vbar.getValue() != targetY) {
             if(hbar.getValue() < targetX) {
                 hbar.setValue(hbar.getValue() + 1);//scroll right
-                this.update(this.getGraphics());
+                this.update(bufferedGraphics);
+                this.getGraphics().drawImage(bufferedImage,0,0,this);
             }
             else if(hbar.getValue() > targetX) {
                 hbar.setValue(hbar.getValue() - 1);//scroll left
-                this.update(this.getGraphics());
+                this.update(bufferedGraphics);
+                this.getGraphics().drawImage(bufferedImage,0,0,this);
             }
 
             if(vbar.getValue() < targetY) {
                 vbar.setValue(vbar.getValue() + 1);//scroll up
-                this.update(this.getGraphics());
+                this.update(bufferedGraphics);
+                this.getGraphics().drawImage(bufferedImage,0,0,this);
             }
             else if(vbar.getValue() > targetY) {
                 vbar.setValue(vbar.getValue() - 1);//scroll down
-                this.update(this.getGraphics());
+                this.update(bufferedGraphics);
+                this.getGraphics().drawImage(bufferedImage,0,0,this);
             }
         }
         autoscrolling=false;

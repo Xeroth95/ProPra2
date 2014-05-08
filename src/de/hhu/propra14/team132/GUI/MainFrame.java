@@ -15,7 +15,7 @@ public class MainFrame extends JFrame{
 
     public MainFrame(GameManager gameManager)
     {
-        mainPanel=new MainPanel(gameManager);
+        mainPanel=new MainPanel(this, gameManager);
 
         this.setTitle("ProPra14 - Team 132");
         this.setSize(640, 480);

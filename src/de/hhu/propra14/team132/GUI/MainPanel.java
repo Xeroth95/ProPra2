@@ -24,10 +24,10 @@ public class MainPanel extends JPanel {
 
     CardLayout mainPanelLayout;
 
-    public MainPanel(GameManager gameManager) {
+    public MainPanel(MainFrame mainFrame, GameManager gameManager) {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
-        mainGamePanel=new MainGamePanel(this, gameManager);
+        mainGamePanel=new MainGamePanel(mainFrame, this, gameManager);
         menuPanel=new MenuPanel(this);
         settingsPanel=new SettingsPanel(this);
         aboutPanel=new AboutPanel(this);
