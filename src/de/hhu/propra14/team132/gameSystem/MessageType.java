@@ -5,9 +5,9 @@ package de.hhu.propra14.team132.gameSystem;
  */
 public enum MessageType {
     //this is the enum for MessageType. Here we will list all the different MessageTypes
-    //maybe each person writes the types he needs and then I can easily add them to the sitch-Case
-    //via ordinate you can get the index
-    //maybe we can add some parametes to each MessageTyp
+    //At the Moment I have to add them manually to the switch-Case and I manually generate the ArrayList
+    //After I added the type in GameManager, Messages of this type can be send and received
+    //Kann man das ändern?
     KEYBOARD,
     OPTION,
     CHAT,

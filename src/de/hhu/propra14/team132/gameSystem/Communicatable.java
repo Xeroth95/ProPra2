@@ -23,7 +23,6 @@ public interface Communicatable {
     }
      **/
     public void register(GameManager gameManager);
-    //should call all the addTo<NameOfMessageTypeItwantsToReceive> of gameManager. As a parameter it should commit itself
-    //Example gameManager.addToKeyboard(this);
-    //addToMessageLists should be called for the first time in the constructor
+    //ruft Registermethoden des GameManager auf und trägt sich in die arraylist die zu dem messagetype die diese Klasse erhalten will,
+    //gehört. Es bekommt dann Methoden von diesem Typ
 }

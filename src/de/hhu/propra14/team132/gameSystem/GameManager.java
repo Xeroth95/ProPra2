@@ -38,7 +38,13 @@ public class GameManager {
         //It then calls all the receiveMessage-Methods of the Objects
         Message message=m;
         MessageType messageType=message.getMessageType();  //reads the MessageType
-        //makes a Decision what to do with the message:s
+        //makes a Decision what to do with the message:
+        switch(messageType) {
+            case KEYBOARD:
+                helpSend(MessageType.KEYBOARD, m);
+            case MOUSE:
+                helpSend(MessageType.KEYBOARD, m);
+        }
 
 
     }
@@ -50,12 +56,7 @@ public class GameManager {
         //do what the message wants
         Message message=m;
         MessageType messageType=message.getMessageType();
-        switch(messageType) {
-            case KEYBOARD:
-                helpSend(MessageType.KEYBOARD, m);
-            case MOUSE:
-                helpSend(MessageType.KEYBOARD, m);
-        }
+
     }
     public void helpSend(MessageType messageType, Message m) {
         for(Communicatable o : map.get(messageType)) {
