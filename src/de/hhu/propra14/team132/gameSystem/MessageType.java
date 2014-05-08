@@ -9,10 +9,12 @@ public enum MessageType {
     //After I added the type in GameManager, Messages of this type can be send and received
     //Kann man das ändern?
     KEYBOARD,
+    MOUSE,
+    //not added at the Moment:
     OPTION,
     CHAT,
     NETWORK,
-    MOUSE,
+
     DRAW,
     WHATEVER,
     B,

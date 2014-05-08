@@ -19,6 +19,7 @@ public class GameManager {
     HashMap<MessageType,ArrayList<Communicatable>> map;
     public GameManager() {
         map=new HashMap<MessageType, ArrayList<Communicatable>>();
+        //generate the ArrayList for all the MessagesTypes:
         map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
         map.put(MessageType.MOUSE,new ArrayList<Communicatable>());
     }
@@ -30,7 +31,6 @@ public class GameManager {
     }
     public void start() {
         MainFrame f=new MainFrame();
-        this.sendMessage(new MouseMessage(MessageType.MOUSE, MouseMessage.Button.LEFT));
     }
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
@@ -43,7 +43,7 @@ public class GameManager {
             case KEYBOARD:
                 helpSend(MessageType.KEYBOARD, m);
             case MOUSE:
-                helpSend(MessageType.KEYBOARD, m);
+                helpSend(MessageType.MOUSE, m);
         }
 
 
