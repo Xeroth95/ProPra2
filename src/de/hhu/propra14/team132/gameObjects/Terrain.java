@@ -9,35 +9,19 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import java.awt.*;
 
 /**
- * Created by isabel on 02.05.14.
+ * Created by isabel on 06.05.14.
  */
-public class Weapon extends GameObject {
-    private Map map;
-    private int teamID;
-    private CollisionObject o;
-
-    //constructors:
-
-
-    public Weapon(int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+public class Terrain extends GameObject {
+    public Terrain(int teamID, Map map, GameManager gameManager) {
         super(teamID, map, gameManager);
-        map = map1;
-        teamID = teamID1;
-        this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+    public Terrain(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager) {
         super(shapes, teamID, map, gameManager);
-        map = map1;
-        teamID = teamID1;
-        this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+    public Terrain(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
         super(shape, teamID, map, gameManager);
-        map = map1;
-        teamID = teamID1;
-        this.o = o;
     }
     @Override
     public void receiveMessage(Message m)  {
@@ -53,6 +37,7 @@ public class Weapon extends GameObject {
     }
     //Drawable Methods:
     public void draw(Graphics g, int posX, int posY) {
-
+       // g.fillPolygon(this..getPolygonToDraw());
     }
+
 }
