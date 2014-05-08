@@ -34,7 +34,7 @@ public class GameManager {
 
     }
     public void start() {
-       // MainFrame f=new MainFrame();
+        MainFrame f=new MainFrame();
         this.update();
     }
     public void update() {
