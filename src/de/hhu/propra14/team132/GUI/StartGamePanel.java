@@ -38,22 +38,22 @@ public class StartGamePanel extends JPanel {
         this.add(button_go_back);
     }
 
-    class LocalGameListener implements ActionListener
-    {
+    class LocalGameListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             StartGamePanel.this.mainPanel.showPanel("2");
         }
     }
 
-    class NetworkGameListener implements ActionListener
-    {
+    class NetworkGameListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             StartGamePanel.this.mainPanel.showPanel("9");
         }
     }
 
-    class GoBackListener implements ActionListener
-    {
+    class GoBackListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             StartGamePanel.this.mainPanel.showPanel("1");

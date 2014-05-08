@@ -28,8 +28,8 @@ public class VideoSettingsPanel extends JPanel{
         this.add(button_go_back);
     }
 
-    class GoBackListener implements ActionListener
-    {
+    class GoBackListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e) {
             VideoSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }

@@ -60,7 +60,7 @@ public class MenuPanel extends JPanel{
 
     class LoadGameListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 chooser.showOpenDialog(null);
@@ -81,7 +81,7 @@ public class MenuPanel extends JPanel{
 
     class SettingsListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.mainPanel.showPanel("3");//switch to SettingsPanel
         }
@@ -90,7 +90,7 @@ public class MenuPanel extends JPanel{
 
     class AboutListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.mainPanel.showPanel("4");//switch to AboutPanel
         }
@@ -99,7 +99,7 @@ public class MenuPanel extends JPanel{
 
     class ExitListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }

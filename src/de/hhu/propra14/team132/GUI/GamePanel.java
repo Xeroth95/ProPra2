@@ -105,7 +105,7 @@ public class GamePanel extends JPanel {
     }
 
     class GameMouseListener implements MouseListener {
-
+        @Override
         public void mouseClicked(MouseEvent e) {
             //show weaponsPanel when the right mouse button has been clicked
             if(e.getButton()==e.BUTTON3) {
@@ -117,20 +117,19 @@ public class GamePanel extends JPanel {
                 GamePanel.this.scroll(GamePanel.this.mainGamePanel.scrollPane.getHorizontalScrollBar(), GamePanel.this.mainGamePanel.scrollPane.getVerticalScrollBar(), 0, 0);
             }
         }
-
-
+        @Override
         public void mousePressed(MouseEvent e) {
 
         }
-
+        @Override
         public void mouseReleased(MouseEvent e) {
 
         }
-
+        @Override
         public void mouseEntered(MouseEvent e) {
 
         }
-
+        @Override
         public void mouseExited(MouseEvent e) {
 
         }
