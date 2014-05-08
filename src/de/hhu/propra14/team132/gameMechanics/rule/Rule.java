@@ -1,13 +1,15 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
+import de.hhu.propra14.team132.gameSystem.MessageType;
+
 public abstract class Rule {
 	public Rule(){
 		messageTypesToReactTo=defineMessageTypesToReactTo();
 	}
 	
-	int[] messageTypesToReactTo; //TODO:change to appropriate Enum when it is implemented!
+	MessageType[] messageTypesToReactTo;
 	
-	protected abstract int[] defineMessageTypesToReactTo();//TODO:change to appropriate Enum when it is implemented!
+	protected abstract MessageType[] defineMessageTypesToReactTo();
 	
 	public abstract void applyRule();
 }

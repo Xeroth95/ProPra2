@@ -132,9 +132,8 @@ public abstract strictfp class CollisionObject {
 				e.printStackTrace();
 			}
 			
-			//vector magic!!
-			//I made the math and then took away the parts that were redundant and I am left with this code.
-			//In all honesty I don't know the equation I began with, so you just have to hope it does what it does correctly			
+			// I made that code part clear to me again:		
+			// It is a projection of the speed vector onto the mtv.
 			
 			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();//read as: (dot product of this.speed and mtv)*mtv.x
 			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
