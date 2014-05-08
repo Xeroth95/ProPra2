@@ -239,7 +239,7 @@ public strictfp class WGrid extends CollisionSystem{
 					//now look if parent is already in parentsOfI[i]. If not, add
 					boolean parentAlreadySortedIn=false;
 					int pos=0;
-					for(int a=0;parentsOfI[i][a]!=0;a++,pos=a){ // !! ÄNDERUNG -1 in parentsOfI[i][a] durch 0 ersetzt
+					for(int a=0;parentsOfI[i][a]!=0;a++,pos=a){ // !! Change !! -1 in parentsOfI[i][a] is now 0 instead
 						if(parentsOfI[i][a]==parent){
 							parentAlreadySortedIn=true;
 						}
