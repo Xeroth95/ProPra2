@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 import javax.swing.*;
 
 /**
@@ -10,7 +12,7 @@ public class MainFrame extends JFrame{
 
     MainPanel mainPanel;
 
-    public MainFrame()
+    public MainFrame(GameManager gameManager)
     {
         mainPanel=new MainPanel();
 
