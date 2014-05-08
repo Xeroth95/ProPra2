@@ -59,7 +59,7 @@ public class Worm extends GameObject {
 
     }
     @Override
-    public void addToMessageLists(GameManager gameManager) {
+    public void register(GameManager gameManager) {
         gameManager.addToKeyboard(this);
         gameManager.addToMouse(this);
 

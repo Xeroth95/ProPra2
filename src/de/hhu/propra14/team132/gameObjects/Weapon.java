@@ -44,7 +44,7 @@ public class Weapon extends GameObject {
 
     }
     @Override
-    public void addToMessageLists(GameManager gameManager) {
+    public void register(GameManager gameManager) {
 
     }
     @Override

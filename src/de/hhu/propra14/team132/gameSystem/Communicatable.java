@@ -22,7 +22,7 @@ public interface Communicatable {
         System.out.println("this is a Message of Type KEYBOARD and the key is "+((KeyboardMessage)message).getKey());
     }
      **/
-    public void addToMessageLists(GameManager gameManager);
+    public void register(GameManager gameManager);
     //should call all the addTo<NameOfMessageTypeItwantsToReceive> of gameManager. As a parameter it should commit itself
     //Example gameManager.addToKeyboard(this);
     //addToMessageLists should be called for the first time in the constructor
