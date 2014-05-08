@@ -5,8 +5,10 @@ import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameObjects.Worm;
 
+import java.lang.reflect.Array;
 import java.net.SocketPermission;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Queue;
 
 /**
@@ -16,8 +18,7 @@ public class GameManager {
     public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
     public ArrayList<Communicatable> keyboard; // of Type KeyboardMessage
     public ArrayList<Communicatable> mouse;     // of Type MouseMessage
-    Queue<Message> messageQueue;                //contains the Messages ready to send
-    Queue<Communicatable> objectsQueue;         //contains the Objects to which the Messages from M.Queue should be send
+    HashMap<MessageType,ArrayList<Communicatable>> map;
     public GameManager() {
         //create all the ArrayLists
         keyboard=new ArrayList<Communicatable>(5);
