@@ -7,18 +7,22 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 
 import java.net.SocketPermission;
 import java.util.ArrayList;
+import java.util.Queue;
 
 /**
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
     public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
-    public ArrayList<Communicatable> Keyboard; // of Type KeyboardMessage
-    public ArrayList<Communicatable> Mouse;     // of Type MouseMessage
+    public ArrayList<Communicatable> keyboard; // of Type KeyboardMessage
+    public ArrayList<Communicatable> mouse;     // of Type MouseMessage
+    Queue<Message> messageQueue;                //contains the Messages ready to send
+    Queue<Communicatable> objectsQueue;         //contains the Objects to which the Messages from M.Queue should be send
     public GameManager() {
         //create all the ArrayLists
-        Keyboard=new ArrayList<Communicatable>(5);
-        Mouse=new ArrayList<Communicatable>(5);
+        keyboard=new ArrayList<Communicatable>(5);
+        mouse=new ArrayList<Communicatable>(5);
+
 
     }
 
@@ -41,17 +45,17 @@ public class GameManager {
         //for now just an Example with KEYBOARD
         switch(messageType) { //here the different Messages are send to the Objects
             case KEYBOARD:
-                for(int i=0; i<Keyboard.size();i++) { //Keyboard is a ArrayList
-                    Keyboard.get(i).receiveMessage((KeyboardMessage)m);//Message wird an Objects gesendet
+                for(int i=0; i<keyboard.size();i++) { //Keyboard is a ArrayList
+                    keyboard.get(i).receiveMessage((KeyboardMessage)m);//Message wird an Objects gesendet
                     //! Problem: nächste Message wird erst gesendet, sobald alle Folgeanweisungen der ersten Message abgehandelt sind
-                    // --> Queue? Messagequeue and ObjectQueue, 
+                    // --> Queue? Messagequeue and ObjectQueue,
                     System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
                 break;
             case MOUSE:
                 MouseMessage.Button button=((MouseMessage) m).getButton();
-                for(int i=0; i<Mouse.size();i++) {
-                    Mouse.get(i).receiveMessage((MouseMessage) m); //Message wird weiter an Object gesendet.
+                for(int i=0; i<mouse.size();i++) {
+                    mouse.get(i).receiveMessage((MouseMessage) m); //Message wird weiter an Object gesendet.
                     //Soll das schon getypcast werden?
                     System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
@@ -74,22 +78,22 @@ public class GameManager {
     }
 
     public ArrayList<Communicatable> getKeyboard() {
-        return Keyboard;
+        return keyboard;
     }
 
     public void addToKeyboard(Communicatable o) {
-        Keyboard.add(o);
+        keyboard.add(o);
     }
 
     public ArrayList<Communicatable> getMouse() {
-        return Mouse;
+        return mouse;
     }
 
     public void setMouse(ArrayList<Communicatable> mouse) {
-        Mouse = mouse;
+        mouse = mouse;
     }
     public void addToMouse(Communicatable o) {
-        Mouse.add(o);
+        mouse.add(o);
     }
 }
 
