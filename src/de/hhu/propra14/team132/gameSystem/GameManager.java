@@ -39,10 +39,12 @@ public class GameManager {
         MessageType messageType=message.getMessageType();  //reads the MessageType
         //makes a Decision what to do with the message
         //for now just an Example with KEYBOARD
-        switch(messageType) {
+        switch(messageType) { //here the different Messages are send to the Objects
             case KEYBOARD:
                 for(int i=0; i<Keyboard.size();i++) { //Keyboard is a ArrayList
                     Keyboard.get(i).receiveMessage((KeyboardMessage)m);//Message wird an Objects gesendet
+                    //! Problem: nächste Message wird erst gesendet, sobald alle Folgeanweisungen der ersten Message abgehandelt sind
+                    // --> Queue? Messagequeue and ObjectQueue, 
                     System.out.println("Message wurde weitergeleitet"); //Just for test.
                 }
                 break;
