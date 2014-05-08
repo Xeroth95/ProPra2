@@ -48,7 +48,7 @@ public class GameManager {
                 long t2 = System.nanoTime();
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1);
-                    Thread.sleep(((int) (diff / 1000)));
+                    Thread.sleep(((int) (diff / 10000000)));
                 }
             } catch(Exception e) {
                  System.out.println("exception");
