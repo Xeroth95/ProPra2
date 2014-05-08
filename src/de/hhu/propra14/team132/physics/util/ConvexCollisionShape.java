@@ -23,21 +23,18 @@ public strictfp class ConvexCollisionShape {
 		
 	}
 	public ConvexCollisionShape(Vector2D[] p){
-		xPoints=new double[p.length];
-		yPoints=new double[p.length];
-		originalxPoints=new double[p.length];
-		originalyPoints=new double[p.length];
+		double[] x=new double[p.length];
+		double[] y=new double[p.length];
 		for(int i=0;i<p.length;i++){
-			originalxPoints[i]=p[i].getX();
-			originalyPoints[i]=p[i].getY();
+			x[i]=p[i].getX();
+			y[i]=p[i].getY();
 		}
-		positionX=0;
-		positionY=0;
-		this.recalcY();
-		this.recalcX();
-		this.computeCollisionAxes();
+		constructHelp(x,y);
 	}
 	public ConvexCollisionShape(double[] x,double[] y){
+		constructHelp(x,y);
+	}
+	private void constructHelp(double[] x,double[] y){
 		minOnX=Double.MAX_VALUE;
 		maxOnX=Double.MIN_VALUE;
 		minOnY=Double.MAX_VALUE;
