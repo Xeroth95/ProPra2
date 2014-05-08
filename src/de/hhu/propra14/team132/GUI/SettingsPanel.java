@@ -38,32 +38,32 @@ public class SettingsPanel extends JPanel {
             this.add(button_go_back);
         }
 
-    class VideoListener implements ActionListener
-    {
+    class VideoListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             SettingsPanel.this.mainPanel.showPanel("5");//switch to VideoSettingsPanel
         }
     }
 
-    class AudioListener implements ActionListener
-    {
+    class AudioListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             SettingsPanel.this.mainPanel.showPanel("6");//switch to AudioSettingsPanel
         }
     }
 
-    class ControlsListener implements ActionListener
-    {
+    class ControlsListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             SettingsPanel.this.mainPanel.showPanel("7");//switch to ControlSettingsPanel
         }
     }
 
-    class GoBackListener implements ActionListener
-    {
+    class GoBackListener implements ActionListener {
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel

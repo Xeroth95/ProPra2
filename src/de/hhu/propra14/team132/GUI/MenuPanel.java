@@ -60,14 +60,19 @@ public class MenuPanel extends JPanel{
 
     class LoadGameListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 chooser.showOpenDialog(null);
                 MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();//open a filechooser dialog
             }
             catch(Exception ex) {
-                JOptionPane.showMessageDialog(null,"An error occured!", "Error", JOptionPane.ERROR_MESSAGE);//show an error message when something goes wrong
+                if(path_to_saved_game==null) {
+                    JOptionPane.showMessageDialog(null,"No file was chosen!", "Error", JOptionPane.ERROR_MESSAGE);//show an error if no file was chosen
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "An error occured!", "Error", JOptionPane.ERROR_MESSAGE);//show an error message when something went wrong
+                }
             }
 
         }
@@ -76,7 +81,7 @@ public class MenuPanel extends JPanel{
 
     class SettingsListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.mainPanel.showPanel("3");//switch to SettingsPanel
         }
@@ -85,7 +90,7 @@ public class MenuPanel extends JPanel{
 
     class AboutListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.mainPanel.showPanel("4");//switch to AboutPanel
         }
@@ -94,7 +99,7 @@ public class MenuPanel extends JPanel{
 
     class ExitListener implements ActionListener
     {
-
+        @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }

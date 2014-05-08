@@ -35,25 +35,10 @@ public class GameManager {
     }
     public void start() {
         MainFrame f=new MainFrame();
-        this.update();
+       // this.update();
     }
-    public void update() {
-        while(true) {
-           try {
-               currentTick++;
-                long t1 = System.nanoTime();
-                //Update everything;
-                //System.out.println("currentTick: "+currentTick);
-                long t2 = System.nanoTime();
-                if (t2 - t1 < lengthOfTickInNanoSeconds) {
-                    double diff = lengthOfTickInNanoSeconds - (t2 - t1);
-                    Thread.sleep(((int) (diff / 1000000)));
-                }
-            } catch(Exception e) {
-                 System.out.println("exception");
-            }
-        }
-    }
+
+
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
         //which Objects want messages of this type

@@ -35,9 +35,30 @@ public class Terrain extends GameObject {
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing
     }
+
+    @Override
+    public double getInitialBounciness() {
+        return 0;
+    }
+
+    @Override
+    public double getInitialFriction() {
+        return 0;
+    }
+
     //Drawable Methods:
     public void draw(Graphics g, int posX, int posY) {
        // g.fillPolygon(this..getPolygonToDraw());
+    }
+
+    @Override
+    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+
+    }
+
+    @Override
+    public void draw(Graphics g) {
+
     }
 
 }
