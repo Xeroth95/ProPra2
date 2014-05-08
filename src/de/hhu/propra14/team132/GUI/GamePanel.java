@@ -1,5 +1,8 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameObjects.Terrain;
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -12,6 +15,7 @@ public class GamePanel extends JPanel {
     //this is where the action will take place
     //but for now there is not much to show
 
+    //MainFrame mainFrame;
     MainPanel mainPanel;
     MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
@@ -19,34 +23,34 @@ public class GamePanel extends JPanel {
     JScrollBar vbar;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
+    GameManager gameManager;
 
-    public GamePanel(MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel) {
+    public GamePanel(MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
+        //this.mainFrame=mainFrame;
         this.mainPanel=mainPanel;
         this.mainGamePanel=mainGamePanel;
         this.weaponsPanel=weaponsPanel;
+        this.gameManager=gameManager;
 
         autoscrolling=false;
-
-        this.setPreferredSize(new Dimension(1500, 1500));//scrollPane needs to know the size of the panel it scrolls
-
+        this.setPreferredSize(new Dimension((int)Math.round(gameManager.terrain.shape.getMaxOnX()), (int)Math.round(gameManager.terrain.shape.getMaxOnY())));//scrollPane needs to know the size of the panel it scrolls
         this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        //draw some rects and a string for testing purposes
-        g.drawString("This is the GamePanel. It will contain all the game graphics later on. This is a very long string to test the scrolling functionality. Later on in the developement it will be replaced by cool graphics and stuff.", 0, 100);
-        g.fillRect(100,150,200,200);
-        g.fillRect(300,500,200,200);
-        g.fillRect(600,700,200,200);
-        g.fillRect(700,300,200,200);
-        g.fillRect(1000,500,200,200);
-        g.fillRect(1200,1000,200,200);
-        g.fillRect(1100,150,200,200);
-        g.fillRect(350,200,200,200);
-        g.fillRect(100,1200,200,200);
-        g.fillRect(500,1100,200,200);
+        gameManager.terrain.draw(this.getGraphics());
+        //draw team1
+        gameManager.worm1_1.draw(this.getGraphics(),100,438);
+        gameManager.worm1_2.draw(this.getGraphics(),120,432);
+        gameManager.worm1_3.draw(this.getGraphics(),132,428);
+        gameManager.worm1_4.draw(this.getGraphics(),150,422);
+        //draw team2
+        gameManager.worm2_1.draw(this.getGraphics(),763,306);
+        gameManager.worm2_2.draw(this.getGraphics(),750,300);
+        gameManager.worm2_3.draw(this.getGraphics(),735,293);
+        gameManager.worm2_4.draw(this.getGraphics(),722,287);
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
@@ -117,19 +121,20 @@ public class GamePanel extends JPanel {
                 GamePanel.this.scroll(GamePanel.this.mainGamePanel.scrollPane.getHorizontalScrollBar(), GamePanel.this.mainGamePanel.scrollPane.getVerticalScrollBar(), 0, 0);
             }
         }
-        @Override
+
+
         public void mousePressed(MouseEvent e) {
 
         }
-        @Override
+
         public void mouseReleased(MouseEvent e) {
 
         }
-        @Override
+
         public void mouseEntered(MouseEvent e) {
 
         }
-        @Override
+
         public void mouseExited(MouseEvent e) {
 
         }

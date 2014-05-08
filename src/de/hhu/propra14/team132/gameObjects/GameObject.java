@@ -10,7 +10,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 public abstract class GameObject extends CollisionObject implements Communicatable,Drawable {
     private String name;
     private Map map;
-    private ConvexCollisionShape shape;
+    public ConvexCollisionShape shape;
     private ConvexCollisionShape[] shapes;
     private int teamID;
     private GameManager gameManager;

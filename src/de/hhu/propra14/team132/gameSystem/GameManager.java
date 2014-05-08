@@ -1,6 +1,11 @@
 package de.hhu.propra14.team132.gameSystem;
 
 import de.hhu.propra14.team132.GUI.MainFrame;
+import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Terrain;
+import de.hhu.propra14.team132.gameObjects.Worm;
+import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
+import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +14,18 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
-    public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
-    HashMap<MessageType,ArrayList<Communicatable>> map;
+    public Map gameMap;
+    public Terrain terrain;
+    public Worm worm1_1;
+    public Worm worm1_2;
+    public Worm worm1_3;
+    public Worm worm1_4;
+    public Worm worm2_1;
+    public Worm worm2_2;
+    public Worm worm2_3;
+    public Worm worm2_4;
+    public MainFrame mainFrame;
+    HashMap<MessageType,ArrayList<Communicatable>> map; //arrayList with all the Objects who want to receive Message
     int ticksPerSecond;
     long lengthOfTickInNanoSeconds;
     int currentTick;
@@ -34,8 +49,35 @@ public class GameManager {
 
     }
     public void start() {
+        //create map
+        gameMap=new Map(this);
+        //create vectors, that form the terrain
+        Vector2D[] vertices=new Vector2D[10];
+        vertices[0]=new Vector2D(0, 550);
+        vertices[1]=new Vector2D(100, 450);
+        vertices[2]=new Vector2D(250, 400);
+        vertices[3]=new Vector2D(375, 370);
+        vertices[4]=new Vector2D(500, 480);
+        vertices[5]=new Vector2D(615, 300);
+        vertices[6]=new Vector2D(690, 280);
+        vertices[7]=new Vector2D(820, 340);
+        vertices[8]=new Vector2D(900, 400);
+        vertices[9]=new Vector2D(1000, 550);
+        //create terrain
+        terrain=new Terrain(new ConvexCollisionShape(vertices),0, gameMap, this);
+        //create worms for team1
+        worm1_1=new Worm(1, gameMap, this, "Worm1_1", 1);
+        worm1_2=new Worm(1, gameMap, this, "Worm1_2", 1);
+        worm1_3=new Worm(1, gameMap, this, "Worm1_3", 1);
+        worm1_4=new Worm(1, gameMap, this, "Worm1_4", 1);
+        //create worms for team2
+        worm2_1=new Worm(2, gameMap, this, "Worm2_1", 2);
+        worm2_2=new Worm(2, gameMap, this, "Worm2_2", 2);
+        worm2_3=new Worm(2, gameMap, this, "Worm2_3", 2);
+        worm2_4=new Worm(2, gameMap, this, "Worm2_4", 2);
+        //create MainFrame
         MainFrame f=new MainFrame(this);
-       // this.update();
+        this.update();
     }
     public void update() {
         try {

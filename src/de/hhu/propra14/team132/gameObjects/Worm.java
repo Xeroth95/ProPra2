@@ -51,7 +51,7 @@ public class Worm extends GameObject {
                         System.out.println("right");
                         break;
                     case MIDDEL:
-                        System.out.println("middel");
+                        System.out.println("middle");
                         break;
                 }
             case KEYBOARD:
@@ -80,7 +80,8 @@ public class Worm extends GameObject {
 
     //Drawable Methods:
     public void draw(Graphics g, int posX, int posY) {
-
+        g.setColor(Color.PINK);
+        g.fillOval(posX, posY, 10, 10);
     }
 
     public Worm(int teamID, Map map, GameManager gameManager) {
