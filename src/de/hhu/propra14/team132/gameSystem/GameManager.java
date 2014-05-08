@@ -41,8 +41,7 @@ public class GameManager {
         //It then calls all the receiveMessage-Methods of the Objects
         Message message=m;
         MessageType messageType=message.getMessageType();  //reads the MessageType
-        //makes a Decision what to do with the message
-        //for now just an Example with KEYBOARD
+        //makes a Decision what to do with the message:s
         switch(messageType) { //here the different Messages are send to the Objects
             case KEYBOARD:
                 for(int i=0; i<keyboard.size();i++) { //Keyboard is a ArrayList
@@ -97,7 +96,14 @@ public class GameManager {
     }
 }
 
-
+/*
+Problem/Idee: Durch das Abarbeiten der ArrayLists in einer Schleife werden nach jeder Gesendeten message erst die daraus
+resultierenden Anweisung abgearbeitet. Dies bewirkt, dass die receiveMessage der selben Stufe erst spät gesendet werden oder
+wir in einer Endlosschleife landen. Eine Idee wäre, wenn eine Message gesendet werden soll, sie stattdessen in eine Queue einzufügen
+Neue resultierende Messages werden dann also am Ende eingefügt, der GameManager fängt nun an, vom Anfang aus die Queue zu bearbeiten
+Problem: Es muss die Message und das Objekk, dass sie erhalten soll, gespeichert werden. WIe soll das in einer Queue gehen?
+--> Eine MessageQueue, eine Object-Queue die zusammen gepopt und gepusht werden.
+ */
 
 
 
