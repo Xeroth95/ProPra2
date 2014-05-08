@@ -2,6 +2,8 @@ package de.hhu.propra14.team132.gameMechanics;
 
 import java.util.ArrayList;
 
+import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
+import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.CollisionSystem;
 
@@ -23,17 +25,23 @@ public class Map {
 	
 	static int MAX_OBJECT_COUNT=21000; // arbitrary value. Has direct influence on a few very important array sizes.
 	
-	public Map(){
-		this.initializeBasics();
+	GameManager manager;
+	
+	RuleSet ruleset;
+	
+	public Map(GameManager manager){
+		this.initializeBasics(manager);
 		sizeX=0;
 		sizeY=0;
 	}
-	public Map(double x,double y){
-		this.initializeBasics();
+	public Map(double x,double y,GameManager manager){
+		this.initializeBasics(manager);
 		sizeX=x;
 		sizeY=y;
 	}
-	private void initializeBasics(){
+	private void initializeBasics(GameManager manager){
+		
+		this.manager=manager;
 
 		mapObjects=new CollisionObject[MAX_OBJECT_COUNT];
 		
@@ -60,8 +68,7 @@ public class Map {
 	}
 	public void nextTick(){
 		moveAllObjects();
-		//TODO:Apply Rules, or something?!
-		//this migth be a good Idea. I should delegate all of this to a set of Rules. This is the next thing to do !
+		ruleset.applyRules();
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){
