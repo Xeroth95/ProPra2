@@ -62,12 +62,10 @@ public abstract strictfp class CollisionObject {
 		this.acceleration=new Vector2D();
 		
 		this.mapPlacedIn=map;
-<<<<<<< HEAD
-		this.bounciness=
-=======
+
 		this.bounciness=this.getInitialBounciness();
 		this.friction=this.getInitialFriction();
->>>>>>> 12ca2454489692360c89bf6343d242e68ed66d1c
+
 		collisionTranslationBehaviour=TRANSLATION_BEHAVIOUR_NORMAL;
 		
 		markedForDeletion=false;
@@ -230,17 +228,7 @@ public abstract strictfp class CollisionObject {
 	}
 	
 	//regular getter/setter
-<<<<<<< HEAD
-	
-	public Vector2D getSpeed() {
-		return speed;
-	}
-	public abstract double getBounciness();
-	public void setBounciness(double bounciness) {
-		this.bounciness = bounciness;
-	}
-	public abstract double getFriction();
-=======
+
 	public abstract double getInitialBounciness();
 	public abstract double getInitialFriction();
 	public Vector2D getSpeed() {
@@ -255,7 +243,7 @@ public abstract strictfp class CollisionObject {
 	public void setBounciness(double bounciness) {
 		this.bounciness = bounciness;
 	}
->>>>>>> 12ca2454489692360c89bf6343d242e68ed66d1c
+
 	public void setFriction(double friction) {
 		this.friction = friction;
 	}
