@@ -38,21 +38,20 @@ public class GameManager {
         this.update();
     }
     public void update() {
+        try {
         while(true) {
-
-           try {
-               currentTick++;
-                long t1 = System.nanoTime();
+              long t1 = System.nanoTime();
                 //Update everything;
-                System.out.println("currentTick: "+currentTick);
+                //System.out.println("currentTick: "+currentTick);
                 long t2 = System.nanoTime();
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1);
-                    Thread.sleep(((int) (diff / 1000)));
+                    Thread.sleep(((int) (diff / 10000000)));
                 }
             } catch(Exception e) {
                  System.out.println("exception");
             }
+            currentTick++;
         }
     }
     public void sendMessage(Message m) {

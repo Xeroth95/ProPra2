@@ -37,6 +37,17 @@ public class Projectile extends GameObject{
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing
     }
+
+    @Override
+    public double getInitialBounciness() {
+        return 0;
+    }
+
+    @Override
+    public double getInitialFriction() {
+        return 0;
+    }
+
     //Drawable Methods:
     public void draw(Graphics g, int posX, int posY) {
 
