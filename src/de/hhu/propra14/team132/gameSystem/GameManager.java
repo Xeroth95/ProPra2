@@ -52,11 +52,15 @@ public class GameManager {
         MessageType messageType=message.getMessageType();
         switch(messageType) {
             case KEYBOARD:
+                helpSend(MessageType.KEYBOARD, m);
             case MOUSE:
+                helpSend(MessageType.KEYBOARD, m);
         }
-
-
-
+    }
+    public void helpSend(MessageType messageType, Message m) {
+        for(Communicatable o : map.get(messageType)) {
+            o.receiveMessage(m);
+        }
     }
     public void register(Communicatable o, ArrayList<MessageType> type) {
         //add Communicatable o to all the ArrayLists in type
