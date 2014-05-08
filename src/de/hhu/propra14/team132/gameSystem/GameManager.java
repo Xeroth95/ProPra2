@@ -20,7 +20,7 @@ public class GameManager {
     public GameManager() {
         map=new HashMap<MessageType, ArrayList<Communicatable>>();
         map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
-        map.put(MessageType.MOUSE),new ArrayList<Communicatable>());
+        map.put(MessageType.MOUSE,new ArrayList<Communicatable>());
     }
 
     public static void main(String[] args) {
