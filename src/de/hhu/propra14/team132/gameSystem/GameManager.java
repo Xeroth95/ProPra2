@@ -18,7 +18,9 @@ public class GameManager {
     public MainFrame mainFrame;                 //arrayList with all the Objects who want to receive Message
     HashMap<MessageType,ArrayList<Communicatable>> map;
     public GameManager() {
-
+        map=new HashMap<MessageType, ArrayList<Communicatable>>();
+        map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
+        map.put(MessageType.MOUSE),new ArrayList<Communicatable>());
     }
 
     public static void main(String[] args) {
@@ -37,7 +39,7 @@ public class GameManager {
         Message message=m;
         MessageType messageType=message.getMessageType();  //reads the MessageType
         //makes a Decision what to do with the message:s
-     
+
 
     }
     public void receiveMessage(Message m) {
@@ -46,8 +48,13 @@ public class GameManager {
         //cast to the right typ
         //get all the things this class needs
         //do what the message wants
-        MessageType messageType=m.getMessageType();
-        Message message;
+        Message message=m;
+        MessageType messageType=message.getMessageType();
+        switch(messageType) {
+            case KEYBOARD:
+            case MOUSE:
+        }
+
 
 
     }
