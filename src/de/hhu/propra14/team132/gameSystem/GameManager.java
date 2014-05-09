@@ -14,6 +14,7 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
+    //declares the necessary objects
     public Map gameMap;
     public Terrain terrain;
     public Worm worm1_1;
@@ -30,11 +31,12 @@ public class GameManager {
     long lengthOfTickInNanoSeconds;
     int currentTick;
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
-    public GameManager(int ticksPerSecond) {
+    public GameManager() {
         currentTick=0;
-        this.ticksPerSecond=ticksPerSecond;
+        this.ticksPerSecond=60; //todo:where should this be declared?
         this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicatable>>();
+        gameMap=new Map(this);
         //generate the ArrayList for all the MessagesTypes:
         //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
         //hashMap.put(MessageType.MOUSE,new ArrayList<Communicatable>());
@@ -44,13 +46,13 @@ public class GameManager {
     }
 
     public static void main(String[] args) {
-        GameManager gameManager=new GameManager(15); //this is the gameManager. It gives itself to all other Objects it creates
-        gameManager.start();                       //testMethod to start the GUI
+        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        gameManager.start();  //starts the game
 
     }
     public void start() {
-        //create hashMap
-        gameMap=new Map(this);
+        //creates Map
+
         //create vectors, that form the terrain
         Vector2D[] vertices=new Vector2D[10];
         vertices[0]=new Vector2D(0, 550);
@@ -81,10 +83,11 @@ public class GameManager {
     }
     public void update() {
         try {
-            while (true) {   //must stop if game is paused
-
+            while (true) {   //todo: must stop if game is paused
                 long t1 = System.nanoTime();
                 //Update everything;
+                mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+
                 //System.out.println("currentTick: "+currentTick);
                 long t2 = System.nanoTime();
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
