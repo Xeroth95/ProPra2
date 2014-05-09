@@ -47,17 +47,17 @@ public class Worm extends GameObject {
     }
 
     //Drawable Methods:
-    public void draw(Graphics g, int posX, int posY) {
-        g.setColor(Color.PINK);
+    public void draw(Graphics g, Color color, int posX, int posY) {
+        g.setColor(color);
         g.fillOval(posX, posY, 10, 10);
     }
     @Override
-    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+    public void draw(Graphics g, Color color, int posX, int posY, int sizeX, int sizeY) {
 
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, Color color) {
 
     }
 }

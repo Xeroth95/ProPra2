@@ -1,12 +1,13 @@
 package de.hhu.propra14.team132.gameObjects;
 
+import de.hhu.propra14.team132.GUI.Drawable;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 /**
  * Created by isabel on 09.05.14.
  */
-public class Obstacle extends Terrain {
+public class Obstacle extends Terrain{
     private boolean destroyable;
 
     public Obstacle(int teamID, Map map, boolean destroyable) {

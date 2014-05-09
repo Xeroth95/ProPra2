@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
@@ -54,18 +55,22 @@ public class GamePanel extends JPanel {
             bufferedImage=this.createImage(width, height);
             bufferedGraphics=bufferedImage.getGraphics();
         }
-
-        gameManager.terrain.draw(bufferedGraphics);
+        //draw obstacles
+        for(int i=0; i<gameManager.obstacles.length; i++) {
+            gameManager.obstacles[i].draw(bufferedGraphics, Color.DARK_GRAY);
+        }
+        //draw terrain
+        gameManager.terrain.draw(bufferedGraphics,Color.BLACK);
         //draw team1
-        gameManager.worm1_1.draw(bufferedGraphics,100,438);
-        gameManager.worm1_2.draw(bufferedGraphics,120,432);
-        gameManager.worm1_3.draw(bufferedGraphics,132,428);
-        gameManager.worm1_4.draw(bufferedGraphics,150,422);
+        gameManager.worm1_1.draw(bufferedGraphics,Color.PINK,100,438);
+        gameManager.worm1_2.draw(bufferedGraphics,Color.PINK,120,432);
+        gameManager.worm1_3.draw(bufferedGraphics,Color.PINK,132,428);
+        gameManager.worm1_4.draw(bufferedGraphics,Color.PINK,150,422);
         //draw team2
-        gameManager.worm2_1.draw(bufferedGraphics,763,306);
-        gameManager.worm2_2.draw(bufferedGraphics,750,300);
-        gameManager.worm2_3.draw(bufferedGraphics,735,293);
-        gameManager.worm2_4.draw(bufferedGraphics,722,287);
+        gameManager.worm2_1.draw(bufferedGraphics,Color.PINK,763,306);
+        gameManager.worm2_2.draw(bufferedGraphics,Color.PINK,750,300);
+        gameManager.worm2_3.draw(bufferedGraphics,Color.PINK,735,293);
+        gameManager.worm2_4.draw(bufferedGraphics,Color.PINK,722,287);
 
         g.drawImage(bufferedImage,0,0,this);
 

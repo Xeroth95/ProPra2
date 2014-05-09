@@ -2,6 +2,7 @@ package de.hhu.propra14.team132.gameSystem;
 
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
@@ -16,9 +17,9 @@ import java.util.HashMap;
 public class GameManager {
     private boolean stop; //is there to pause the thread;
     //declares the necessary objects
-
     public Map gameMap;
     public Terrain terrain;
+    public Obstacle[] obstacles;
     public Worm worm1_1;
     public Worm worm1_2;
     public Worm worm1_3;
@@ -48,19 +49,39 @@ public class GameManager {
         //creates Map
 
         //create vectors, that form the terrain
-        Vector2D[] vertices=new Vector2D[10];
-        vertices[0]=new Vector2D(0, 550);
-        vertices[1]=new Vector2D(100, 450);
-        vertices[2]=new Vector2D(250, 400);
-        vertices[3]=new Vector2D(375, 370);
-        vertices[4]=new Vector2D(500, 480);
-        vertices[5]=new Vector2D(615, 300);
-        vertices[6]=new Vector2D(690, 280);
-        vertices[7]=new Vector2D(820, 340);
-        vertices[8]=new Vector2D(900, 400);
-        vertices[9]=new Vector2D(1000, 550);
+        Vector2D[] verticesTerrain=new Vector2D[10];
+        verticesTerrain[0]=new Vector2D(0, 550);
+        verticesTerrain[1]=new Vector2D(100, 450);
+        verticesTerrain[2]=new Vector2D(250, 400);
+        verticesTerrain[3]=new Vector2D(375, 370);
+        verticesTerrain[4]=new Vector2D(500, 480);
+        verticesTerrain[5]=new Vector2D(615, 300);
+        verticesTerrain[6]=new Vector2D(690, 280);
+        verticesTerrain[7]=new Vector2D(820, 340);
+        verticesTerrain[8]=new Vector2D(900, 400);
+        verticesTerrain[9]=new Vector2D(1000, 550);
         //create terrain
-        terrain=new Terrain(new ConvexCollisionShape(vertices),0, gameMap);
+        terrain=new Terrain(new ConvexCollisionShape(verticesTerrain),0, gameMap);
+        //create some obstacles
+        obstacles=new Obstacle[3];
+        Vector2D[] verticesObstacle0=new Vector2D[4];
+        verticesObstacle0[0]=new Vector2D(600,285);
+        verticesObstacle0[1]=new Vector2D(630,280);
+        verticesObstacle0[2]=new Vector2D(630,330);
+        verticesObstacle0[3]=new Vector2D(600,330);
+        obstacles[0]=new Obstacle(new ConvexCollisionShape(verticesObstacle0),0,gameMap,false);
+        Vector2D[] verticesObstacle1=new Vector2D[4];
+        verticesObstacle1[0]=new Vector2D(300,405);
+        verticesObstacle1[1]=new Vector2D(330,405);
+        verticesObstacle1[2]=new Vector2D(330,355);
+        verticesObstacle1[3]=new Vector2D(300,350);
+        obstacles[1]=new Obstacle(new ConvexCollisionShape(verticesObstacle1),0,gameMap,false);
+        Vector2D[] verticesObstacle2=new Vector2D[4];
+        verticesObstacle2[0]=new Vector2D(450,500);
+        verticesObstacle2[1]=new Vector2D(510,500);
+        verticesObstacle2[2]=new Vector2D(510,310);
+        verticesObstacle2[3]=new Vector2D(450,290);
+        obstacles[2]=new Obstacle(new ConvexCollisionShape(verticesObstacle2),0,gameMap,false);
         //create worms for team1
         worm1_1=new Worm(1, gameMap, "Worm1_1");
         worm1_2=new Worm(1, gameMap, "Worm1_2");
@@ -88,8 +109,6 @@ public class GameManager {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-
-                   System.out.println("currentTick: " + currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
