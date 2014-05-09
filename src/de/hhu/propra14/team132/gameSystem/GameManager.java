@@ -96,6 +96,8 @@ public class GameManager {
                         Thread.sleep(((int) (diff / 1000000)));   //
                     }
                     currentTick++;
+                } else {
+                    Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
             }
          } catch (Exception e) {
