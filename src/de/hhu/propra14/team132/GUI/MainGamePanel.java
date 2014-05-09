@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
  */
 public class MainGamePanel extends JPanel{
     MainPanel mainPanel;
-    GamePanel gamePanel;
+    public GamePanel gamePanel;
     WeaponsPanel weaponsPanel;
     JScrollPane scrollPane;
 
