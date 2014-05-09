@@ -14,6 +14,7 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
+    //declares the necessary objects
     public Map gameMap;
     public Terrain terrain;
     public Worm worm1_1;
@@ -25,32 +26,33 @@ public class GameManager {
     public Worm worm2_3;
     public Worm worm2_4;
     public MainFrame mainFrame;
-    HashMap<MessageType,ArrayList<Communicatable>> map; //arrayList with all the Objects who want to receive Message
+    HashMap<MessageType,ArrayList<Communicatable>> hashMap; //arrayList with all the Objects who want to receive Message
     int ticksPerSecond;
     long lengthOfTickInNanoSeconds;
     int currentTick;
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
-    public GameManager(int ticksPerSecond) {
+    public GameManager() {
         currentTick=0;
-        this.ticksPerSecond=ticksPerSecond;
+        this.ticksPerSecond=60; //todo:where should this be declared?
         this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
-        map=new HashMap<MessageType, ArrayList<Communicatable>>();
+        hashMap =new HashMap<MessageType, ArrayList<Communicatable>>();
+        gameMap=new Map(this);
         //generate the ArrayList for all the MessagesTypes:
-        //map.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
-        //map.put(MessageType.MOUSE,new ArrayList<Communicatable>());
+        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
+        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicatable>());
         for(MessageType t: MessageType.values()){
-            map.put(t,new ArrayList<Communicatable>());
+            hashMap.put(t, new ArrayList<Communicatable>());
         }
     }
 
     public static void main(String[] args) {
-        GameManager gameManager=new GameManager(15); //this is the gameManager. It gives itself to all other Objects it creates
-        gameManager.start();                       //testMethod to start the GUI
+        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        gameManager.start();  //starts the game
 
     }
     public void start() {
-        //create map
-        gameMap=new Map(this);
+        //creates Map
+
         //create vectors, that form the terrain
         Vector2D[] vertices=new Vector2D[10];
         vertices[0]=new Vector2D(0, 550);
@@ -76,15 +78,16 @@ public class GameManager {
         worm2_3=new Worm(2, gameMap, this, "Worm2_3");
         worm2_4=new Worm(2, gameMap, this, "Worm2_4");
         //create MainFrame
-        MainFrame f=new MainFrame(this);
+        mainFrame=new MainFrame(this);
         this.update();
     }
     public void update() {
         try {
-            while (true) {
-                currentTick++;
+            while (true) {   //todo: must stop if game is paused
                 long t1 = System.nanoTime();
                 //Update everything;
+                mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+
                 //System.out.println("currentTick: "+currentTick);
                 long t2 = System.nanoTime();
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
@@ -94,7 +97,7 @@ public class GameManager {
             }
 
          } catch (Exception e) {
-                   System.out.println("exception");
+                   e.printStackTrace();
          }
          currentTick++;
      }
@@ -117,7 +120,7 @@ public class GameManager {
 
     }
     public void helpSend(MessageType messageType, Message m) {
-        for(Communicatable o : map.get(messageType)) {
+        for(Communicatable o : hashMap.get(messageType)) {
             o.receiveMessage(m);
         }
     }
@@ -131,11 +134,11 @@ public class GameManager {
     public void register(Communicatable o, ArrayList<MessageType> type) {
         //add Communicatable o to all the ArrayLists in type
         for(MessageType t: type) {
-            map.get(t).add(o);
+            hashMap.get(t).add(o);
         }
     }
     public void register(Communicatable o, MessageType type) {
-        map.get(type).add(o);
+        hashMap.get(type).add(o);
         //add Communicatable to ArrayList assoziatet with type
     }
 
