@@ -95,7 +95,9 @@ public class GamePanel extends JPanel {
                 vbar.setValue(vbar.getValue() - 1);//scroll up
             }
         }
+    }
 
+    public void nextTick() {
         this.repaint();
     }
 
