@@ -17,6 +17,8 @@ public class GameSettingsPanel extends JPanel {
     JTextField timeTextField;
     JButton timeButtonPlus;
     JButton timeButtonMinus;
+    JButton timeButtonPlus10;
+    JButton timeButtonMinus10;
 
     JButton goBackButton;
 
@@ -35,11 +37,18 @@ public class GameSettingsPanel extends JPanel {
         timeButtonPlus.addActionListener(new TimePlusListener());
         timeButtonMinus=new JButton("-");
         timeButtonMinus.addActionListener(new TimeMinusListener());
+        timeButtonPlus10=new JButton("+10");
+        timeButtonPlus10.addActionListener(new TimePlus10Listener());
+        timeButtonMinus10=new JButton("-10");
+        timeButtonMinus10.addActionListener(new TimeMinus10Listener());
+
 
         timePanel.add(timeLabel);
         timePanel.add(timeTextField);
         timePanel.add(timeButtonPlus);
         timePanel.add(timeButtonMinus);
+        timePanel.add(timeButtonPlus10);
+        timePanel.add(timeButtonMinus10);
 
         this.add(timePanel);
         this.add(goBackButton);
@@ -74,6 +83,32 @@ public class GameSettingsPanel extends JPanel {
             }
             else {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(time - 1));
+            }
+        }
+    }
+
+    class TimePlus10Listener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
+            if(time>=99999) {
+                GameSettingsPanel.this.timeTextField.setText(String.valueOf(99999));
+            }
+            else {
+                GameSettingsPanel.this.timeTextField.setText(String.valueOf(time + 10));
+            }
+        }
+    }
+
+    class TimeMinus10Listener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
+            if(time<=0) {
+                GameSettingsPanel.this.timeTextField.setText(String.valueOf(0));
+            }
+            else {
+                GameSettingsPanel.this.timeTextField.setText(String.valueOf(time - 10));
             }
         }
     }
