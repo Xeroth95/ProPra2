@@ -95,7 +95,6 @@ public class GameManager {
                     Thread.sleep(((int) (diff / 1000000)));
                 }
             }
-
          } catch (Exception e) {
                    e.printStackTrace();
          }

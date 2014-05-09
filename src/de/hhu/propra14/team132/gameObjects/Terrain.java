@@ -26,14 +26,6 @@ public class Terrain extends GameObject {
         this.shape=shape;
     }
     @Override
-    public void receiveMessage(Message m)  {
-
-    }
-    @Override
-    public void register(GameManager gameManager) {
-
-    }
-    @Override
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing
     }

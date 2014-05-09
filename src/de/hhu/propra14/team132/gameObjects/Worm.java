@@ -31,34 +31,6 @@ public class Worm extends GameObject {
         super(shape, teamID, map, gameManager);
         this.name = name;
     }
-
-
-    @Override
-    public void receiveMessage(Message m)  {
-        MessageType messageType=m.getMessageType();
-        switch(messageType) {
-            case MOUSE:
-                MouseMessage.Button button=((MouseMessage)m).getButton();
-                switch(button) {
-                    case LEFT:
-                        System.out.println("left");
-                        break;
-                    case RIGHT:
-                        System.out.println("right");
-                        break;
-                    case MIDDEL:
-                        System.out.println("middle");
-                        break;
-                }
-            case KEYBOARD:
-         }
-
-    }
-    @Override
-    public void register(GameManager gameManager) {
-
-
-    }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing

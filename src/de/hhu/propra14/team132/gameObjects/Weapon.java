@@ -30,14 +30,7 @@ public class Weapon extends GameObject {
         super(shape, teamID, map, gameManager);
         map = map;
     }
-    @Override
-    public void receiveMessage(Message m)  {
 
-    }
-    @Override
-    public void register(GameManager gameManager) {
-
-    }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing

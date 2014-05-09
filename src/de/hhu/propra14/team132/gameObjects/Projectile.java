@@ -23,15 +23,7 @@ public class Projectile extends GameObject{
     public Projectile(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
         super(shape, teamID, map, gameManager);
     }
-    //Communicatable-Methods
-    @Override
-    public void receiveMessage(Message m)  {
 
-    }
-    @Override
-    public void register(GameManager gameManager) {
-
-    }
     //CollsionObject-Methods
     @Override
     public void furtherCollisionWith(CollisionObject o) {
