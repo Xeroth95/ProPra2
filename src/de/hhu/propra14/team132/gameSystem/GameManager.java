@@ -26,7 +26,7 @@ public class GameManager {
     public Worm worm2_3;
     public Worm worm2_4;
     public MainFrame mainFrame;
-    HashMap<MessageType,ArrayList<Communicatable>> hashMap; //arrayList with all the Objects who want to receive Message
+    HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
     int ticksPerSecond;
     long lengthOfTickInNanoSeconds;
     int currentTick;
@@ -35,13 +35,13 @@ public class GameManager {
         currentTick=0;
         this.ticksPerSecond=60; //todo:where should this be declared?
         this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
-        hashMap =new HashMap<MessageType, ArrayList<Communicatable>>();
+        hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         gameMap=new Map(this);
         //generate the ArrayList for all the MessagesTypes:
-        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
-        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicatable>());
+        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
+        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicable>());
         for(MessageType t: MessageType.values()){
-            hashMap.put(t, new ArrayList<Communicatable>());
+            hashMap.put(t, new ArrayList<Communicable>());
         }
     }
 
@@ -119,28 +119,34 @@ public class GameManager {
 
     }
     public void helpSend(MessageType messageType, Message m) {
-        for(Communicatable o : hashMap.get(messageType)) {
+        for(Communicable o : hashMap.get(messageType)) {
             o.receiveMessage(m);
         }
     }
     public void receiveMessage(Message m) {
-     //this is the receive-Method from Interface Communicatable
+     //this is the receive-Method from Interface Communicable
         //Decide what to do with Message.
         Message message=m;
         MessageType messageType=message.getMessageType();
 
     }
-    public void register(Communicatable o, ArrayList<MessageType> type) {
-        //add Communicatable o to all the ArrayLists in type
+    public void register(Communicable o, ArrayList<MessageType> type) {
+        //add Communicable o to all the ArrayLists in type
         for(MessageType t: type) {
-            hashMap.get(t).add(o);
+            if(!checkIfAlreadyRegistered(o,t)) {
+                hashMap.get(t).add(o);
+            }
         }
     }
-    public void register(Communicatable o, MessageType type) {
-        hashMap.get(type).add(o);
-        //add Communicatable to ArrayList assoziatet with type
+    public void register(Communicable o, MessageType type) {
+        if(!checkIfAlreadyRegistered(o,type)) {
+            hashMap.get(type).add(o);
+        }
+        //add Communicable to ArrayList assoziatet with type
     }
-
+    public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
+        return (hashMap.get(type).contains(o));
+    }
 }
 
 /*

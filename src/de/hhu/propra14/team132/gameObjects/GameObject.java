@@ -2,8 +2,6 @@ package de.hhu.propra14.team132.gameObjects;
 
 import de.hhu.propra14.team132.GUI.Drawable;
 import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameSystem.Communicatable;
-import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
