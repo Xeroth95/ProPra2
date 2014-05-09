@@ -14,7 +14,9 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
+    private boolean stop; //is there to pause the thread;
     //declares the necessary objects
+
     public Map gameMap;
     public Terrain terrain;
     public Worm worm1_1;
@@ -26,7 +28,7 @@ public class GameManager {
     public Worm worm2_3;
     public Worm worm2_4;
     public MainFrame mainFrame;
-    HashMap<MessageType,ArrayList<Communicatable>> hashMap; //arrayList with all the Objects who want to receive Message
+    HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
     int ticksPerSecond;
     long lengthOfTickInNanoSeconds;
     int currentTick;
@@ -35,22 +37,14 @@ public class GameManager {
         currentTick=0;
         this.ticksPerSecond=60; //todo:where should this be declared?
         this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
-        hashMap =new HashMap<MessageType, ArrayList<Communicatable>>();
+        hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         gameMap=new Map(this);
         //generate the ArrayList for all the MessagesTypes:
-        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicatable>());
-        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicatable>());
+        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
+        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicable>());
         for(MessageType t: MessageType.values()){
-            hashMap.put(t, new ArrayList<Communicatable>());
+            hashMap.put(t, new ArrayList<Communicable>());
         }
-    }
-
-    public static void main(String[] args) {
-        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-        gameManager.start();  //starts the game
-
-    }
-    public void start() {
         //creates Map
 
         //create vectors, that form the terrain
@@ -79,26 +73,36 @@ public class GameManager {
         worm2_4=new Worm(2, gameMap, "Worm2_4");
         //create MainFrame
         mainFrame=new MainFrame(this);
-        this.update();
+        stop=false;
     }
-    public void update() {
-        try {
-            while (true) {   //todo: must stop if game is paused
-                long t1 = System.nanoTime();
-                //Update everything;
-                mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
 
-                //System.out.println("currentTick: "+currentTick);
-                long t2 = System.nanoTime();
-                if (t2 - t1 < lengthOfTickInNanoSeconds) {
-                    double diff = lengthOfTickInNanoSeconds - (t2 - t1);
-                    Thread.sleep(((int) (diff / 1000000)));
+    public static void main(String[] args) {
+        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        gameManager.start();  //starts the game
+
+    }
+    public void start() { //todo: start, when the game starts, not before. GUI should call this!
+        try {
+            while (true) {
+                if(!stop) {
+                    long t1 = System.nanoTime();   //time before
+                    //Update everything;
+                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+
+                   System.out.println("currentTick: " + currentTick);
+                    long t2 = System.nanoTime();  //time after
+                    if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                        double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
+                        Thread.sleep(((int) (diff / 1000000)));   //
+                    }
+                    currentTick++;
+                } else {
+                    Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
             }
          } catch (Exception e) {
                    e.printStackTrace();
          }
-         currentTick++;
      }
 
 
@@ -119,28 +123,46 @@ public class GameManager {
 
     }
     public void helpSend(MessageType messageType, Message m) {
-        for(Communicatable o : hashMap.get(messageType)) {
+        for(Communicable o : hashMap.get(messageType)) {
             o.receiveMessage(m);
         }
     }
     public void receiveMessage(Message m) {
-     //this is the receive-Method from Interface Communicatable
+     //this is the receive-Method from Interface Communicable
         //Decide what to do with Message.
         Message message=m;
         MessageType messageType=message.getMessageType();
 
     }
-    public void register(Communicatable o, ArrayList<MessageType> type) {
-        //add Communicatable o to all the ArrayLists in type
+    public void register(Communicable o, ArrayList<MessageType> type) {
+        //add Communicable o to all the ArrayLists in type
         for(MessageType t: type) {
-            hashMap.get(t).add(o);
+            if(!checkIfAlreadyRegistered(o,t)) {
+                hashMap.get(t).add(o);
+            }
         }
     }
-    public void register(Communicatable o, MessageType type) {
-        hashMap.get(type).add(o);
-        //add Communicatable to ArrayList assoziatet with type
+    public void register(Communicable o, MessageType type) {
+        if(!checkIfAlreadyRegistered(o,type)) {
+            hashMap.get(type).add(o);
+        }
+        //add Communicable to ArrayList assoziatet with type
+    }
+    public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
+        return (hashMap.get(type).contains(o));
     }
 
+    public int getCurrentTick() {
+        return currentTick;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
 }
 
 /*

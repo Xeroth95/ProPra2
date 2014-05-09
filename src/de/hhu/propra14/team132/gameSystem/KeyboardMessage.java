@@ -5,19 +5,22 @@ package de.hhu.propra14.team132.gameSystem;
  */
 //further Message-Classes will be added soon
 public class KeyboardMessage extends Message {
+    public enum Command {
+        JUMP,
+        MOVE_RIGHT,
+        MOVE_LEFT,
+        SHOOT,
+        WHATEVER
+    }
     MessageType messageType;
-    private String key;
-    public KeyboardMessage(MessageType messageType, String key) {
+    Command command;
+    public KeyboardMessage(MessageType messageType, Command command) {
         super(messageType);
         this.messageType=super.getMessageType();
-        this.key=key;
+        this.command=command;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
+    public Command getCommand() {
+        return command;
     }
 }
