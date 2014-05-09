@@ -54,6 +54,10 @@ public class Map {
 		IdCounter=1; // zero is reserved!
 
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
+		
+		this.ruleset=RuleSet.generateStandardRules(this);
+		
+		this.ruleset.applyStartUpRules();
 
 	}
 	private int getNewMapID(){
@@ -70,7 +74,7 @@ public class Map {
 	}
 	public void nextTick(){
 		moveAllObjects();
-		ruleset.applyRules();
+		ruleset.applyRuntimeRules();
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){
