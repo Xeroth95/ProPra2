@@ -19,6 +19,7 @@ public class MainPanel extends JPanel {
     VideoSettingsPanel videoSettingsPanel;
     AudioSettingsPanel audioSettingsPanel;
     ControlSettingsPanel controlSettingsPanel;
+    GameSettingsPanel gameSettingsPanel;
     StartGamePanel startGamePanel;
     LobbyPanel lobbyPanel;
 
@@ -34,6 +35,7 @@ public class MainPanel extends JPanel {
         videoSettingsPanel=new VideoSettingsPanel(this);
         audioSettingsPanel=new AudioSettingsPanel(this);
         controlSettingsPanel=new ControlSettingsPanel(this);
+        gameSettingsPanel=new GameSettingsPanel(this);
         startGamePanel=new StartGamePanel(this);
         lobbyPanel=new LobbyPanel(this);
 
@@ -52,6 +54,7 @@ public class MainPanel extends JPanel {
         this.add(controlSettingsPanel, "7");
         this.add(startGamePanel, "8");
         this.add(lobbyPanel, "9");
+        this.add(gameSettingsPanel, "10");
     }
 
     public void showPanel(String ID)

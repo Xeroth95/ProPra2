@@ -17,6 +17,7 @@ public class SettingsPanel extends JPanel {
         JButton button_video;
         JButton button_audio;
         JButton button_controls;
+        JButton button_game;
         JButton button_go_back;
 
         public SettingsPanel(MainPanel mainPanel) {
@@ -28,13 +29,16 @@ public class SettingsPanel extends JPanel {
             button_audio.addActionListener(new AudioListener());
             button_controls = new JButton("Control Settings");
             button_controls.addActionListener(new ControlsListener());
+            button_game=new JButton("Game Settings");
+            button_game.addActionListener(new GameListener());
             button_go_back = new JButton("Go back to Main Menu");
             button_go_back.addActionListener(new GoBackListener());
 
-            this.setLayout(new GridLayout(4, 1, 0, 10));
+            this.setLayout(new GridLayout(5, 1, 0, 10));
             this.add(button_video);
             this.add(button_audio);
             this.add(button_controls);
+            this.add(button_game);
             this.add(button_go_back);
         }
 
@@ -59,6 +63,14 @@ public class SettingsPanel extends JPanel {
         public void actionPerformed(ActionEvent e)
         {
             SettingsPanel.this.mainPanel.showPanel("7");//switch to ControlSettingsPanel
+        }
+    }
+
+    class GameListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            SettingsPanel.this.mainPanel.showPanel("10");//switch to GameSettingsPanel
         }
     }
 
