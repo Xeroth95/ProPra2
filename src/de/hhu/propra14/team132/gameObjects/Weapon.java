@@ -13,31 +13,22 @@ import java.awt.*;
  */
 public class Weapon extends GameObject {
     private Map map;
-    private int teamID;
-    private CollisionObject o;
-
     //constructors:
 
 
-    public Weapon(int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
+    public Weapon(int teamID, Map map, GameManager gameManager) {
         super(teamID, map, gameManager);
-        map = map1;
-        teamID = teamID;
-        this.o = o;
+        map = map;
     }
 
-    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
+    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager) {
         super(shapes, teamID, map, gameManager);
-        map = map1;
-        teamID = teamID;
-        this.o = o;
+        map = map;
     }
 
-    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
+    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
         super(shape, teamID, map, gameManager);
-        map = map1;
-        teamID = teamID;
-        this.o = o;
+        map = map;
     }
     @Override
     public void receiveMessage(Message m)  {
@@ -67,9 +58,6 @@ public class Weapon extends GameObject {
 
     }
 
-    public Weapon(int teamID, Map map, GameManager gameManager) {
-        super(teamID, map, gameManager);
-    }
 
     @Override
     public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
