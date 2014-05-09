@@ -14,7 +14,9 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
+    private boolean stop; //testvariable to stop the thread
     //declares the necessary objects
+
     public Map gameMap;
     public Terrain terrain;
     public Worm worm1_1;
@@ -79,26 +81,29 @@ public class GameManager {
         worm2_4=new Worm(2, gameMap, "Worm2_4");
         //create MainFrame
         mainFrame=new MainFrame(this);
+        stop=false;
         this.update();
     }
     public void update() {
         try {
             while (true) {   //todo: must stop if game is paused
-                long t1 = System.nanoTime();
-                //Update everything;
-                mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                if(!stop) {
+                    long t1 = System.nanoTime();   //time before
+                    //Update everything;
+                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
 
-                //System.out.println("currentTick: "+currentTick);
-                long t2 = System.nanoTime();
-                if (t2 - t1 < lengthOfTickInNanoSeconds) {
-                    double diff = lengthOfTickInNanoSeconds - (t2 - t1);
-                    Thread.sleep(((int) (diff / 1000000)));
+                    System.out.println("currentTick: " + currentTick);
+                    long t2 = System.nanoTime();  //time after
+                    if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                        double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
+                        Thread.sleep(((int) (diff / 1000000)));   //
+                    }
+                    currentTick++;
                 }
             }
          } catch (Exception e) {
                    e.printStackTrace();
          }
-         currentTick++;
      }
 
 
@@ -146,6 +151,18 @@ public class GameManager {
     }
     public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
         return (hashMap.get(type).contains(o));
+    }
+
+    public int getCurrentTick() {
+        return currentTick;
+    }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
     }
 }
 
