@@ -14,7 +14,7 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
-    private boolean stop; //testvariable to stop the thread
+    private boolean stop; //is there to pause the thread;
     //declares the necessary objects
 
     public Map gameMap;
@@ -45,14 +45,6 @@ public class GameManager {
         for(MessageType t: MessageType.values()){
             hashMap.put(t, new ArrayList<Communicable>());
         }
-    }
-
-    public static void main(String[] args) {
-        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-        gameManager.start();  //starts the game
-
-    }
-    public void start() {
         //creates Map
 
         //create vectors, that form the terrain
@@ -82,9 +74,14 @@ public class GameManager {
         //create MainFrame
         mainFrame=new MainFrame(this);
         stop=false;
-        this.update();
     }
-    public void update() { //todo: start, when the game starts, not before
+
+    public static void main(String[] args) {
+        GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        gameManager.start();  //starts the game
+
+    }
+    public void start() { //todo: start, when the game starts, not before. GUI should call this!
         try {
             while (true) {
                 if(!stop) {
@@ -92,7 +89,7 @@ public class GameManager {
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
 
-                    System.out.println("currentTick: " + currentTick);
+                   // System.out.println("currentTick: " + currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
