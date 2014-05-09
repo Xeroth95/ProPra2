@@ -4,6 +4,7 @@ import de.hhu.propra14.team132.gameSystem.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by fabian on 02.05.14.
@@ -25,7 +26,7 @@ public class MainPanel extends JPanel {
 
     CardLayout mainPanelLayout;
 
-    public MainPanel(MainFrame mainFrame, GameManager gameManager) {
+    public MainPanel(MainFrame mainFrame, GameManager gameManager) throws IOException {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
         mainGamePanel=new MainGamePanel(mainFrame, this, gameManager);

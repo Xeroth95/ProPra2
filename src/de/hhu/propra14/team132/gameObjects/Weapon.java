@@ -51,14 +51,18 @@ public class Weapon extends GameObject {
 
     }
 
-
     @Override
-    public void draw(Graphics g, Color color, int posX, int posY, int sizeX, int sizeY) {
-
-    }
-    @Override
-    public void draw(Graphics g, Color color) {
+    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
 
     }
 
+    @Override
+    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
+
+    }
+
+    @Override
+    public void draw(Graphics2D g, Paint paint) {
+
+    }
 }

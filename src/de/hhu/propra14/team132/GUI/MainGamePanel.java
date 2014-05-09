@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 /**
  * Created by fabian on 03.05.14.
@@ -17,7 +18,7 @@ public class MainGamePanel extends JPanel{
     WeaponsPanel weaponsPanel;
     JScrollPane scrollPane;
 
-    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager) {
+    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager) throws IOException {
         //this panel contains all in-game related panels
         //for now that would be scrollPane(GamePanel) and WeaponsPanel
         this.mainPanel=mainPanel;

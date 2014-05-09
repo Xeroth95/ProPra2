@@ -4,6 +4,7 @@ import de.hhu.propra14.team132.gameSystem.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Created by fabian on 02.05.14.
@@ -13,8 +14,7 @@ public class MainFrame extends JFrame{
 
     public MainPanel mainPanel;
 
-    public MainFrame(GameManager gameManager)
-    {
+    public MainFrame(GameManager gameManager) throws IOException {
         mainPanel=new MainPanel(this, gameManager);
 
         this.setTitle("ProPra14 - Team 132");

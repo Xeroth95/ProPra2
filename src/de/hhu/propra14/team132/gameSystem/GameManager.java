@@ -8,6 +8,7 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,7 +35,7 @@ public class GameManager {
     long lengthOfTickInNanoSeconds;
     int currentTick;
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
-    public GameManager() {
+    public GameManager() throws IOException {
         currentTick=0;
         this.ticksPerSecond=60; //todo:where should this be declared?
         this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
@@ -97,7 +98,8 @@ public class GameManager {
         stop=false;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         gameManager.start();  //starts the game
 

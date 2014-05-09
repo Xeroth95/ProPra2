@@ -40,20 +40,19 @@ public class Terrain extends GameObject {
         return 0;
     }
 
-    //Drawable Methods:
-    public void draw(Graphics g, Color color, int posX, int posY) {
+    @Override
+    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
 
     }
 
     @Override
-    public void draw(Graphics g, Color color, int posX, int posY, int sizeX, int sizeY) {
+    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
 
     }
 
     @Override
-    public void draw(Graphics g, Color color) {
-        g.setColor(color);
+    public void draw(Graphics2D g, Paint paint) {
+        g.setPaint(paint);
         g.fillPolygon(shape.getPolygonToDraw());
     }
-
 }

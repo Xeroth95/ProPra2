@@ -4,10 +4,14 @@ import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by fabian on 02.05.14.
@@ -24,14 +28,16 @@ public class GamePanel extends JPanel {
     JScrollBar hbar;
     JScrollBar vbar;
     Image bufferedImage;
-    Graphics bufferedGraphics;
+    Graphics2D bufferedGraphics;
     Dimension terrainSize;
+    BufferedImage textureTerrainImage;
+    TexturePaint textureTerrain;
     int width, height;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
 
 
-    public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
+    public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) throws IOException {
         //this.mainFrame=mainFrame;
         this.mainPanel=mainPanel;
         this.mainGamePanel=mainGamePanel;
@@ -39,6 +45,8 @@ public class GamePanel extends JPanel {
         this.gameManager=gameManager;
 
         autoscrolling=false;
+        textureTerrainImage=ImageIO.read(new File("resources/img/textures/terrain.jpg"));
+        textureTerrain=new TexturePaint(textureTerrainImage, new Rectangle(0,0,48,48));
         terrainSize=new Dimension((int)gameManager.terrain.shape.getMaxOnX(), (int)gameManager.terrain.shape.getMaxOnY());
         this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
         width=(int)this.getPreferredSize().getWidth();
@@ -49,18 +57,20 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d=(Graphics2D) g;
 
         if(bufferedImage==null) {
             //check if buffer is empty and if yes, refresh it;
             bufferedImage=this.createImage(width, height);
-            bufferedGraphics=bufferedImage.getGraphics();
+            bufferedGraphics=(Graphics2D) (bufferedImage.getGraphics());
         }
+
         //draw obstacles
         for(int i=0; i<gameManager.obstacles.length; i++) {
-            gameManager.obstacles[i].draw(bufferedGraphics, Color.DARK_GRAY);
+            gameManager.obstacles[i].draw(bufferedGraphics,Color.DARK_GRAY);
         }
         //draw terrain
-        gameManager.terrain.draw(bufferedGraphics,Color.BLACK);
+        gameManager.terrain.draw(bufferedGraphics,textureTerrain);
         //draw team1
         gameManager.worm1_1.draw(bufferedGraphics,Color.PINK,100,438);
         gameManager.worm1_2.draw(bufferedGraphics,Color.PINK,120,432);
@@ -72,7 +82,7 @@ public class GamePanel extends JPanel {
         gameManager.worm2_3.draw(bufferedGraphics,Color.PINK,735,293);
         gameManager.worm2_4.draw(bufferedGraphics,Color.PINK,722,287);
 
-        g.drawImage(bufferedImage,0,0,this);
+        g2d.drawImage(bufferedImage,0,0,this);
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
