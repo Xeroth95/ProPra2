@@ -84,9 +84,9 @@ public class GameManager {
         stop=false;
         this.update();
     }
-    public void update() {
+    public void update() { //todo: start, when the game starts, not before
         try {
-            while (true) {   //todo: must stop if game is paused
+            while (true) {
                 if(!stop) {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
