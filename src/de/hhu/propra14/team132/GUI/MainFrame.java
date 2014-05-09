@@ -11,7 +11,7 @@ import java.awt.*;
 public class MainFrame extends JFrame{
     //this class creates a frame which contains the MainPanel
 
-    MainPanel mainPanel;
+    public MainPanel mainPanel;
 
     public MainFrame(GameManager gameManager)
     {

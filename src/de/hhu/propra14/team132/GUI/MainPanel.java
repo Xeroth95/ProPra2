@@ -12,7 +12,7 @@ public class MainPanel extends JPanel {
     //the MainPanel contains all other panels
     //and because it uses a CardLayout it is easy to switch between all these panels
 
-    MainGamePanel mainGamePanel;
+    public MainGamePanel mainGamePanel;
     MenuPanel menuPanel;
     SettingsPanel settingsPanel;
     AboutPanel aboutPanel;
