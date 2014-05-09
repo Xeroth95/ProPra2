@@ -1,27 +1,35 @@
 package de.hhu.propra14.team132.Network;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 import java.net.*;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 public class Server {
 	
-	private final ExecutorService connectionPool;
-	private final ServerSocket serverSocket;
-	private int port;
+	private final ExecutorService	connectionPool;
+	private final ServerSocket	serverSocket;
+	private final int		port;
+	private final NetworkService	service;
 	
-	public static void main(String[] args) {
+	public static void main(String[] argv) {
 		try {
-			Server server = new Server(3141);
-		} catch(IOException e) {
-			
+			Server server = new Server(null, 3141);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
-	public Server(int port) throws IOException {
-		this.port			= port;
+	public Server(GameManager g, int port) throws IOException {
+		this.port		= port;
 		this.connectionPool	= Executors.newCachedThreadPool();
 		this.serverSocket	= new ServerSocket(port);
 		
@@ -29,7 +37,9 @@ public class Server {
 		 * Start a new Thread. This thread will wait for clients to connect
 		 * and create new Threads for them to communicate
 		 */
-		Thread clientHandler = new Thread(new NetworkService(connectionPool, serverSocket));
+		
+		this.service = new NetworkService(connectionPool, serverSocket);
+		Thread clientHandler = new Thread(this.service);
 		clientHandler.start();
 		
 		/*
@@ -55,14 +65,25 @@ public class Server {
 			});
 	}
 	
+	public void sendMessage(String str) {
+		this.service.sendMessage(str);
+	}
+	
 	// This runnable awaits connections and forwards them
 	private class NetworkService implements Runnable {
 		private final ServerSocket serverSocket;
 		private final ExecutorService pool;
-		
+		private final List<Handler> handlerList;
 		public NetworkService(ExecutorService pool, ServerSocket socket) {
-			this.pool			= pool;
+			this.pool		= pool;
 			this.serverSocket	= socket;
+			this.handlerList	= new ArrayList<Handler>();
+		}
+		
+		public void sendMessage(String str) {
+			for (Handler h : handlerList) {
+				h.sendMessage(str);
+			}
 		}
 		
 		// this will get executed in the Thread
@@ -94,7 +115,9 @@ public class Server {
 					  Socket clientSocket = serverSocket.accept();
 					  
 					  //start a new Handerthread
-					  pool.execute(new Handler(serverSocket, clientSocket));
+					  Handler newHandler = new Handler(serverSocket, clientSocket, pool);
+					  handlerList.add(newHandler);
+					  pool.execute(newHandler);
 				 }
 			 } catch (IOException e) {
 				 // do not print the stacktrace, because this was not an error
@@ -103,10 +126,10 @@ public class Server {
 				System.out.println("--- Stop NetworkService");
 				
 				// do not accept new requests
-				pool.shutdown();
+				this.pool.shutdown();
 				try {
 					//wait up to 4 seconds for the end of pending requests
-					pool.awaitTermination(4L, TimeUnit.SECONDS);
+					this.pool.awaitTermination(4L, TimeUnit.SECONDS);
 					if (!serverSocket.isClosed()) {
 						System.out.println("--- Stopped NetworkService");
 						serverSocket.close();
@@ -121,15 +144,25 @@ public class Server {
 	// This runnable handles the client requests
 	private class Handler implements Runnable {
 		private final Socket client;
-		private final ServerSocket server; 
+		private final ServerSocket server;
+		private final ExecutorService pool;
+		private final Queue<String> inMessages;
+		private final Queue<String> outMessages;
 		
-		public Handler(ServerSocket server, Socket client) {
-			this.client = client;
-			this.server = server;
+		public Handler(ServerSocket server, Socket client, ExecutorService pool) {
+			this.client		= client;
+			this.server		= server;
+			this.pool		= pool;
+			this.inMessages 	= new ConcurrentLinkedQueue<String>();
+			this.outMessages	= new ConcurrentLinkedQueue<String>();
+		}
+		
+		public void sendMessage(String str) {
+			this.outMessages.offer(str);
 		}
 		
 		public void run() {
-			PrintWriter out = null;
+			/*PrintWriter out = null;
 			InputStreamReader in = null;
 			
 			try {
@@ -162,16 +195,141 @@ public class Server {
 						e.printStackTrace();
 					}
 				}
+			}*/
+			
+			this.pool.submit(new InputHandler(client, server, inMessages));
+			this.pool.submit(new OutputHandler(client, server, outMessages));
+			
+			while (true) {
+				while (!inMessages.isEmpty()) {
+					outMessages.offer(inMessages.poll());
+				}
+			}
+			
+			
+		}
+		
+		private class InputHandler implements Runnable {
+			private InputStreamReader in;
+			private Queue<String> inMessages;
+			private Socket client;
+			private ServerSocket server;
+			
+			public InputHandler(Socket client, ServerSocket server, Queue<String> inMessages) {
+				this.client	= client;
+				this.server 	= server;
+				this.inMessages = inMessages;
+			}
+			
+			public void run() {
+				try {
+					this.in = new InputStreamReader(client.getInputStream());
+					while (true) {
+						System.out.println("starting service " + Thread.currentThread());
+						char[] messageLengthBuffer = new char[4];
+						//first the message length is send
+						int read = in.read(messageLengthBuffer, 0, 4);
+						int messageLength = getMessageLength(messageLengthBuffer);
+						System.out.println("Erhalten : " 	+ messageLength + "([ " 	
+											+ (int)messageLengthBuffer[0] + ","
+											+ (int)messageLengthBuffer[1] + ","
+											+ (int)messageLengthBuffer[2] + ","
+											+ (int)messageLengthBuffer[3]
+											+  " ], read = " + read + ")");
+						if (messageLength <= 0) return;															
+						char[] message = new char[messageLength];
+						this.in.read(message, 0, messageLength);
+						String messageString = new String(message);
+						
+						this.inMessages.offer(messageString);					
+						System.out.println(new String(message));
+					}
+				} catch (IOException e) {
+					System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
+					e.printStackTrace();
+				} finally {
+					if (!this.client.isClosed()) {
+						System.out.println("--- Closed client");
+						try {
+							this.in.close();
+							this.client.close();
+						} catch (IOException e) {
+							System.out.println("Could not close client.");
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			
+			private int getMessageLength(char[] buffer) {
+				int length = 0;
+				for (int i = 0; i < buffer.length; ++i) {
+					length += ((int) buffer[i]) << 8*i;
+				}
+				
+				return length;
 			}
 		}
 		
-		private int getMessageLength(char[] buffer) {
-			int length = 0;
-			for (int i = 0; i < buffer.length; ++i) {
-				length += ((int) buffer[i]) << 8*i;
+		private class OutputHandler implements Runnable {
+			
+			private OutputStreamWriter	out;
+			private Queue<String>		outMessages;
+			private Socket			client;
+			private ServerSocket		server;
+			
+			public OutputHandler(Socket client, ServerSocket server, Queue<String> outMessages) {
+				this.client		= client;
+				this.server 		= server;
+				this.outMessages	= outMessages;
 			}
 			
-			return length;
+			public void run() {
+				try {
+					this.out = new OutputStreamWriter(client.getOutputStream());
+					while (true) {
+						//wait for messages to come
+						while (outMessages.isEmpty());
+						//if we got one, send all
+						while (!outMessages.isEmpty()) {
+							String toSend = outMessages.poll();
+							int messageLength = toSend.length();
+							char[] messageLengthBuffer = getMessageLengthBuffer(messageLength);
+							
+							this.out.write(messageLengthBuffer, 0, 4);
+							this.out.flush();
+							this.out.write(toSend.toCharArray(), 0, messageLength);
+							this.out.flush();
+							
+							System.out.println("I wrote : " + toSend);
+						}
+					}
+					
+				} catch (IOException e) {
+					System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
+					e.printStackTrace();
+				} finally {
+					if (!this.client.isClosed()) {
+						System.out.println("--- Closed client");
+						try {
+							this.out.close();
+							this.client.close();
+						} catch (IOException e) {
+							System.out.println("Could not close client.");
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		
+		private char[] getMessageLengthBuffer(int length) {
+			char[] buffer = new char[4];
+			for (int i = 0; i < buffer.length; ++i) {
+				buffer[i] = (char) (length >> 8 * i);
+			}
+			
+			return buffer;
 		}
 	}
 }

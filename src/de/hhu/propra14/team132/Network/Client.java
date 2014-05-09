@@ -25,9 +25,14 @@ public class Client {
 		try {
 			Client client = new Client(args[0], 3141);
 			client.send(args[1]);
-			Thread.sleep(6000);
+			String in = null;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+			do {
+				in = reader.readLine();
+				client.send(in);
+			} while (!in.equals("exit"));
 			client.close();
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -42,17 +47,18 @@ public class Client {
 	 private volatile boolean toSend;
 	 private volatile boolean hasReceived;
 	 private Socket server;
+	 private int clientID;
 	 
 	 
 	 public Client(String serverIP, int port) throws IOException {
-		this.toSend						= false;
-		this.hasReceived				= false;
-		this.messageInBuffer	= new ConcurrentLinkedQueue<String>();
-		this.messageOutBuffer	= new ConcurrentLinkedQueue<String>();
-		this.server = new Socket(serverIP, port);
-		this.sendThread = new Thread(new Sender(server));
+		this.toSend			= false;
+		this.hasReceived		= false;
+		this.messageInBuffer		= new ConcurrentLinkedQueue<String>();
+		this.messageOutBuffer		= new ConcurrentLinkedQueue<String>();
+		this.server 			= new Socket(serverIP, port);
+		this.sendThread 		= new Thread(new Sender(server));
+		this.receiveThread 		= new Thread(new Receiver(server));
 		this.sendThread.start();
-		this.receiveThread = new Thread(new Receiver(server));
 		this.receiveThread.start();
 	 }
 	 
@@ -82,6 +88,10 @@ public class Client {
 		 if (receiveThread != null) {
 			 receiveThread.interrupt();
 		 }
+	 }
+	 
+	 public void sendMessage(NetworkableMessage message) {
+		 NetworkMessage netMessage = new NetworkMessage(message, this.clientID);
 	 }
 	 
 	 private class Sender implements Runnable {
@@ -129,12 +139,50 @@ public class Client {
 	 }
 	 
 	 private class Receiver implements Runnable {
-		 public Receiver(Socket server) {
-			 
-		 }
-		 
-		 public void run() {
-			 
-		 }
+		 private InputStreamReader in;
+			private final Socket server;
+			
+			public Receiver(Socket server) {
+				this.server 	= server;
+			}
+			
+			public void run() {
+				try {
+					this.in = new InputStreamReader(server.getInputStream());
+					while (true) {
+						System.out.println("starting service " + Thread.currentThread());
+						char[] messageLengthBuffer = new char[4];
+						//first the message length is send
+						int read = in.read(messageLengthBuffer, 0, 4);
+						int messageLength = getMessageLength(messageLengthBuffer);
+						System.out.println("Erhalten : " 	+ messageLength + "([ " 	
+											+ (int)messageLengthBuffer[0] + ","
+											+ (int)messageLengthBuffer[1] + ","
+											+ (int)messageLengthBuffer[2] + ","
+											+ (int)messageLengthBuffer[3]
+											+  " ], read = " + read + ")");
+						if (messageLength <= 0) return;															
+						char[] message = new char[messageLength];
+						this.in.read(message, 0, messageLength);
+						String messageString = new String(message);
+						
+						if (Client.this.messageInBuffer.offer(messageString)) {
+							Client.this.hasReceived = true;
+						}
+						System.out.println(new String(message));
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			private int getMessageLength(char[] buffer) {
+				int length = 0;
+				for (int i = 0; i < buffer.length; ++i) {
+					length += ((int) buffer[i]) << 8*i;
+				}
+				
+				return length;
+			}
 	 }
 }
