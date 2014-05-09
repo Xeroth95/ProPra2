@@ -18,22 +18,23 @@ public class Worm extends GameObject {
     private int life;
     private int teamID;
 
-    public Worm(int teamID, Map map, GameManager gameManager, String name, int teamID1) {
+    public Worm(int teamID, Map map, GameManager gameManager, String name) {
         super(teamID, map, gameManager);
         this.name = name;
-        teamID = teamID1;
+        this.teamID=teamID;
+
     }
 
-    public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, String name, int teamID1) {
+    public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, String name) {
         super(shapes, teamID, map, gameManager);
         this.name = name;
-        teamID = teamID1;
+        this.teamID=teamID;
     }
 
-    public Worm(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, String name, int teamID1) {
+    public Worm(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, String name) {
         super(shape, teamID, map, gameManager);
         this.name = name;
-        teamID = teamID1;
+        this.teamID=teamID;
     }
 
 

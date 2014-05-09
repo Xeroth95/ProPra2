@@ -19,24 +19,24 @@ public class Weapon extends GameObject {
     //constructors:
 
 
-    public Weapon(int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+    public Weapon(int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
         super(teamID, map, gameManager);
         map = map1;
-        teamID = teamID1;
+        teamID = teamID;
         this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
         super(shapes, teamID, map, gameManager);
         map = map1;
-        teamID = teamID1;
+        teamID = teamID;
         this.o = o;
     }
 
-    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, Map map1, int teamID1, CollisionObject o) {
+    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, Map map1, CollisionObject o) {
         super(shape, teamID, map, gameManager);
         map = map1;
-        teamID = teamID1;
+        teamID = teamID;
         this.o = o;
     }
     @Override
