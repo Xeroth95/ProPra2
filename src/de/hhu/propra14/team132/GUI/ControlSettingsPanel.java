@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
 import javax.swing.*;
+import javax.xml.ws.Holder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,17 +15,31 @@ public class ControlSettingsPanel extends JPanel {
 
     MainPanel mainPanel;
 
-    JButton button_go_back;
+    JPanel panelMoveControls;
+    JButton GoBackButton;
+    ButtonGroup groupMoveControls;
+    JRadioButton buttonArrowControls;
+    JRadioButton buttonWasdControls;
 
     public ControlSettingsPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
+        this.setLayout(new GridLayout(2, 1, 10, 10));
 
-        this.setLayout(new GridLayout(1, 1, 10, 10));
+        panelMoveControls=new JPanel(new FlowLayout());
+        buttonArrowControls=new JRadioButton("Control worms with arrowkeys");
+        buttonWasdControls=new JRadioButton("Control worms with WASD-keys");
+        groupMoveControls=new ButtonGroup();
+        groupMoveControls.add(buttonArrowControls);
+        groupMoveControls.add(buttonWasdControls);
+        GoBackButton = new JButton("Go back to Settings Menu");
+        GoBackButton.addActionListener(new GoBackListener());
 
-        button_go_back = new JButton("Go back to Settings Menu");
-        button_go_back.addActionListener(new GoBackListener());
+        panelMoveControls.add(buttonArrowControls);
+        buttonArrowControls.setSelected(true);
+        panelMoveControls.add(buttonWasdControls);
 
-        this.add(button_go_back);
+        this.add(panelMoveControls);
+        this.add(GoBackButton);
     }
 
     class GoBackListener implements ActionListener {
