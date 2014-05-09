@@ -78,7 +78,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-        gameManager.start();  //starts the game
+        //gameManager.start();  //starts the game
 
     }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
@@ -89,7 +89,7 @@ public class GameManager {
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
 
-                   // System.out.println("currentTick: " + currentTick);
+                   System.out.println("currentTick: " + currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
