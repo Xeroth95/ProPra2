@@ -16,18 +16,36 @@ public class AudioSettingsPanel extends JPanel{
 
     MainPanel mainPanel;
 
-    JButton button_go_back;
+    JPanel volumePanel;
+    JLabel bgVolumeLabel;
+    JLabel fxVolumeLabel;
+    JLabel volumeLabel;
+    JSlider bgVolumeSlider;
+    JSlider fxVolumeSlider;
+    JButton GoBackButton;
 
     public AudioSettingsPanel(MainPanel mainPanel)
     {
         this.mainPanel=mainPanel;
+        this.setLayout(new GridLayout(2,1,10,10));
 
-        this.setLayout(new GridLayout(1,1,10,10));
+        volumePanel=new JPanel(new FlowLayout());
+        volumeLabel=new JLabel("<HTML><U>Audio volume:</U></HTML>");
+        bgVolumeLabel=new JLabel("Music:");
+        fxVolumeLabel=new JLabel("FX:");
+        bgVolumeSlider=new JSlider();
+        fxVolumeSlider=new JSlider();
+        GoBackButton=new JButton("Go back to Settings Menu");
+        GoBackButton.addActionListener(new GoBackListener());
 
-        button_go_back=new JButton("Go back to Settings Menu");
-        button_go_back.addActionListener(new GoBackListener());
+        volumePanel.add(volumeLabel);
+        volumePanel.add(bgVolumeLabel);
+        volumePanel.add(bgVolumeSlider);
+        volumePanel.add(fxVolumeLabel);
+        volumePanel.add(fxVolumeSlider);
 
-        this.add(button_go_back);
+        this.add(volumePanel);
+        this.add(GoBackButton);
     }
 
     class GoBackListener implements ActionListener {
