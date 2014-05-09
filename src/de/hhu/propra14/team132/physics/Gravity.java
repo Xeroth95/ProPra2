@@ -7,7 +7,7 @@ public class Gravity extends Effect{
 	public static double GRAVITY_CONSTANT = -0.5;
 	public static Vector2D GRAVITY_ACCELERATION_VECTOR = new Vector2D(0,GRAVITY_CONSTANT);
 	@Override
-	public void apply(GameObject o) {
+	public void apply(CollisionObject o) {
 		o.getAcceleration().addVector(GRAVITY_ACCELERATION_VECTOR);
 	}
 	public void change(double newGravConst) {

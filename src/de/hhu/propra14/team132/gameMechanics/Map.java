@@ -29,6 +29,8 @@ public class Map {
 	
 	RuleSet ruleset;
 	
+	
+	
 	public Map(GameManager manager){
 		this.initializeBasics(manager);
 		sizeX=0;

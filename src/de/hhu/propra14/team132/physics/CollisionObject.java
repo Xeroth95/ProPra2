@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.physics;
 
+import java.util.ArrayList;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
@@ -28,7 +30,7 @@ public abstract strictfp class CollisionObject {
 	private CollisionMode collisionMode;
 	int collisionTranslationBehaviour;
 	
-	
+	ArrayList<Effect> effects;
 	
 	private boolean markedForDeletion;
 	
@@ -62,7 +64,8 @@ public abstract strictfp class CollisionObject {
 		this.acceleration=new Vector2D();
 		
 		this.mapPlacedIn=map;
-
+		
+		this.effects=this.getInitalEffects();
 		this.bounciness=this.getInitialBounciness();
 		this.friction=this.getInitialFriction();
 
@@ -127,7 +130,7 @@ public abstract strictfp class CollisionObject {
 			o.getPosition().addVector(mtv);// you too, get out of that collision
 			o.recalcPosition();
 			try {
-				mtv.makeUnitVector();
+				mtv.makeUnitVector();//this is important! if this was not here, the following code would not work at all! It is necessary to do this to get accurate projections!
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -210,6 +213,9 @@ public abstract strictfp class CollisionObject {
 		}
 	}
 	public void move(){
+		for(Effect e:this.effects){
+			e.apply(this);
+		}
 		this.speed.addVector(this.acceleration);
 		this.position.addVector(this.speed);
 		for(ConvexCollisionShape s:this.collisionShapes){
@@ -230,6 +236,14 @@ public abstract strictfp class CollisionObject {
 
 	public abstract double getInitialBounciness();
 	public abstract double getInitialFriction();
+	public abstract ArrayList<Effect> getInitalEffects();
+	
+	public ArrayList<Effect> getEffects() {
+		return effects;
+	}
+	public void setEffects(ArrayList<Effect> effects) {
+		this.effects = effects;
+	}
 	public Vector2D getSpeed() {
 		return speed;
 	}

@@ -9,7 +9,7 @@ public class Wind extends Effect{
 		windVector = new Vector2D(Math.random(),0);
 	}
 	@Override
-	public void apply(GameObject o) {
+	public void apply(CollisionObject o) {
 		o.getAcceleration().addVector(windVector);
 	}
 
