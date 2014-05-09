@@ -78,7 +78,7 @@ public class GameManager {
 
     public static void main(String[] args) {
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-        //gameManager.start();  //starts the game
+        gameManager.start();  //starts the game
 
     }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
