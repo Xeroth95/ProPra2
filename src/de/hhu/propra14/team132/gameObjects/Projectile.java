@@ -25,7 +25,7 @@ public class Projectile extends GameObject{
     }
     //Communicatable-Methods
     @Override
-    public void receiveMessage(Message m)  { //Todo: Which Message should
+    public void receiveMessage(Message m)  {
 
     }
     @Override

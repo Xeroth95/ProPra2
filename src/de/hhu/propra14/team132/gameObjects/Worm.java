@@ -16,25 +16,21 @@ import java.awt.*;
 public class Worm extends GameObject {
     private String name;
     private int life;
-    private int teamID;
 
     public Worm(int teamID, Map map, GameManager gameManager, String name) {
         super(teamID, map, gameManager);
         this.name = name;
-        this.teamID=teamID;
 
     }
 
     public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, String name) {
         super(shapes, teamID, map, gameManager);
         this.name = name;
-        this.teamID=teamID;
     }
 
     public Worm(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, String name) {
         super(shape, teamID, map, gameManager);
         this.name = name;
-        this.teamID=teamID;
     }
 
 
