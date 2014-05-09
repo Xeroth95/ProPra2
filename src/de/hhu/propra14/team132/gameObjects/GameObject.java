@@ -12,23 +12,13 @@ public abstract class GameObject extends CollisionObject implements Drawable {
     private Map map;
     public ConvexCollisionShape shape;
     private ConvexCollisionShape[] shapes;
-    private GameManager gameManager;
-    public GameObject(int teamID, Map map, GameManager gameManager) {
+    public GameObject(int teamID, Map map) {
        super(teamID,map);
-       this.gameManager=gameManager;
     }
-    public GameObject(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager) {
+    public GameObject(ConvexCollisionShape[] shapes, int teamID, Map map) {
         super(shapes,teamID,map);
-        this.gameManager=gameManager;
     }
-    public GameObject(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
+    public GameObject(ConvexCollisionShape shape, int teamID, Map map) {
         super(shape,teamID,map);
-        this.gameManager=gameManager;
     }
-
-    public GameManager getGameManager() {
-        return gameManager;
-    }
-    //  public abstract void furtherCollisionWith(CollisionObject o);
-
 }

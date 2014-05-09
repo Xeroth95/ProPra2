@@ -12,16 +12,16 @@ import java.awt.*;
  * Created by isabel on 06.05.14.
  */
 public class Projectile extends GameObject{
-    public Projectile(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager) {
-        super(shapes, teamID, map, gameManager);
+    public Projectile(ConvexCollisionShape[] shapes, int teamID, Map map) {
+        super(shapes, teamID, map);
     }
 
     public Projectile(int teamID, Map map, GameManager gameManager) {
-        super(teamID, map, gameManager);
+        super(teamID, map);
     }
 
-    public Projectile(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
-        super(shape, teamID, map, gameManager);
+    public Projectile(ConvexCollisionShape shape, int teamID, Map map) {
+        super(shape, teamID, map);
     }
 
     //CollsionObject-Methods

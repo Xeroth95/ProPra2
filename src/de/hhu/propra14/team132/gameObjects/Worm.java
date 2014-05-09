@@ -17,18 +17,18 @@ public class Worm extends GameObject {
     private String name;
     private int life;
     //constructors:
-    public Worm(int teamID, Map map, GameManager gameManager, String name) {
-        super(teamID, map, gameManager);
+    public Worm(int teamID, Map map, String name) {
+        super(teamID, map);
         this.name = name;
     }
 
-    public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, String name) {
-        super(shapes, teamID, map, gameManager);
+    public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, String name) {
+        super(shapes, teamID, map);
         this.name = name;
     }
 
-    public Worm(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, String name) {
-        super(shape, teamID, map, gameManager);
+    public Worm(ConvexCollisionShape shape, int teamID, Map map, String name) {
+        super(shape, teamID, map);
         this.name = name;
     }
     @Override
@@ -51,11 +51,6 @@ public class Worm extends GameObject {
         g.setColor(Color.PINK);
         g.fillOval(posX, posY, 10, 10);
     }
-
-    public Worm(int teamID, Map map, GameManager gameManager) {
-        super(teamID, map, gameManager);
-    }
-
     @Override
     public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
 

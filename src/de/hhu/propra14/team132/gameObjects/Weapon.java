@@ -16,18 +16,18 @@ public class Weapon extends GameObject {
     //constructors:
 
 
-    public Weapon(int teamID, Map map, GameManager gameManager) {
-        super(teamID, map, gameManager);
+    public Weapon(int teamID, Map map) {
+        super(teamID, map);
         map = map;
     }
 
-    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager) {
-        super(shapes, teamID, map, gameManager);
+    public Weapon(ConvexCollisionShape[] shapes, int teamID, Map map) {
+        super(shapes, teamID, map);
         map = map;
     }
 
-    public Weapon(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager) {
-        super(shape, teamID, map, gameManager);
+    public Weapon(ConvexCollisionShape shape, int teamID, Map map) {
+        super(shape, teamID, map);
         map = map;
     }
 

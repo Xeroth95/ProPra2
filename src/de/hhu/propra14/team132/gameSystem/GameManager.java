@@ -66,17 +66,17 @@ public class GameManager {
         vertices[8]=new Vector2D(900, 400);
         vertices[9]=new Vector2D(1000, 550);
         //create terrain
-        terrain=new Terrain(new ConvexCollisionShape(vertices),0, gameMap, this);
+        terrain=new Terrain(new ConvexCollisionShape(vertices),0, gameMap);
         //create worms for team1
-        worm1_1=new Worm(1, gameMap, this, "Worm1_1");
-        worm1_2=new Worm(1, gameMap, this, "Worm1_2");
-        worm1_3=new Worm(1, gameMap, this, "Worm1_3");
-        worm1_4=new Worm(1, gameMap, this, "Worm1_4");
+        worm1_1=new Worm(1, gameMap, "Worm1_1");
+        worm1_2=new Worm(1, gameMap, "Worm1_2");
+        worm1_3=new Worm(1, gameMap, "Worm1_3");
+        worm1_4=new Worm(1, gameMap, "Worm1_4");
         //create worms for team2
-        worm2_1=new Worm(2, gameMap, this, "Worm2_1");
-        worm2_2=new Worm(2, gameMap, this, "Worm2_2");
-        worm2_3=new Worm(2, gameMap, this, "Worm2_3");
-        worm2_4=new Worm(2, gameMap, this, "Worm2_4");
+        worm2_1=new Worm(2, gameMap, "Worm2_1");
+        worm2_2=new Worm(2, gameMap, "Worm2_2");
+        worm2_3=new Worm(2, gameMap, "Worm2_3");
+        worm2_4=new Worm(2, gameMap, "Worm2_4");
         //create MainFrame
         mainFrame=new MainFrame(this);
         this.update();
