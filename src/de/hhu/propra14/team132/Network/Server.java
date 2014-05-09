@@ -121,7 +121,7 @@ public class Server {
 	// This runnable handles the client requests
 	private class Handler implements Runnable {
 		private final Socket client;
-		private final ServerSocket server;
+		private final ServerSocket server; 
 		
 		public Handler(ServerSocket server, Socket client) {
 			this.client = client;
