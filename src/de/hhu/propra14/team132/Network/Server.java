@@ -11,6 +11,7 @@ import java.io.*;
 import java.net.*;
 
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.Message;
 
 public class Server {
 	
@@ -65,8 +66,8 @@ public class Server {
 			});
 	}
 	
-	public void sendMessage(String str) {
-		this.service.sendMessage(str);
+	public void sendMessage(NetworkMessage mes) {
+		this.service.sendMessage(mes);
 	}
 	
 	// This runnable awaits connections and forwards them
@@ -74,15 +75,19 @@ public class Server {
 		private final ServerSocket serverSocket;
 		private final ExecutorService pool;
 		private final List<Handler> handlerList;
+		
+		private int curID;
+		
 		public NetworkService(ExecutorService pool, ServerSocket socket) {
 			this.pool		= pool;
 			this.serverSocket	= socket;
 			this.handlerList	= new ArrayList<Handler>();
+			this.curID		= 0;
 		}
 		
-		public void sendMessage(String str) {
+		public void sendMessage(NetworkMessage mes) {
 			for (Handler h : handlerList) {
-				h.sendMessage(str);
+				h.sendMessage(mes);
 			}
 		}
 		
@@ -106,7 +111,7 @@ public class Server {
 					  * wait for a client with 'accept' (this will block the thread)
 					  * then get a thread from the Threadpool (ExecutorService pool)
 					  * which will run the 'run' method of the 'Handler'-thread.
-					  * The Handerthread needs:
+					  * The Handlerthread needs:
 					  * 1) the ServerSocket
 					  * 2) the Client socket
 					  */
@@ -114,8 +119,8 @@ public class Server {
 					  //wait for a client
 					  Socket clientSocket = serverSocket.accept();
 					  
-					  //start a new Handerthread
-					  Handler newHandler = new Handler(serverSocket, clientSocket, pool);
+					  //start a new Handlerthread
+					  Handler newHandler = new Handler(this, clientSocket, pool, getNextID());
 					  handlerList.add(newHandler);
 					  pool.execute(newHandler);
 				 }
@@ -139,113 +144,79 @@ public class Server {
 				} 
 			 }
 		}
+		
+		private int getNextID() {
+			return curID++;
+		}
 	}
 	
 	// This runnable handles the client requests
 	private class Handler implements Runnable {
 		private final Socket client;
-		private final ServerSocket server;
 		private final ExecutorService pool;
-		private final Queue<String> inMessages;
-		private final Queue<String> outMessages;
+		private final Queue<NetworkMessage> inMessages;
+		private final Queue<NetworkMessage> outMessages;
+		private final NetworkService manager;
+		private final int assoziatedID;
 		
-		public Handler(ServerSocket server, Socket client, ExecutorService pool) {
+		public Handler(NetworkService manager, Socket client, ExecutorService pool, int assoziatedID) {
 			this.client		= client;
-			this.server		= server;
 			this.pool		= pool;
-			this.inMessages 	= new ConcurrentLinkedQueue<String>();
-			this.outMessages	= new ConcurrentLinkedQueue<String>();
+			this.inMessages 	= new ConcurrentLinkedQueue<NetworkMessage>();
+			this.outMessages	= new ConcurrentLinkedQueue<NetworkMessage>();
+			this.manager		= manager;
+			this.assoziatedID	= assoziatedID;
 		}
 		
-		public void sendMessage(String str) {
-			this.outMessages.offer(str);
+		public void sendMessage(NetworkMessage mes) {
+			// do not sent the messages sent by client to the client
+			if (mes.getID() != this.assoziatedID)
+				this.outMessages.offer(mes);
 		}
 		
 		public void run() {
-			/*PrintWriter out = null;
-			InputStreamReader in = null;
 			
-			try {
-				System.out.println("starting service " + Thread.currentThread());
-				out = new PrintWriter(client.getOutputStream(), true);
-				in = new InputStreamReader(client.getInputStream());
-				char[] messageLengthBuffer = new char[4];
-				//first the message length is send
-				int read = in.read(messageLengthBuffer, 0, 4);
-				int messageLength = getMessageLength(messageLengthBuffer);
-				System.out.println("Erhalten : " + messageLength + "([ " 	+ (int)messageLengthBuffer[0] + ","
-																			+ (int)messageLengthBuffer[1] + ","
-																			+ (int)messageLengthBuffer[2] + ","
-																			+ (int)messageLengthBuffer[3]
-																			+  " ], read = " + read + ")");
-				if (messageLength <= 0) return;															
-				char[] message = new char[messageLength];
-				in.read(message, 0, messageLength);
-				System.out.println(new String(message));
-			} catch (IOException e) {
-				System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
-				e.printStackTrace();
-			} finally {
-				if (!client.isClosed()) {
-					System.out.println("--- Closed client");
-					try {
-						client.close();
-					} catch (IOException e) {
-						System.out.println("Could not close client.");
-						e.printStackTrace();
-					}
-				}
-			}*/
+			sentIDToClient();
 			
-			this.pool.submit(new InputHandler(client, server, inMessages));
-			this.pool.submit(new OutputHandler(client, server, outMessages));
+			this.pool.execute(new InputHandler(client, inMessages));
+			this.pool.execute(new OutputHandler(client, outMessages));
 			
 			while (true) {
 				while (!inMessages.isEmpty()) {
-					outMessages.offer(inMessages.poll());
+					this.manager.sendMessage(inMessages.poll());
 				}
 			}
 			
 			
 		}
 		
+		private void sentIDToClient() {
+			// sent the id to the client, so he knows who he is
+		}
+		
 		private class InputHandler implements Runnable {
-			private InputStreamReader in;
-			private Queue<String> inMessages;
-			private Socket client;
-			private ServerSocket server;
+			private ObjectInputStream in;
+			private final Queue<NetworkMessage> inMessages;
+			private final Socket client;
 			
-			public InputHandler(Socket client, ServerSocket server, Queue<String> inMessages) {
+			public InputHandler(Socket client, Queue<NetworkMessage> inMessages) {
 				this.client	= client;
-				this.server 	= server;
 				this.inMessages = inMessages;
 			}
 			
 			public void run() {
 				try {
-					this.in = new InputStreamReader(client.getInputStream());
+					this.in = new ObjectInputStream(client.getInputStream());
 					while (true) {
-						System.out.println("starting service " + Thread.currentThread());
-						char[] messageLengthBuffer = new char[4];
-						//first the message length is send
-						int read = in.read(messageLengthBuffer, 0, 4);
-						int messageLength = getMessageLength(messageLengthBuffer);
-						System.out.println("Erhalten : " 	+ messageLength + "([ " 	
-											+ (int)messageLengthBuffer[0] + ","
-											+ (int)messageLengthBuffer[1] + ","
-											+ (int)messageLengthBuffer[2] + ","
-											+ (int)messageLengthBuffer[3]
-											+  " ], read = " + read + ")");
-						if (messageLength <= 0) return;															
-						char[] message = new char[messageLength];
-						this.in.read(message, 0, messageLength);
-						String messageString = new String(message);
-						
-						this.inMessages.offer(messageString);					
-						System.out.println(new String(message));
+						// read a network message from the input stream
+						NetworkMessage message = (NetworkMessage) in.readObject();
+						this.inMessages.offer(message);
+						System.out.println("Got that message!");
 					}
 				} catch (IOException e) {
 					System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} finally {
 					if (!this.client.isClosed()) {
@@ -260,48 +231,30 @@ public class Server {
 					}
 				}
 			}
-			
-			private int getMessageLength(char[] buffer) {
-				int length = 0;
-				for (int i = 0; i < buffer.length; ++i) {
-					length += ((int) buffer[i]) << 8*i;
-				}
-				
-				return length;
-			}
 		}
 		
 		private class OutputHandler implements Runnable {
 			
-			private OutputStreamWriter	out;
-			private Queue<String>		outMessages;
-			private Socket			client;
-			private ServerSocket		server;
+			private ObjectOutputStream		out;
+			private final Queue<NetworkMessage>	outMessages;
+			private final Socket			client;
 			
-			public OutputHandler(Socket client, ServerSocket server, Queue<String> outMessages) {
+			public OutputHandler(Socket client, Queue<NetworkMessage> outMessages) {
 				this.client		= client;
-				this.server 		= server;
 				this.outMessages	= outMessages;
 			}
 			
 			public void run() {
 				try {
-					this.out = new OutputStreamWriter(client.getOutputStream());
+					this.out = new ObjectOutputStream(client.getOutputStream());
 					while (true) {
 						//wait for messages to come
 						while (outMessages.isEmpty());
 						//if we got one, send all
 						while (!outMessages.isEmpty()) {
-							String toSend = outMessages.poll();
-							int messageLength = toSend.length();
-							char[] messageLengthBuffer = getMessageLengthBuffer(messageLength);
-							
-							this.out.write(messageLengthBuffer, 0, 4);
-							this.out.flush();
-							this.out.write(toSend.toCharArray(), 0, messageLength);
-							this.out.flush();
-							
-							System.out.println("I wrote : " + toSend);
+							NetworkMessage message = outMessages.poll();
+							this.out.writeObject(message);
+							System.out.println("Sent that message!");
 						}
 					}
 					
@@ -321,15 +274,6 @@ public class Server {
 					}
 				}
 			}
-		}
-		
-		private char[] getMessageLengthBuffer(int length) {
-			char[] buffer = new char[4];
-			for (int i = 0; i < buffer.length; ++i) {
-				buffer[i] = (char) (length >> 8 * i);
-			}
-			
-			return buffer;
 		}
 	}
 }
