@@ -17,6 +17,7 @@ import java.util.HashMap;
  */
 public class GameManager {
     private boolean stop; //is there to pause the thread;
+    private boolean isBeforeStart;
     //declares the necessary objects
     public Map gameMap;
     public Terrain terrain;
@@ -101,10 +102,33 @@ public class GameManager {
     public static void main(String[] args) throws IOException {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
+        //gameManager.beforeStart();
         gameManager.start();  //starts the game
 
     }
+    //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
+    public void beforeStart() {
+        try {
+            while (true) {
+                long t1 = System.nanoTime();   //time before
+                //Update everything;
+                mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                long t2 = System.nanoTime();  //time after
+                if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                    double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
+                    Thread.sleep(((int) (diff / 1000000)));   //
+                }
+                currentTick++;
+                if(!isBeforeStart) {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
+        //maybe when the game starts, the GUI sets the current ticks to 0;
         try {
             while (true) {
                 if(!stop) {
