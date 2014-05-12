@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
-    private boolean stop; //is there to pause the thread;
+    private boolean stopped; //is there to pause the thread;
     private boolean isBeforeStart;
     //declares the necessary objects
     public Map gameMap;
@@ -32,14 +32,14 @@ public class GameManager {
     public Worm worm2_4;
     public MainFrame mainFrame;
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
-    int ticksPerSecond;
-    long lengthOfTickInNanoSeconds;
-    int currentTick;
+    public static int ticksPerSecond;
+    public static long lengthOfTickInNanoSeconds;
+    public static int currentTick;
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
     public GameManager() throws IOException {
         currentTick=0;
-        this.ticksPerSecond=60; //todo:where should this be declared?
-        this.lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
+        ticksPerSecond=60; //todo:where should this be declared?
+        lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         gameMap=new Map(this);
         //generate the ArrayList for all the MessagesTypes:
@@ -96,7 +96,7 @@ public class GameManager {
         worm2_4=new Worm(2, gameMap, "Worm2_4");
         //create MainFrame
         mainFrame=new MainFrame(this);
-        stop=false;
+        stopped =false;
     }
 
     public static void main(String[] args) throws IOException {
@@ -131,7 +131,7 @@ public class GameManager {
         //maybe when the game starts, the GUI sets the current ticks to 0;
         try {
             while (true) {
-                if(!stop) {
+                if(!stopped) {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
@@ -201,12 +201,12 @@ public class GameManager {
         return currentTick;
     }
 
-    public boolean isStop() {
-        return stop;
+    public boolean isStopped() {
+        return stopped;
     }
 
-    public void setStop(boolean stop) {
-        this.stop = stop;
+    public void setStopped(boolean stopped) {
+        this.stopped = stopped;
     }
 }
 
