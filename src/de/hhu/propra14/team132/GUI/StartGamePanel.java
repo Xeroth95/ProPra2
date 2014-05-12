@@ -41,7 +41,9 @@ public class StartGamePanel extends JPanel {
     class LocalGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             StartGamePanel.this.mainPanel.showPanel("2");
+            mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
         }
     }
 

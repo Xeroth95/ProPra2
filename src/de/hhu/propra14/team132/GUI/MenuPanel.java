@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

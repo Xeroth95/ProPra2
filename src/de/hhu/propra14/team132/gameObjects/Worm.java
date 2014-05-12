@@ -1,14 +1,14 @@
 package de.hhu.propra14.team132.gameObjects;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.Message;
-import de.hhu.propra14.team132.gameSystem.MessageType;
-import de.hhu.propra14.team132.gameSystem.MouseMessage;
 import de.hhu.propra14.team132.physics.CollisionObject;
+import de.hhu.propra14.team132.physics.Effect;
+import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
+import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by isabel on 02.05.14.
@@ -16,52 +16,25 @@ import java.awt.*;
 public class Worm extends GameObject {
     private String name;
     private int life;
-    private int teamID;
-
-    public Worm(int teamID, Map map, GameManager gameManager, String name, int teamID1) {
-        super(teamID, map, gameManager);
+    private static final ConvexCollisionShape shape;
+    
+    static{
+    	Vector2D[] vert=new Vector2D[8];
+    	vert[0]=new Vector2D(10,0);
+    	vert[1]=new Vector2D(20,0);
+    	vert[2]=new Vector2D(30,10);
+    	vert[3]=new Vector2D(30,20);
+    	vert[4]=new Vector2D(20,30);
+    	vert[5]=new Vector2D(10,30);
+    	vert[6]=new Vector2D(0,20);
+    	vert[7]=new Vector2D(0,10);
+    	shape = new ConvexCollisionShape(vert);
+    }
+    
+    //constructors:
+    public Worm(int teamID, Map map, String name) {
+        super(shape, teamID, map);
         this.name = name;
-        teamID = teamID1;
-    }
-
-    public Worm(ConvexCollisionShape[] shapes, int teamID, Map map, GameManager gameManager, String name, int teamID1) {
-        super(shapes, teamID, map, gameManager);
-        this.name = name;
-        teamID = teamID1;
-    }
-
-    public Worm(ConvexCollisionShape shape, int teamID, Map map, GameManager gameManager, String name, int teamID1) {
-        super(shape, teamID, map, gameManager);
-        this.name = name;
-        teamID = teamID1;
-    }
-
-
-    @Override
-    public void receiveMessage(Message m)  {
-        MessageType messageType=m.getMessageType();
-        switch(messageType) {
-            case MOUSE:
-                MouseMessage.Button button=((MouseMessage)m).getButton();
-                switch(button) {
-                    case LEFT:
-                        System.out.println("left");
-                        break;
-                    case RIGHT:
-                        System.out.println("right");
-                        break;
-                    case MIDDEL:
-                        System.out.println("middle");
-                        break;
-                }
-            case KEYBOARD:
-         }
-
-    }
-    @Override
-    public void register(GameManager gameManager) {
-
-
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
@@ -78,23 +51,26 @@ public class Worm extends GameObject {
         return 0;
     }
 
-    //Drawable Methods:
-    public void draw(Graphics g, int posX, int posY) {
-        g.setColor(Color.PINK);
+    @Override
+    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
+        g.setPaint(paint);
         g.fillOval(posX, posY, 10, 10);
     }
 
-    public Worm(int teamID, Map map, GameManager gameManager) {
-        super(teamID, map, gameManager);
-    }
-
     @Override
-    public void draw(Graphics g, int posX, int posY, int sizeX, int sizeY) {
+    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
 
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g, Paint paint) {
 
     }
+
+	@Override
+	public ArrayList<Effect> getInitalEffects() {
+		ArrayList<Effect> effects = new ArrayList<>();
+		effects.add(Gravity.GLOBAL_GRAVITY);
+		return effects;
+	}
 }
