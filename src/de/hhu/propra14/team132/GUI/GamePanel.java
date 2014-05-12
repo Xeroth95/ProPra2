@@ -47,7 +47,7 @@ public class GamePanel extends JPanel {
         autoscrolling=false;
         textureTerrainImage=ImageIO.read(new File("resources/img/textures/terrain.jpg"));
         textureTerrain=new TexturePaint(textureTerrainImage, new Rectangle(0,0,48,48));
-        terrainSize=new Dimension((int)gameManager.terrain.shape.getMaxOnX(), (int)gameManager.terrain.shape.getMaxOnY());
+        terrainSize=new Dimension((int)gameManager.terrain.getCollisionShapes()[0].getMaxOnX(), (int)gameManager.terrain.getCollisionShapes()[0].getMaxOnY());
         this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
         width=(int)this.getPreferredSize().getWidth();
         height=(int)this.getPreferredSize().getHeight();

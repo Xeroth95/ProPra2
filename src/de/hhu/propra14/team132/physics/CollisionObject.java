@@ -21,7 +21,7 @@ public abstract strictfp class CollisionObject {
 	double bounciness;
 	double friction;
 	
-	ConvexCollisionShape[] collisionShapes;
+	public ConvexCollisionShape[] collisionShapes;
 	
 	Map mapPlacedIn;
 	int playerID;

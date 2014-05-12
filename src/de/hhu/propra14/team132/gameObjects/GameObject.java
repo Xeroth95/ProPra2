@@ -7,9 +7,6 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 public abstract class GameObject extends CollisionObject implements Drawable {
 
-    private Map map;
-    public ConvexCollisionShape shape;
-    private ConvexCollisionShape[] shapes;
     public GameObject(int teamID, Map map) {
        super(teamID,map);
     }

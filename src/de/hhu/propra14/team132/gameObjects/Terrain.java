@@ -26,7 +26,6 @@ public class Terrain extends GameObject {
 
     public Terrain(ConvexCollisionShape shape, Map map) {
         super(shape, Player.WORLD, map);
-        this.shape=shape;
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
@@ -56,7 +55,9 @@ public class Terrain extends GameObject {
     @Override
     public void draw(Graphics2D g, Paint paint) {
         g.setPaint(paint);
-        g.fillPolygon(shape.getPolygonToDraw());
+        for(ConvexCollisionShape s : this.collisionShapes){
+        	g.fillPolygon(s.getPolygonToDraw());
+        }
     }
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
