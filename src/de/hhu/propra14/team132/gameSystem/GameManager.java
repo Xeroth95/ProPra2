@@ -35,7 +35,9 @@ public class GameManager {
     public static int ticksPerSecond;
     public static long lengthOfTickInNanoSeconds;
     public static int currentTick;
+
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
+    int Round;
     public GameManager() throws IOException {
         beforeStart=true;
         currentTick=0;
@@ -115,7 +117,7 @@ public class GameManager {
                 long t1 = System.nanoTime();   //time before
                 //Update everything;
                 mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-                System.out.println("erste Schleife, Tick: "+currentTick);
+                //System.out.println("erste Schleife, Tick: "+currentTick);
                 long t2 = System.nanoTime();  //time after
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
@@ -127,6 +129,7 @@ public class GameManager {
 
         }
         currentTick=0;
+        System.out.println("switched loops");
         //when the game starts, the gui sets the beforeStart to false;
         try {
             while (true) {
@@ -134,7 +137,7 @@ public class GameManager {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-                    System.out.println("zweite Schleife, Tick: "+currentTick);
+                    //System.out.println("zweite Schleife, Tick: "+currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
@@ -149,8 +152,6 @@ public class GameManager {
                    e.printStackTrace();
          }
      }
-
-
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
         //which Objects want messages of this type
