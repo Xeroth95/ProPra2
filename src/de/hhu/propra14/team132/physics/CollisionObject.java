@@ -238,6 +238,7 @@ public abstract strictfp class CollisionObject {
 	public abstract double getInitialFriction();
 	public abstract ArrayList<Effect> getInitalEffects();
 	
+	
 	public ArrayList<Effect> getEffects() {
 		return effects;
 	}

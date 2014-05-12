@@ -4,9 +4,11 @@ import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.CollisionObject;
+import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by isabel on 06.05.14.
@@ -60,5 +62,11 @@ public class Terrain extends GameObject {
     public void draw(Graphics g) {
 
     }
+
+	@Override
+	public ArrayList<Effect> getInitalEffects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

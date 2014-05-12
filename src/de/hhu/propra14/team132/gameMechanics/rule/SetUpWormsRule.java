@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Worm;
 
 public class SetUpWormsRule extends StartUpRule {
 	int numberOfPlayers;
@@ -16,7 +17,6 @@ public class SetUpWormsRule extends StartUpRule {
 
 	@Override
 	public void applyRule() {
-		
 	}
 
 }

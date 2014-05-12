@@ -6,9 +6,12 @@ import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 import de.hhu.propra14.team132.gameSystem.MouseMessage;
 import de.hhu.propra14.team132.physics.CollisionObject;
+import de.hhu.propra14.team132.physics.Effect;
+import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by isabel on 02.05.14.
@@ -96,4 +99,11 @@ public class Worm extends GameObject {
     public void draw(Graphics g) {
 
     }
+
+	@Override
+	public ArrayList<Effect> getInitalEffects() {
+		ArrayList<Effect> effects = new ArrayList<>();
+		effects.add(Gravity.GLOBAL_GRAVITY);
+		return effects;
+	}
 }
