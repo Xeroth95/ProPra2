@@ -10,18 +10,18 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 public class Obstacle extends Terrain{
     private boolean destroyable;
 
-    public Obstacle(int teamID, Map map, boolean destroyable) {
-        super(teamID, map);
+    public Obstacle(Map map, boolean destroyable) {
+        super(map);
         this.destroyable = destroyable;
     }
 
-    public Obstacle(ConvexCollisionShape[] shapes, int teamID, Map map, boolean destroyable) {
-        super(shapes, teamID, map);
+    public Obstacle(ConvexCollisionShape[] shapes, Map map, boolean destroyable) {
+        super(shapes, map);
         this.destroyable = destroyable;
     }
 
-    public Obstacle(ConvexCollisionShape shape, int teamID, Map map, boolean destroyable) {
-        super(shape, teamID, map);
+    public Obstacle(ConvexCollisionShape shape, Map map, boolean destroyable) {
+        super(shape, map);
         this.destroyable = destroyable;
     }
 

@@ -22,10 +22,14 @@ public class RuleSet {
 	}
 	
 	public void applyRuntimeRules(){
-		
+		for(RuntimeRule s : runtimeRules){
+			s.applyRule();
+		}
 	}
 	public void applyStartUpRules(){
-		
+		for(StartUpRule s : startUpRules){
+			s.applyRule();
+		}
 	}
 
 

@@ -6,6 +6,7 @@ import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.physics.CollisionSystem;
+import de.hhu.propra14.team132.physics.WGrid;
 
 
 public class Map {
@@ -59,7 +60,8 @@ public class Map {
 		this.ruleset=RuleSet.generateStandardRules(this);
 		
 		this.ruleset.applyStartUpRules();
-
+		
+		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
 	}
 	private int getNewMapID(){
 		if(this.aviableIds.size()!=0){	//first, try to recycle available Ids
@@ -75,7 +77,7 @@ public class Map {
 	}
 	public void nextTick(){
 		moveAllObjects();
-		ruleset.applyRuntimeRules();
+		this.collsys.calcCollision();
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){

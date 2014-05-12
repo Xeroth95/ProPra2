@@ -67,7 +67,7 @@ public class GameManager {
         verticesTerrain[8]=new Vector2D(900, 400);
         verticesTerrain[9]=new Vector2D(1000, 550);
         //create terrain
-        terrain=new Terrain(new ConvexCollisionShape(verticesTerrain),0, gameMap);
+        terrain=new Terrain(new ConvexCollisionShape(verticesTerrain), gameMap);
         //create some obstacles
         obstacles=new Obstacle[3];
         Vector2D[] verticesObstacle0=new Vector2D[4];
@@ -75,19 +75,19 @@ public class GameManager {
         verticesObstacle0[1]=new Vector2D(630,280);
         verticesObstacle0[2]=new Vector2D(630,330);
         verticesObstacle0[3]=new Vector2D(600,330);
-        obstacles[0]=new Obstacle(new ConvexCollisionShape(verticesObstacle0),0,gameMap,false);
+        obstacles[0]=new Obstacle(new ConvexCollisionShape(verticesObstacle0),gameMap,false);
         Vector2D[] verticesObstacle1=new Vector2D[4];
         verticesObstacle1[0]=new Vector2D(300,405);
         verticesObstacle1[1]=new Vector2D(330,405);
         verticesObstacle1[2]=new Vector2D(330,355);
         verticesObstacle1[3]=new Vector2D(300,350);
-        obstacles[1]=new Obstacle(new ConvexCollisionShape(verticesObstacle1),0,gameMap,false);
+        obstacles[1]=new Obstacle(new ConvexCollisionShape(verticesObstacle1),gameMap,false);
         Vector2D[] verticesObstacle2=new Vector2D[4];
         verticesObstacle2[0]=new Vector2D(450,500);
         verticesObstacle2[1]=new Vector2D(510,500);
         verticesObstacle2[2]=new Vector2D(510,310);
         verticesObstacle2[3]=new Vector2D(450,290);
-        obstacles[2]=new Obstacle(new ConvexCollisionShape(verticesObstacle2),0,gameMap,false);
+        obstacles[2]=new Obstacle(new ConvexCollisionShape(verticesObstacle2),gameMap,false);
         //create worms for team1
         worm1_1=new Worm(1, gameMap, "Worm1_1");
         worm1_2=new Worm(1, gameMap, "Worm1_2");
@@ -138,6 +138,7 @@ public class GameManager {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                    gameMap.nextTick();
                     //System.out.println("zweite Schleife, Tick: "+currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {

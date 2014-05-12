@@ -320,6 +320,8 @@ public strictfp class WGrid extends CollisionSystem{
 		for (Integer i:this.IDs) {
 			int level;
 			//which level is the lowest it can go into??
+			
+			//TODO: Don't just take the first CollisionShape! Take the Max and Min on x and y Axis of the Whole Object!!
 			double[] x = this.objects[i].getCollisionShapes()[0].getOnX();
 			double[] y = this.objects[i].getCollisionShapes()[0].getOnY();
 			
