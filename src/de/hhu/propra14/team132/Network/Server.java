@@ -176,7 +176,14 @@ public class Server {
 		
 		public void run() {
 			
-			sentIDToClient();
+			try {
+				sentIDToClient();
+			} catch (IOException e) {
+				// this should never happen
+				e.printStackTrace();
+				//TODO: close client
+				return;
+			}
 			
 			this.pool.execute(new InputHandler(client, inMessages));
 			this.pool.execute(new OutputHandler(client, outMessages));
@@ -190,8 +197,13 @@ public class Server {
 			
 		}
 		
-		private void sentIDToClient() {
+		private void sentIDToClient() throws IOException {
 			// sent the id to the client, so he knows who he is
+			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
+			out.writeObject(new Integer(this.assoziatedID));
+			out.flush();
+			out.close();
+			
 		}
 		
 		private class InputHandler implements Runnable {
@@ -254,6 +266,7 @@ public class Server {
 						while (!outMessages.isEmpty()) {
 							NetworkMessage message = outMessages.poll();
 							this.out.writeObject(message);
+							this.out.flush();
 							System.out.println("Sent that message!");
 						}
 					}
