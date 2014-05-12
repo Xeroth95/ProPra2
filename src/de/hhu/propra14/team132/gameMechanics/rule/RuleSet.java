@@ -2,18 +2,33 @@ package de.hhu.propra14.team132.gameMechanics.rule;
 
 import java.util.ArrayList;
 
+import de.hhu.propra14.team132.gameMechanics.Map;
+
 public class RuleSet {
+	Map gameMap;
+	ArrayList<StartUpRule> startUpRules;
+	ArrayList<RuntimeRule> runtimeRules;
 	
-	ArrayList<Rule> rules;
-	public RuleSet(){
+	public RuleSet(Map gameMap){
+		this.gameMap=gameMap;
+		startUpRules=new ArrayList<StartUpRule>();
+		runtimeRules=new ArrayList<RuntimeRule>();
+	}
+	
+	public static RuleSet generateStandardRules(Map gameMap){
+		RuleSet r= new RuleSet(gameMap);
+		
+		return r;
+	}
+	
+	public void applyRuntimeRules(){
 		
 	}
-	
-	public static RuleSet generateStandardRules(){
-		return null; //not implemented yet
+	public void applyStartUpRules(){
+		
 	}
+
+
 	
-	public void applyRules(){
-		//not implemented yet
-	}
+	
 }

@@ -3,8 +3,8 @@ package de.hhu.propra14.team132.gameMechanics;
 import java.util.ArrayList;
 
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.CollisionSystem;
 
 
@@ -16,7 +16,7 @@ public class Map {
 	int IdCounter;
 	ArrayList<Integer> aviableIds;
 	
-	private  CollisionObject[] mapObjects;
+	private  GameObject[] mapObjects;
 	
 	double sizeX;
 	double sizeY;
@@ -28,6 +28,8 @@ public class Map {
 	GameManager manager;
 	
 	RuleSet ruleset;
+	
+	
 	
 	public Map(GameManager manager){
 		this.initializeBasics(manager);
@@ -43,7 +45,7 @@ public class Map {
 		
 		this.manager=manager;
 
-		mapObjects=new CollisionObject[MAX_OBJECT_COUNT];
+		mapObjects=new GameObject[MAX_OBJECT_COUNT];
 		
 		isActive=false;
 		
@@ -52,6 +54,10 @@ public class Map {
 		IdCounter=1; // zero is reserved!
 
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
+		
+		this.ruleset=RuleSet.generateStandardRules(this);
+		
+		this.ruleset.applyStartUpRules();
 
 	}
 	private int getNewMapID(){
@@ -68,10 +74,11 @@ public class Map {
 	}
 	public void nextTick(){
 		moveAllObjects();
-		ruleset.applyRules();
+		ruleset.applyRuntimeRules();
 	}
 	private void moveAllObjects() {
 		for(int i:this.objectIds){
+//			this.mapObjects[i].getSpeed().multiplyWith(0.9999);
 			this.mapObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
 			this.mapObjects[i].move();
 		}
@@ -79,14 +86,14 @@ public class Map {
 	public void detectCollision(){//delegate
 		this.collsys.calcCollision();
 	}
-	public void addObject(CollisionObject o){
+	public void addObject(GameObject o){
 		int newID = this.getNewMapID();
 		o.setPhysicsID(newID);
 		this.objectIds.add(newID);
 		this.mapObjects[newID]=o;
 	}
 	
-	public void removeObject(CollisionObject o){
+	public void removeObject(GameObject o){
 		this.objectIds.remove(o.getPhysicsID());
 		this.mapObjects[o.getPhysicsID()]=null;
 		this.aviableIds.add(o.getPhysicsID());
@@ -97,10 +104,10 @@ public class Map {
 		this.mapObjects[objectID]=null;
 		this.aviableIds.add(objectID);
 	}
-	public CollisionObject[] getMapObjects() {
+	public GameObject[] getMapObjects() {
 		return mapObjects;
 	}
-	public void setMapObjects(CollisionObject[] mapObjects) {
+	public void setMapObjects(GameObject[] mapObjects) {
 		this.mapObjects = mapObjects;
 	}
 	public boolean isActive() {

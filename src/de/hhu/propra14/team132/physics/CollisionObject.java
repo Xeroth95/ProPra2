@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.physics;
 
+import java.util.ArrayList;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
@@ -28,7 +30,7 @@ public abstract strictfp class CollisionObject {
 	private CollisionMode collisionMode;
 	int collisionTranslationBehaviour;
 	
-	
+	ArrayList<Effect> effects;
 	
 	private boolean markedForDeletion;
 	
@@ -62,7 +64,8 @@ public abstract strictfp class CollisionObject {
 		this.acceleration=new Vector2D();
 		
 		this.mapPlacedIn=map;
-
+		
+		this.effects=this.getInitalEffects();
 		this.bounciness=this.getInitialBounciness();
 		this.friction=this.getInitialFriction();
 
@@ -127,7 +130,7 @@ public abstract strictfp class CollisionObject {
 			o.getPosition().addVector(mtv);// you too, get out of that collision
 			o.recalcPosition();
 			try {
-				mtv.makeUnitVector();
+				mtv.makeUnitVector();//this is important! if this was not here, the following code would not work at all! It is necessary to do this to get accurate projections!
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -142,11 +145,11 @@ public abstract strictfp class CollisionObject {
 			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
 			
 			//set both
-			this.speed.setX(oSpeedDotMtvTimesMtvX+this.speed.getX()-thisSpeedDotMtvTimesMtvX);
-			this.speed.setY(oSpeedDotMtvTimesMtvY+this.speed.getY()-thisSpeedDotMtvTimesMtvY);
+			this.speed.setX(this.bounciness*oSpeedDotMtvTimesMtvX+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
+			this.speed.setY(this.bounciness*oSpeedDotMtvTimesMtvY+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
 			
-			o.getSpeed().setX(thisSpeedDotMtvTimesMtvX+o.getSpeed().getX()-oSpeedDotMtvTimesMtvX);
-			o.getSpeed().setY(thisSpeedDotMtvTimesMtvY+o.getSpeed().getY()-oSpeedDotMtvTimesMtvY);
+			o.getSpeed().setX(o.getBounciness()*thisSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
+			o.getSpeed().setY(o.getBounciness()*thisSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
 			
 			
 		}
@@ -166,8 +169,8 @@ public abstract strictfp class CollisionObject {
 			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
 
 			//set only the other object
-			o.getSpeed().setX(thisSpeedDotMtvTimesMtvX+o.getSpeed().getX()-oSpeedDotMtvTimesMtvX);
-			o.getSpeed().setY(thisSpeedDotMtvTimesMtvY+o.getSpeed().getY()-oSpeedDotMtvTimesMtvY);
+			o.getSpeed().setX(o.getBounciness()*thisSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
+			o.getSpeed().setY(o.getBounciness()*thisSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
 			
 		}
 		else{
@@ -187,8 +190,8 @@ public abstract strictfp class CollisionObject {
 			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
 			
 			//set only this object
-			this.speed.setX(oSpeedDotMtvTimesMtvX+this.speed.getX()-thisSpeedDotMtvTimesMtvX);
-			this.speed.setY(oSpeedDotMtvTimesMtvY+this.speed.getY()-thisSpeedDotMtvTimesMtvY);
+			this.speed.setX(this.bounciness*oSpeedDotMtvTimesMtvX+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
+			this.speed.setY(this.bounciness*oSpeedDotMtvTimesMtvY+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
 			
 		}
 		this.furtherCollisionWith(o);
@@ -210,6 +213,9 @@ public abstract strictfp class CollisionObject {
 		}
 	}
 	public void move(){
+		for(Effect e:this.effects){
+			e.apply(this);
+		}
 		this.speed.addVector(this.acceleration);
 		this.position.addVector(this.speed);
 		for(ConvexCollisionShape s:this.collisionShapes){
@@ -230,6 +236,15 @@ public abstract strictfp class CollisionObject {
 
 	public abstract double getInitialBounciness();
 	public abstract double getInitialFriction();
+	public abstract ArrayList<Effect> getInitalEffects();
+	
+	
+	public ArrayList<Effect> getEffects() {
+		return effects;
+	}
+	public void setEffects(ArrayList<Effect> effects) {
+		this.effects = effects;
+	}
 	public Vector2D getSpeed() {
 		return speed;
 	}
