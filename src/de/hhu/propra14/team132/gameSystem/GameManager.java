@@ -126,6 +126,7 @@ public class GameManager {
         } catch (Exception e) {
 
         }
+        currentTick=0;
         //when the game starts, the gui sets the beforeStart to false;
         try {
             while (true) {
