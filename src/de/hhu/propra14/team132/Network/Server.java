@@ -11,7 +11,6 @@ import java.io.*;
 import java.net.*;
 
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.Message;
 
 public class Server {
 	
@@ -22,9 +21,8 @@ public class Server {
 	
 	public static void main(String[] argv) {
 		try {
-			Server server = new Server(null, 3141);
+			new Server(null, 3141);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -202,7 +200,7 @@ public class Server {
 		private void sentIDToClient() throws IOException {
 			// sent the id to the client, so he knows who he is
 			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
-			out.writeObject(new Integer(this.assoziatedID));
+			out.writeInt(this.assoziatedID);
 			out.flush();
 			out.close();
 			

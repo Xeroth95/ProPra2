@@ -2,11 +2,8 @@ package de.hhu.propra14.team132.Network;
 
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.Arrays;
 
 import de.hhu.propra14.team132.gameSystem.Message;
 
@@ -128,17 +125,6 @@ public class Client {
 				e.printStackTrace();
 			}
 		 }
-		 
-		 public char[] toMessageLengthBuffer(int length) {
-			 // int = 4bytes
-			 char[] ret = new char[4];
-			 ret[0] = (char) (length >> 0);
-			 ret[1] = (char) (length >> 8);
-			 ret[2] = (char) (length >> 16);
-			 ret[3] = (char) (length >> 24);
-			 
-			 return ret;
-		 }
 	 }
 	 
 	 private class Receiver implements Runnable {
@@ -164,15 +150,6 @@ public class Client {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		private int getMessageLength(char[] buffer) {
-			int length = 0;
-			for (int i = 0; i < buffer.length; ++i) {
-				length += ((int) buffer[i]) << 8*i;
-			}
-			
-			return length;
 		}
 	 }
 }
