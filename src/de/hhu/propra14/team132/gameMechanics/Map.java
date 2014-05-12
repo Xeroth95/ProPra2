@@ -29,19 +29,14 @@ public class Map {
 	
 	RuleSet ruleset;
 	
+	Player[] players;
 	
-	
-	public Map(GameManager manager){
-		this.initializeBasics(manager);
+	public Map(GameManager manager,int playerCount){
+		this.initializeBasics(manager, playerCount);
 		sizeX=0;
 		sizeY=0;
 	}
-	public Map(double x,double y,GameManager manager){
-		this.initializeBasics(manager);
-		sizeX=x;
-		sizeY=y;
-	}
-	private void initializeBasics(GameManager manager){
+	private void initializeBasics(GameManager manager, int playerCount){
 		
 		this.manager=manager;
 
@@ -54,6 +49,12 @@ public class Map {
 		IdCounter=1; // zero is reserved!
 
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
+		
+		players = new Player[playerCount];
+		
+		for(int i = 0; i<playerCount; i++){
+			players[i]=new Player();
+		}
 		
 		this.ruleset=RuleSet.generateStandardRules(this);
 		
@@ -103,6 +104,19 @@ public class Map {
 		this.objectIds.remove(objectID);
 		this.mapObjects[objectID]=null;
 		this.aviableIds.add(objectID);
+	}
+	
+	public RuleSet getRuleset() {
+		return ruleset;
+	}
+	public void setRuleset(RuleSet ruleset) {
+		this.ruleset = ruleset;
+	}
+	public Player[] getPlayers() {
+		return players;
+	}
+	public void setPlayers(Player[] players) {
+		this.players = players;
 	}
 	public GameObject[] getMapObjects() {
 		return mapObjects;

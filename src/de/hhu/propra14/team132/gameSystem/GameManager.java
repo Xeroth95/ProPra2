@@ -44,7 +44,8 @@ public class GameManager {
         ticksPerSecond=60; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
-        gameMap=new Map(this);
+        int playerCount=1;//TODO: Isabel, hier muss du ran.
+        gameMap=new Map(this,playerCount);
         //generate the ArrayList for all the MessagesTypes:
         //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
         //hashMap.put(MessageType.MOUSE,new ArrayList<Communicable>());
