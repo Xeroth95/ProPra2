@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public class GameManager {
     private boolean stopped; //is there to pause the thread;
-    private boolean isBeforeStart;
+    private boolean beforeStart;
     //declares the necessary objects
     public Map gameMap;
     public Terrain terrain;
@@ -37,6 +37,7 @@ public class GameManager {
     public static int currentTick;
     public static final long LENGTH_OF_A_SECOND_IN_NANASECONDS =1000000000L;
     public GameManager() throws IOException {
+        beforeStart=true;
         currentTick=0;
         ticksPerSecond=60; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
@@ -107,34 +108,32 @@ public class GameManager {
 
     }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
-    public void beforeStart() {
+
+    public void start() { //todo: start, when the game starts, not before. GUI should call this!
         try {
-            while (true) {
+            while (beforeStart) {
                 long t1 = System.nanoTime();   //time before
                 //Update everything;
                 mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                System.out.println("erste Schleife, Tick: "+currentTick);
                 long t2 = System.nanoTime();  //time after
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
                     Thread.sleep(((int) (diff / 1000000)));   //
                 }
                 currentTick++;
-                if(!isBeforeStart) {
-                    break;
-                }
             }
         } catch (Exception e) {
 
         }
-    }
-    public void start() { //todo: start, when the game starts, not before. GUI should call this!
-        //maybe when the game starts, the GUI sets the current ticks to 0;
+        //when the game starts, the gui sets the beforeStart to false;
         try {
             while (true) {
                 if(!stopped) {
                     long t1 = System.nanoTime();   //time before
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                    System.out.println("zweite Schleife, Tick: "+currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
@@ -195,6 +194,24 @@ public class GameManager {
     }
     public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
         return (hashMap.get(type).contains(o));
+    }
+
+    //regulary getter and setter
+
+    public boolean isBeforeStart() {
+        return beforeStart;
+    }
+
+    public void setBeforeStart(boolean beforeStart) {
+        this.beforeStart = beforeStart;
+    }
+
+    public static int getTicksPerSecond() {
+        return ticksPerSecond;
+    }
+
+    public static long getLengthOfTickInNanoSeconds() {
+        return lengthOfTickInNanoSeconds;
     }
 
     public int getCurrentTick() {

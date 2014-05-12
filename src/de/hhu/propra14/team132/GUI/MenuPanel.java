@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,6 +56,7 @@ public class MenuPanel extends JPanel{
 
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.mainPanel.showPanel("8");//switch to GamePanel
+            mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
         }
 
     }
