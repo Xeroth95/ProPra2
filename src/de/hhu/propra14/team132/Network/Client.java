@@ -54,12 +54,29 @@ public class Client {
 		this.server 			= new Socket(serverIP, port);
 		this.sendThread 		= new Thread(new Sender(server));
 		this.receiveThread 		= new Thread(new Receiver(server));
-		this.sendThread.start();
-		this.receiveThread.start();
-		this.clientID			= -1;
+		try {
+			this.clientID		= getClientID();
+			System.out.println("My ID : " + this.clientID);
+		} catch (IOException e) {
+			// this should not happen
+			e.printStackTrace();
+			this.clientID		= -1;
+		}
+		
+		if (this.clientID != -1) {
+			this.sendThread.start();
+			this.receiveThread.start();
+		}
 	 } 
 	 
-	 // this method should never be called
+	 private int getClientID() throws IOException {
+		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
+		Integer clientID = in.readInt();
+		in.close();
+		return clientID;
+	}
+
+	// this method should never be called
 	 // its only here for test purposes
 	 public NetworkMessage receive() throws IOException {
 		 if (this.hasReceived) {

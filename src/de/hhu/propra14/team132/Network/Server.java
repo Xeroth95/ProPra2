@@ -86,8 +86,10 @@ public class Server {
 		}
 		
 		public void sendMessage(NetworkMessage mes) {
+			int i = 0;
 			for (Handler h : handlerList) {
 				h.sendMessage(mes);
+				System.out.println(++i);
 			}
 		}
 		
