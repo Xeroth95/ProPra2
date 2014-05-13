@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.*;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import de.hhu.propra14.team132.gameSystem.Message;
 
@@ -17,7 +19,7 @@ public class Client {
 	 
 	 public static void main(String[] args) {	
 		try {
-			Client client = new Client(args[0], 3333);
+			Client client = new Client(args[0], 3141);
 			String in = null;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			do {
@@ -69,7 +71,7 @@ public class Client {
 	 private int getClientID() throws IOException {
 		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
 		Integer clientID = in.readInt();
-		in.close();
+		System.out.println("Got ClientID : " + clientID);
 		return clientID;
 	}
 
@@ -116,11 +118,11 @@ public class Client {
 					 if (Client.this.toSend) {
 						 NetworkMessage message = Client.this.messageOutBuffer.poll();
 						 if ( message == null ) continue;
-						 Client.this.toSend = (Client.this.messageOutBuffer.peek() == null);
+						 Client.this.toSend = !(Client.this.messageOutBuffer.peek() == null);
 						 oos.writeObject(message);
-						 oos.flush();
 						 System.out.println("Message sent!");
 					 }
+					 oos.flush();
 				 }
 			} catch (IOException e) {
 				e.printStackTrace();

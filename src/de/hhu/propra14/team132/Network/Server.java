@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 import java.io.*;
 import java.net.*;
 
@@ -84,10 +86,8 @@ public class Server {
 		}
 		
 		public void sendMessage(NetworkMessage mes) {
-			int i = 0;
 			for (Handler h : handlerList) {
 				h.sendMessage(mes);
-				System.out.println(++i);
 			}
 		}
 		
@@ -170,8 +170,14 @@ public class Server {
 		
 		public void sendMessage(NetworkMessage mes) {
 			// do not sent the messages sent by client to the client
-			if (mes.getID() != this.assoziatedID)
-				this.outMessages.offer(mes);
+			if (mes.getID() != this.assoziatedID) {
+				synchronized (this.outMessages) {
+					if (this.outMessages.offer(mes)) {
+						this.outMessages.notifyAll();
+					}
+					
+				}
+			}
 		}
 		
 		public void run() {
@@ -189,9 +195,21 @@ public class Server {
 			this.pool.execute(new OutputHandler(client, outMessages));
 			
 			while (true) {
+				synchronized(this.inMessages) {
+					try {
+						this.inMessages.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				while (!inMessages.isEmpty()) {
 					this.manager.sendMessage(inMessages.poll());
 				}
+				/*synchronized(this.outMessages) {
+					this.outMessages.notifyAll();
+				}*/
+				
 			}
 			
 			
@@ -202,7 +220,7 @@ public class Server {
 			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
 			out.writeInt(this.assoziatedID);
 			out.flush();
-			out.close();
+			System.out.println("Sending the ClientID " + this.assoziatedID);
 			
 		}
 		
@@ -223,6 +241,9 @@ public class Server {
 						// read a network message from the input stream
 						NetworkMessage message = (NetworkMessage) in.readObject();
 						this.inMessages.offer(message);
+						synchronized (this.inMessages) {
+							this.inMessages.notifyAll();
+						}
 						System.out.println("Got that message!");
 					}
 				} catch (IOException e) {
@@ -261,13 +282,20 @@ public class Server {
 					this.out = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));
 					while (true) {
 						//wait for messages to come
-						while (outMessages.isEmpty());
+						//while (outMessages.isEmpty());
 						//if we got one, send all
-						while (!outMessages.isEmpty()) {
-							NetworkMessage message = outMessages.poll();
-							this.out.writeObject(message);
+						synchronized (this.outMessages) {
+							if (!outMessages.isEmpty()) {
+								NetworkMessage message = outMessages.poll();
+								this.out.writeObject(message);
+								System.out.println("Sent that message!");
+							}
 							this.out.flush();
-							System.out.println("Sent that message!");
+							try {
+								this.outMessages.wait();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 					
