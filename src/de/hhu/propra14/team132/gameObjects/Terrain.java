@@ -61,8 +61,7 @@ public class Terrain extends GameObject {
     }
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Effect>();
 	}
 
 }
