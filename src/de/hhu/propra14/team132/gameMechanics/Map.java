@@ -123,7 +123,10 @@ public class Map {
 	public GameObject[] getMapObjects() {
 		return mapObjects;
 	}
-	public void setMapObjects(GameObject[] mapObjects) {
+    public ArrayList<Integer> getObjectIds() {
+        return objectIds;
+    }
+    public void setMapObjects(GameObject[] mapObjects) {
 		this.mapObjects = mapObjects;
 	}
 	public boolean isActive() {

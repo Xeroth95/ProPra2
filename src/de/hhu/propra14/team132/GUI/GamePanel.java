@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameSystem.GameManager;
@@ -12,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by fabian on 02.05.14.
@@ -32,6 +34,8 @@ public class GamePanel extends JPanel {
     Dimension terrainSize;
     BufferedImage textureTerrainImage;
     TexturePaint textureTerrain;
+    GameObject[] gameObjects;
+    ArrayList<Integer> objectIDs;
     int width, height;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
@@ -45,13 +49,16 @@ public class GamePanel extends JPanel {
         this.gameManager=gameManager;
 
         autoscrolling=false;
+        gameObjects=gameManager.gameMap.getMapObjects();
+        objectIDs=gameManager.gameMap.getObjectIds();
         textureTerrainImage=ImageIO.read(new File("resources/img/textures/terrain.jpg"));
         textureTerrain=new TexturePaint(textureTerrainImage, new Rectangle(0,0,48,48));
         terrainSize=new Dimension((int)gameManager.terrain.getCollisionShapes()[0].getMaxOnX(), (int)gameManager.terrain.getCollisionShapes()[0].getMaxOnY());
-        this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
+        //this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
+        this.setPreferredSize(new Dimension(4096, 4096));
         width=(int)this.getPreferredSize().getWidth();
         height=(int)this.getPreferredSize().getHeight();
-        mainFrame.setMaximizedBounds(new Rectangle(0,0,width,height));
+        //mainFrame.setMaximizedBounds(new Rectangle(0,0,width,height));
         this.addMouseListener(new GameMouseListener());
     }
 
@@ -65,6 +72,11 @@ public class GamePanel extends JPanel {
             bufferedGraphics=(Graphics2D) (bufferedImage.getGraphics());
         }
 
+        for(int i : objectIDs) {
+            gameObjects[i].draw(bufferedGraphics, textureTerrain);
+        }
+
+        /*
         //draw obstacles
         for(int i=0; i<gameManager.obstacles.length; i++) {
             gameManager.obstacles[i].draw(bufferedGraphics,Color.DARK_GRAY);
@@ -81,6 +93,7 @@ public class GamePanel extends JPanel {
         gameManager.worm2_2.draw(bufferedGraphics,Color.PINK,750,300);
         gameManager.worm2_3.draw(bufferedGraphics,Color.PINK,735,293);
         gameManager.worm2_4.draw(bufferedGraphics,Color.PINK,722,287);
+        */
 
         g2d.drawImage(bufferedImage,0,0,this);
 
