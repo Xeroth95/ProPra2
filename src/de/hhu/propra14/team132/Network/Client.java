@@ -24,7 +24,7 @@ public class Client {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			do {
 				in = reader.readLine();
-				client.sendMessage(new ExampleNetworkMessage(in));
+				client.receiveMessage(new ExampleNetworkMessage(in));
 			} while (!in.equals("exit"));
 			client.close();
 		} catch (IOException e) {
@@ -39,20 +39,16 @@ public class Client {
 	 private final Thread receiveThread;
 	 private final Queue<NetworkMessage> messageInBuffer;
 	 private final Queue<NetworkMessage> messageOutBuffer;
-	 private volatile boolean toSend;
-	 private volatile boolean hasReceived;
 	 private Socket server;
 	 private int clientID;
 	 
 	 
 	 public Client(String serverIP, int port) throws IOException {
-		this.toSend			= false;
-		this.hasReceived		= false;
 		this.messageInBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
 		this.messageOutBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
 		this.server 			= new Socket(serverIP, port);
-		this.sendThread 		= new Thread(new Sender(server));
-		this.receiveThread 		= new Thread(new Receiver(server));
+		this.sendThread 		= new Thread(new Sender(server, messageOutBuffer));
+		this.receiveThread 		= new Thread(new Receiver(server, messageInBuffer));
 		try {
 			this.clientID		= getClientID();
 			System.out.println("My ID : " + this.clientID);
@@ -74,18 +70,6 @@ public class Client {
 		System.out.println("Got ClientID : " + clientID);
 		return clientID;
 	}
-
-	// this method should never be called
-	 // its only here for test purposes
-	 public NetworkMessage receive() throws IOException {
-		 if (this.hasReceived) {
-			 NetworkMessage ret = this.messageInBuffer.poll();
-			 hasReceived = (this.messageInBuffer.peek() != null);
-			 return ret;
-		 } else {
-			 return null;
-		 }
-	 }
 	 
 	 public void close() throws IOException {
 		 if (server != null) {
@@ -99,30 +83,42 @@ public class Client {
 		 }
 	 }
 	 
-	 public void sendMessage(Message message) {
+	 public void receiveMessage(Message message) {
 		 NetworkMessage netMessage = new NetworkMessage(message, this.clientID);
-		 this.toSend = this.messageOutBuffer.offer(netMessage);
+		 synchronized (this.messageOutBuffer) {
+			 if (this.messageOutBuffer.offer(netMessage)) {
+				 this.messageOutBuffer.notifyAll();
+			 }
+		 }
 	 }
 	 
 	 private class Sender implements Runnable {
-		 Socket server;
+		 private final Socket server;
+		 private final Queue<NetworkMessage> outBuffer;
 		 
-		 public Sender(Socket server) {
-			 this.server = server;
+		 public Sender(Socket server, Queue<NetworkMessage> outBuffer) {
+			 this.server	= server;
+			 this.outBuffer	= outBuffer;
 		 }
 		 
 		 public void run() {
 			 try {
 				ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(server.getOutputStream()));
 				while (true) {
-					 if (Client.this.toSend) {
-						 NetworkMessage message = Client.this.messageOutBuffer.poll();
-						 if ( message == null ) continue;
-						 Client.this.toSend = !(Client.this.messageOutBuffer.peek() == null);
-						 oos.writeObject(message);
-						 System.out.println("Message sent!");
+					 synchronized(outBuffer) {
+						 while (!outBuffer.isEmpty()) {
+							 NetworkMessage message = outBuffer.poll();
+							 if ( message == null ) continue;
+							 oos.writeObject(message);
+							 System.out.println("Message sent!");
+						 }
+						 oos.flush();
+						 try {
+							outBuffer.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					 }
-					 oos.flush();
 				 }
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -133,20 +129,24 @@ public class Client {
 	 private class Receiver implements Runnable {
 		private ObjectInputStream in;
 		private final Socket server;
+		private final Queue<NetworkMessage> inBuffer;
 		
-		public Receiver(Socket server) {
-			this.server = server;
+		public Receiver(Socket server, Queue<NetworkMessage> inBuffer) {
+			this.server	= server;
+			this.inBuffer	= inBuffer;
 		}
 		
 		public void run() {
 			try {
 				this.in = new ObjectInputStream(new BufferedInputStream(server.getInputStream()));
 				while (true) {
-					NetworkMessage message = (NetworkMessage) in.readObject();
-					if (Client.this.messageInBuffer.offer(message)) {
-						Client.this.hasReceived = true;
+					synchronized (inBuffer) {
+						NetworkMessage message = (NetworkMessage) in.readObject();
+						if (inBuffer.offer(message)) {
+							inBuffer.notifyAll();
+						}
+						System.out.println(((ExampleNetworkMessage) message.getMessage()).getData());
 					}
-					System.out.println(((ExampleNetworkMessage) message.getMessage()).getData());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

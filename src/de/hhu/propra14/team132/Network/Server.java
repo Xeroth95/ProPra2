@@ -66,7 +66,7 @@ public class Server {
 			});
 	}
 	
-	public void sendMessage(NetworkMessage mes) {
+	public void receiveMessage(NetworkMessage mes) {
 		this.service.sendMessage(mes);
 	}
 	
@@ -202,14 +202,10 @@ public class Server {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					while (!inMessages.isEmpty()) {
+						this.manager.sendMessage(inMessages.poll());
+					}
 				}
-				while (!inMessages.isEmpty()) {
-					this.manager.sendMessage(inMessages.poll());
-				}
-				/*synchronized(this.outMessages) {
-					this.outMessages.notifyAll();
-				}*/
-				
 			}
 			
 			
@@ -240,8 +236,8 @@ public class Server {
 					while (true) {
 						// read a network message from the input stream
 						NetworkMessage message = (NetworkMessage) in.readObject();
-						this.inMessages.offer(message);
 						synchronized (this.inMessages) {
+							this.inMessages.offer(message);
 							this.inMessages.notifyAll();
 						}
 						System.out.println("Got that message!");
