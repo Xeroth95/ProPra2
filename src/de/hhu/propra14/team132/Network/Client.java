@@ -2,11 +2,8 @@ package de.hhu.propra14.team132.Network;
 
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.Arrays;
 
 import de.hhu.propra14.team132.gameSystem.Message;
 
@@ -54,12 +51,29 @@ public class Client {
 		this.server 			= new Socket(serverIP, port);
 		this.sendThread 		= new Thread(new Sender(server));
 		this.receiveThread 		= new Thread(new Receiver(server));
-		this.sendThread.start();
-		this.receiveThread.start();
-		this.clientID			= -1;
+		try {
+			this.clientID		= getClientID();
+			System.out.println("My ID : " + this.clientID);
+		} catch (IOException e) {
+			// this should not happen
+			e.printStackTrace();
+			this.clientID		= -1;
+		}
+		
+		if (this.clientID != -1) {
+			this.sendThread.start();
+			this.receiveThread.start();
+		}
 	 } 
 	 
-	 // this method should never be called
+	 private int getClientID() throws IOException {
+		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
+		Integer clientID = in.readInt();
+		in.close();
+		return clientID;
+	}
+
+	// this method should never be called
 	 // its only here for test purposes
 	 public NetworkMessage receive() throws IOException {
 		 if (this.hasReceived) {
@@ -112,17 +126,6 @@ public class Client {
 				e.printStackTrace();
 			}
 		 }
-		 
-		 public char[] toMessageLengthBuffer(int length) {
-			 // int = 4bytes
-			 char[] ret = new char[4];
-			 ret[0] = (char) (length >> 0);
-			 ret[1] = (char) (length >> 8);
-			 ret[2] = (char) (length >> 16);
-			 ret[3] = (char) (length >> 24);
-			 
-			 return ret;
-		 }
 	 }
 	 
 	 private class Receiver implements Runnable {
@@ -148,15 +151,6 @@ public class Client {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		private int getMessageLength(char[] buffer) {
-			int length = 0;
-			for (int i = 0; i < buffer.length; ++i) {
-				length += ((int) buffer[i]) << 8*i;
-			}
-			
-			return length;
 		}
 	 }
 }

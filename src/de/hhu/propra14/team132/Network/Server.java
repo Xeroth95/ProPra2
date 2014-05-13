@@ -11,7 +11,6 @@ import java.io.*;
 import java.net.*;
 
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.Message;
 
 public class Server {
 	
@@ -22,9 +21,8 @@ public class Server {
 	
 	public static void main(String[] argv) {
 		try {
-			Server server = new Server(null, 3333);
+			new Server(null, 3141);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -86,8 +84,10 @@ public class Server {
 		}
 		
 		public void sendMessage(NetworkMessage mes) {
+			int i = 0;
 			for (Handler h : handlerList) {
 				h.sendMessage(mes);
+				System.out.println(++i);
 			}
 		}
 		
@@ -176,7 +176,14 @@ public class Server {
 		
 		public void run() {
 			
-			sentIDToClient();
+			try {
+				sentIDToClient();
+			} catch (IOException e) {
+				// this should never happen
+				e.printStackTrace();
+				//TODO: close client
+				return;
+			}
 			
 			this.pool.execute(new InputHandler(client, inMessages));
 			this.pool.execute(new OutputHandler(client, outMessages));
@@ -190,8 +197,13 @@ public class Server {
 			
 		}
 		
-		private void sentIDToClient() {
+		private void sentIDToClient() throws IOException {
 			// sent the id to the client, so he knows who he is
+			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
+			out.writeInt(this.assoziatedID);
+			out.flush();
+			out.close();
+			
 		}
 		
 		private class InputHandler implements Runnable {
