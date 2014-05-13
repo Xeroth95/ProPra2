@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="." destdir="javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.7" sourcefiles="src/de/hhu/propra14/team132/Network/Client.java,src/de/hhu/propra14/team132/Network/Server.java" sourcepath="src" splitindex="true" use="true" version="true">
+            <link href="file:/home/sebastian/Dokumente/Projekte/Java/ProPra/javadoc/"/>
+        </javadoc>
+    </target>
+</project>

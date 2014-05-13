@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 import de.hhu.propra14.team132.gameSystem.Message;
 
-class NetworkMessage implements Serializable{
+class NetworkMessage implements Serializable {
+	
+	public final static int requestingConnectionStopID = -1;
+	
 	final int sentFrom;
 	final Message content;
 	public NetworkMessage(Message mes, int sentFrom) {

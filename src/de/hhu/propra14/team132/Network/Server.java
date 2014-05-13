@@ -7,18 +7,32 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.*;
 import java.net.*;
 
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
+/**
+ *
+ * @author <a email-to="Sebastian.Sura@uni-duesseldorf.de">Sebastian Sura</a>
+ *
+ */
 public class Server {
+	/* static variables */
+	//in this logger the Server will log the events (connects, disconnects, etc.)
+	private static final Logger	log		= Logger.getLogger(Server.class.getName());
 	
+	/* attributes */
+	//in this Threadpool every Thread that the server uses lives
 	private final ExecutorService	connectionPool;
+	//this is the socket of the server
 	private final ServerSocket	serverSocket;
+	//the server wil listen to this port
 	private final int		port;
+	//The network service will handle all I/O
 	private final NetworkService	service;
 	
 	public static void main(String[] argv) {
@@ -29,10 +43,21 @@ public class Server {
 		}
 	}
 	
+	/**
+	 * Creates a Server that forwards {@link NetworkMessage}s between {@link Client}s through a port.
+	 * 
+	 * @param g 		The {@link GameManager} that started the game.
+	 * @param port 		The port that the server should listen to.
+	 * @throws IOException 	Throws an IOException if the ServerSocket could not be created.
+	 * @see Client
+	 */
 	public Server(GameManager g, int port) throws IOException {
 		this.port		= port;
 		this.connectionPool	= Executors.newCachedThreadPool();
 		this.serverSocket	= new ServerSocket(port);
+		FileHandler fileHandler	= new FileHandler("log.txt");
+		fileHandler.setLevel(Level.INFO);
+		Server.log.addHandler(fileHandler);
 		
 		/*
 		 * Start a new Thread. This thread will wait for clients to connect
@@ -56,7 +81,7 @@ public class Server {
 							//wait up to 4 seconds
 							Server.this.connectionPool.awaitTermination(4L, TimeUnit.SECONDS);
 							if (!Server.this.serverSocket.isClosed()) {
-								System.out.println("Closing the ServerSocket forcefully!");
+								Server.log.warning("Closing the ServerSocket forcefully!");
 								Server.this.serverSocket.close();
 							}
 						} catch (IOException | InterruptedException e) {
@@ -66,8 +91,13 @@ public class Server {
 			});
 	}
 	
-	public void receiveMessage(NetworkMessage mes) {
-		this.service.sendMessage(mes);
+	/**
+	 * Return the port the server listens to.
+	 * 
+	 * @return Returns the port the server listens to
+	 */
+	public int getPort() {
+		return this.port;
 	}
 	
 	// This runnable awaits connections and forwards them
@@ -121,14 +151,14 @@ public class Server {
 					  
 					  //start a new Handlerthread
 					  Handler newHandler = new Handler(this, clientSocket, pool, getNextID());
-					  handlerList.add(newHandler);
-					  pool.execute(newHandler);
+					  this.handlerList.add(newHandler);
+					  this.pool.execute(newHandler);
 				 }
 			 } catch (IOException e) {
 				 // do not print the stacktrace, because this was not an error
-				 System.out.println("--- Interrupt NetworkService-run");
+				 Server.log.warning("NetworkService got interrupted");
 			 } finally {
-				System.out.println("--- Stop NetworkService");
+				Server.log.info("NetworkService is getting stopped");
 				
 				// do not accept new requests
 				this.pool.shutdown();
@@ -136,7 +166,7 @@ public class Server {
 					//wait up to 4 seconds for the end of pending requests
 					this.pool.awaitTermination(4L, TimeUnit.SECONDS);
 					if (!serverSocket.isClosed()) {
-						System.out.println("--- Stopped NetworkService");
+						Server.log.warning("NetworkService stopped manually");
 						serverSocket.close();
 					}
 				} catch (IOException | InterruptedException e) {
@@ -216,7 +246,7 @@ public class Server {
 			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
 			out.writeInt(this.assoziatedID);
 			out.flush();
-			System.out.println("Sending the ClientID " + this.assoziatedID);
+			Server.log.info("Connecting to Client " + this.assoziatedID);
 			
 		}
 		
@@ -236,26 +266,29 @@ public class Server {
 					while (true) {
 						// read a network message from the input stream
 						NetworkMessage message = (NetworkMessage) in.readObject();
+						if (message.getID() == NetworkMessage.requestingConnectionStopID) {
+							break;
+						}
 						synchronized (this.inMessages) {
 							this.inMessages.offer(message);
 							this.inMessages.notifyAll();
 						}
-						System.out.println("Got that message!");
+						Server.log.finest("Client #" + Handler.this.assoziatedID + "\nReceived message");
 					}
 				} catch (IOException e) {
-					System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
-					e.printStackTrace();
+					Server.log.severe("Client #" + Handler.this.assoziatedID + "\nConnection cut without sending close message.\n" + e.getMessage());
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+					Server.log.severe("Client #" + Handler.this.assoziatedID + "\nNot recognized Object was sent.");
+					//e.printStackTrace();
 				} finally {
 					if (!this.client.isClosed()) {
-						System.out.println("--- Closed client");
+						Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing the client");
 						try {
 							this.in.close();
 							this.client.close();
 						} catch (IOException e) {
-							System.out.println("Could not close client.");
-							e.printStackTrace();
+							Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close client.\n" + e.getMessage());
+							//e.printStackTrace();
 						}
 					}
 				}
@@ -284,29 +317,30 @@ public class Server {
 							if (!outMessages.isEmpty()) {
 								NetworkMessage message = outMessages.poll();
 								this.out.writeObject(message);
-								System.out.println("Sent that message!");
+								Server.log.finest("Client #" + Handler.this.assoziatedID + "\nSent a message!.");
 							}
 							this.out.flush();
 							try {
 								this.outMessages.wait();
 							} catch (InterruptedException e) {
-								e.printStackTrace();
+								Server.log.severe("Client #" + Handler.this.assoziatedID + "\nWhile waiting for new messages, I got Interrupted\n" + e.getMessage());
+								//e.printStackTrace();
 							}
 						}
 					}
 					
 				} catch (IOException e) {
-					System.out.println("IOException --- in Handlerthread " + Thread.currentThread());
-					e.printStackTrace();
+					Server.log.warning("Client #" + Handler.this.assoziatedID + "\nConnection cut without sending close message.\n" + e.getMessage());
+					//e.printStackTrace();
 				} finally {
 					if (!this.client.isClosed()) {
-						System.out.println("--- Closed client");
+						Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing the client.");
 						try {
 							this.out.close();
 							this.client.close();
 						} catch (IOException e) {
-							System.out.println("Could not close client.");
-							e.printStackTrace();
+							Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close client.\n" + e.getMessage());
+							//e.printStackTrace();
 						}
 					}
 				}

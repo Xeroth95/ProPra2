@@ -7,9 +7,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import de.hhu.propra14.team132.gameSystem.Communicable;
+import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
 
-public class Client {
+/**
+ * 
+ * @author <a email-to="Sebastian.Sura@uni-duesseldorf.de">Sebastian Sura</a>
+ *
+ */
+public class Client implements Communicable {
 	/*
 	 * This class does the following:
 	 * 1) Create a 'FutureTask' with a parameter of a 'ClientHandler' instance
@@ -19,7 +26,7 @@ public class Client {
 	 
 	 public static void main(String[] args) {	
 		try {
-			Client client = new Client(args[0], 3141);
+			Client client = new Client(null, args[0], 3141);
 			String in = null;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			do {
@@ -42,8 +49,16 @@ public class Client {
 	 private Socket server;
 	 private int clientID;
 	 
-	 
-	 public Client(String serverIP, int port) throws IOException {
+	 /**
+	  * Creates a client that tries to connect to a server.
+	  * 
+	  * @param g The {@link GameManager} that started the game
+	  * @param serverIP The IP-adress of the server you want to connect to
+	  * @param port The port the server listens to
+	  * @throws IOException
+	  * @see Server
+	  */
+	 public Client(GameManager g, String serverIP, int port) throws IOException {
 		this.messageInBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
 		this.messageOutBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
 		this.server 			= new Socket(serverIP, port);
@@ -64,13 +79,11 @@ public class Client {
 		}
 	 } 
 	 
-	 private int getClientID() throws IOException {
-		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
-		Integer clientID = in.readInt();
-		System.out.println("Got ClientID : " + clientID);
-		return clientID;
-	}
-	 
+	 /**
+	  * Closes the connection.
+	  * 
+	  * @throws IOException
+	  */
 	 public void close() throws IOException {
 		 if (server != null) {
 			 server.close();
@@ -83,6 +96,11 @@ public class Client {
 		 }
 	 }
 	 
+	 /**
+	  * Sends the message over the network.
+	  * 
+	  * @param message The {@link Message} to send.
+	  */
 	 public void receiveMessage(Message message) {
 		 NetworkMessage netMessage = new NetworkMessage(message, this.clientID);
 		 synchronized (this.messageOutBuffer) {
@@ -91,6 +109,18 @@ public class Client {
 			 }
 		 }
 	 }
+	 
+	@Override
+	public void register(GameManager gameManager) {
+		// TODO Auto-generated method stub
+	}
+	 
+	 private int getClientID() throws IOException {
+		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
+		Integer clientID = in.readInt();
+		System.out.println("Got ClientID : " + clientID);
+		return clientID;
+	}
 	 
 	 private class Sender implements Runnable {
 		 private final Socket server;
