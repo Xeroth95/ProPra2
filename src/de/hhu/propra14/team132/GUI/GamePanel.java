@@ -29,8 +29,6 @@ public class GamePanel extends JPanel {
     JScrollBar hbar;
     JScrollBar vbar;
     Graphics2D g2d;
-    BufferedImage textureTerrainImage;
-    TexturePaint textureTerrain;
     GameObject[] gameObjects;
     ArrayList<Integer> objectIDs;
     double mouseLocationX, mouseLocationY;
@@ -47,8 +45,6 @@ public class GamePanel extends JPanel {
         autoscrolling=false;
         gameObjects=gameManager.gameMap.getMapObjects();
         objectIDs=gameManager.gameMap.getObjectIds();
-        textureTerrainImage=ImageIO.read(new File("resources/img/textures/terrain.jpg"));
-        textureTerrain=new TexturePaint(textureTerrainImage, new Rectangle(0,0,48,48));
         this.setPreferredSize(new Dimension(8192, 8192));
         this.addMouseListener(new GameMouseListener());
     }
@@ -58,7 +54,7 @@ public class GamePanel extends JPanel {
         g2d=(Graphics2D) g;
 
         for(int i : objectIDs) {
-            gameObjects[i].draw(g2d, textureTerrain);
+            gameObjects[i].draw(g2d);
         }
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
@@ -97,7 +93,6 @@ public class GamePanel extends JPanel {
     public void scroll(JScrollBar hbar, JScrollBar vbar, int targetX, int targetY) {
         //this method makes the scrollbars scroll to a certain position, which is defined by targetX and targetY
 
-        Graphics g=this.getGraphics();
         autoscrolling=true;
         while(hbar.getValue() != targetX || vbar.getValue() != targetY) {
             if(hbar.getValue() < targetX) {
