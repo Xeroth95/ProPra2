@@ -22,7 +22,7 @@ public class Server {
 	
 	public static void main(String[] argv) {
 		try {
-			Server server = new Server(null, 3141);
+			Server server = new Server(null, 3333);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -206,7 +206,7 @@ public class Server {
 			
 			public void run() {
 				try {
-					this.in = new ObjectInputStream(client.getInputStream());
+					this.in = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
 					while (true) {
 						// read a network message from the input stream
 						NetworkMessage message = (NetworkMessage) in.readObject();
@@ -246,7 +246,7 @@ public class Server {
 			
 			public void run() {
 				try {
-					this.out = new ObjectOutputStream(client.getOutputStream());
+					this.out = new ObjectOutputStream(new BufferedOutputStream(client.getOutputStream()));
 					while (true) {
 						//wait for messages to come
 						while (outMessages.isEmpty());
@@ -254,6 +254,7 @@ public class Server {
 						while (!outMessages.isEmpty()) {
 							NetworkMessage message = outMessages.poll();
 							this.out.writeObject(message);
+							this.out.flush();
 							System.out.println("Sent that message!");
 						}
 					}

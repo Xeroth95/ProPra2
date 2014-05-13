@@ -20,7 +20,7 @@ public class Client {
 	 
 	 public static void main(String[] args) {	
 		try {
-			Client client = new Client(args[0], 3141);
+			Client client = new Client(args[0], 3333);
 			String in = null;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			do {
@@ -97,13 +97,14 @@ public class Client {
 		 
 		 public void run() {
 			 try {
-				ObjectOutputStream oos = new ObjectOutputStream(server.getOutputStream());
+				ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(server.getOutputStream()));
 				while (true) {
 					 if (Client.this.toSend) {
 						 NetworkMessage message = Client.this.messageOutBuffer.poll();
 						 if ( message == null ) continue;
 						 Client.this.toSend = (Client.this.messageOutBuffer.peek() == null);
 						 oos.writeObject(message);
+						 oos.flush();
 						 System.out.println("Message sent!");
 					 }
 				 }
@@ -134,7 +135,7 @@ public class Client {
 		
 		public void run() {
 			try {
-				this.in = new ObjectInputStream(server.getInputStream());
+				this.in = new ObjectInputStream(new BufferedInputStream(server.getInputStream()));
 				while (true) {
 					NetworkMessage message = (NetworkMessage) in.readObject();
 					if (Client.this.messageInBuffer.offer(message)) {
