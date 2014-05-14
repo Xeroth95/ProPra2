@@ -28,6 +28,10 @@ public class Map {
 	
 	GameManager manager;
 	
+	int round;
+	
+	Integer currentTick;
+	
 	RuleSet ruleset;
 	
 	Player[] players;
@@ -36,6 +40,10 @@ public class Map {
 		this.initializeBasics(manager, playerCount);
 		sizeX=0;
 		sizeY=0;
+	}
+	public Map(GameManager manager,int playerCount,RuleSet ruleSet){
+		this(manager,playerCount);
+		this.ruleset=ruleSet;
 	}
 	private void initializeBasics(GameManager manager, int playerCount){
 		
@@ -52,6 +60,8 @@ public class Map {
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
 		
 		players = new Player[playerCount];
+		
+		currentTick = manager.getCurrentTick();
 		
 		for(int i = 0; i<playerCount; i++){
 			players[i]=new Player();
@@ -108,6 +118,9 @@ public class Map {
 		this.aviableIds.add(objectID);
 	}
 	
+	public Integer getCurrentTick() {
+		return currentTick;
+	}
 	public RuleSet getRuleset() {
 		return ruleset;
 	}
