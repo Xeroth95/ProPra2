@@ -5,6 +5,8 @@ import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import java.io.IOException;
+
 public class SetUpWormsRule extends StartUpRule {
 	int numberOfPlayers;
 	int[] wormsToStartWith;
@@ -15,10 +17,14 @@ public class SetUpWormsRule extends StartUpRule {
 	}
 
 	@Override
-	public void applyRule() {
-		stupidTestPlacementOfWorms();
-	}
-	private void stupidTestPlacementOfWorms(){
+	public void applyRule() throws IOException {
+        try {
+            stupidTestPlacementOfWorms();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	private void stupidTestPlacementOfWorms() throws IOException {
 		for(int i=0;i<numberOfPlayers;i++){
 			for(int j=0;j<wormsToStartWith[i];j++){
 				Player p = gameMap.getPlayers()[i];

@@ -44,22 +44,8 @@ public class Projectile extends GameObject{
     }
 
     //Drawable Methods:
-    public void draw(Graphics g, Color color, int posX, int posY) {
-
-    }
-
     @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint) {
+    public void draw(Graphics2D g2d) {
 
     }
 

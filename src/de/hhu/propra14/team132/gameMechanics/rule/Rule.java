@@ -3,6 +3,8 @@ package de.hhu.propra14.team132.gameMechanics.rule;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
+import java.io.IOException;
+
 public abstract class Rule {
 	Map gameMap;
 	public Rule(Map gameMap){
@@ -14,5 +16,5 @@ public abstract class Rule {
 	
 	protected abstract MessageType[] defineMessageTypesToReactTo();
 	
-	public abstract void applyRule();
+	public abstract void applyRule() throws IOException;
 }

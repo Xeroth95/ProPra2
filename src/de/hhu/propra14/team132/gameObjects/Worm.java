@@ -7,7 +7,11 @@ import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -30,11 +34,17 @@ public class Worm extends GameObject {
     	vert[7]=new Vector2D(0,10);
     	shape = new ConvexCollisionShape(vert);
     }
+
+    BufferedImage textureImage;
+    TexturePaint texture;
     
     //constructors:
-    public Worm(int teamID, Map map, String name) {
+    public Worm(int teamID, Map map, String name) throws IOException {
         super(shape, teamID, map);
         this.name = name;
+
+        textureImage= ImageIO.read(new File("resources/img/textures/worm.jpg"));
+        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
@@ -52,19 +62,9 @@ public class Worm extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
-        g.setPaint(paint);
-        g.fillOval(posX, posY, 10, 10);
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint) {
-
+    public void draw(Graphics2D g2d) {
+        g2d.setPaint(texture);
+        g2d.fillPolygon(shape.getPolygonToDraw());
     }
 
 	@Override

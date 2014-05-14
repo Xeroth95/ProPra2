@@ -7,7 +7,12 @@ doc/
 # Java
 *.class
 hs_err_pid*
+# Eclipse
 .project
 .classpath
 .settings/
 bin/
+Makefile
+.gitignore
+*~
+*#

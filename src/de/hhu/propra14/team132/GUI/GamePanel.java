@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameSystem.GameManager;
@@ -12,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by fabian on 02.05.14.
@@ -20,19 +22,15 @@ public class GamePanel extends JPanel {
     //this is where the action will take place
     //but for now there is not much to show
 
-    //MainFrame mainFrame;
     MainPanel mainPanel;
     MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
     GameManager gameManager;
     JScrollBar hbar;
     JScrollBar vbar;
-    Image bufferedImage;
-    Graphics2D bufferedGraphics;
-    Dimension terrainSize;
-    BufferedImage textureTerrainImage;
-    TexturePaint textureTerrain;
-    int width, height;
+    Graphics2D g2d;
+    GameObject[] gameObjects;
+    ArrayList<Integer> objectIDs;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
 
@@ -45,44 +43,19 @@ public class GamePanel extends JPanel {
         this.gameManager=gameManager;
 
         autoscrolling=false;
-        textureTerrainImage=ImageIO.read(new File("resources/img/textures/terrain.jpg"));
-        textureTerrain=new TexturePaint(textureTerrainImage, new Rectangle(0,0,48,48));
-        terrainSize=new Dimension((int)gameManager.terrain.getCollisionShapes()[0].getMaxOnX(), (int)gameManager.terrain.getCollisionShapes()[0].getMaxOnY());
-        this.setPreferredSize(terrainSize);//set prefferred size of this panel because scrollPane needs to know the size of the panel it scrolls
-        width=(int)this.getPreferredSize().getWidth();
-        height=(int)this.getPreferredSize().getHeight();
-        mainFrame.setMaximizedBounds(new Rectangle(0,0,width,height));
+        gameObjects=gameManager.gameMap.getMapObjects();
+        objectIDs=gameManager.gameMap.getObjectIds();
+        this.setPreferredSize(new Dimension(8192, 8192));
         this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d=(Graphics2D) g;
+        g2d=(Graphics2D) g;
 
-        if(bufferedImage==null) {
-            //check if buffer is empty and if yes, refresh it;
-            bufferedImage=this.createImage(width, height);
-            bufferedGraphics=(Graphics2D) (bufferedImage.getGraphics());
+        for(int i : objectIDs) {
+            gameObjects[i].draw(g2d);
         }
-
-        //draw obstacles
-        for(int i=0; i<gameManager.obstacles.length; i++) {
-            gameManager.obstacles[i].draw(bufferedGraphics,Color.DARK_GRAY);
-        }
-        //draw terrain
-        gameManager.terrain.draw(bufferedGraphics,textureTerrain);
-        //draw team1
-        gameManager.worm1_1.draw(bufferedGraphics,Color.PINK,100,438);
-        gameManager.worm1_2.draw(bufferedGraphics,Color.PINK,120,432);
-        gameManager.worm1_3.draw(bufferedGraphics,Color.PINK,132,428);
-        gameManager.worm1_4.draw(bufferedGraphics,Color.PINK,150,422);
-        //draw team2
-        gameManager.worm2_1.draw(bufferedGraphics,Color.PINK,763,306);
-        gameManager.worm2_2.draw(bufferedGraphics,Color.PINK,750,300);
-        gameManager.worm2_3.draw(bufferedGraphics,Color.PINK,735,293);
-        gameManager.worm2_4.draw(bufferedGraphics,Color.PINK,722,287);
-
-        g2d.drawImage(bufferedImage,0,0,this);
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
@@ -124,24 +97,20 @@ public class GamePanel extends JPanel {
         while(hbar.getValue() != targetX || vbar.getValue() != targetY) {
             if(hbar.getValue() < targetX) {
                 hbar.setValue(hbar.getValue() + 1);//scroll right
-                this.update(bufferedGraphics);
-                this.getGraphics().drawImage(bufferedImage,0,0,this);
+                this.update(g2d);
             }
             else if(hbar.getValue() > targetX) {
                 hbar.setValue(hbar.getValue() - 1);//scroll left
-                this.update(bufferedGraphics);
-                this.getGraphics().drawImage(bufferedImage,0,0,this);
+                this.update(g2d);
             }
 
             if(vbar.getValue() < targetY) {
                 vbar.setValue(vbar.getValue() + 1);//scroll up
-                this.update(bufferedGraphics);
-                this.getGraphics().drawImage(bufferedImage,0,0,this);
+                this.update(g2d);
             }
             else if(vbar.getValue() > targetY) {
                 vbar.setValue(vbar.getValue() - 1);//scroll down
-                this.update(bufferedGraphics);
-                this.getGraphics().drawImage(bufferedImage,0,0,this);
+                this.update(g2d);
             }
         }
         autoscrolling=false;

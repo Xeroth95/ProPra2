@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameMechanics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
@@ -36,16 +37,16 @@ public class Map {
 	
 	Player[] players;
 	
-	public Map(GameManager manager,int playerCount){
+	public Map(GameManager manager,int playerCount) throws IOException {
 		this.initializeBasics(manager, playerCount);
 		sizeX=0;
 		sizeY=0;
 	}
-	public Map(GameManager manager,int playerCount,RuleSet ruleSet){
+	public Map(GameManager manager,int playerCount,RuleSet ruleSet)throws IOException{
 		this(manager,playerCount);
 		this.ruleset=ruleSet;
 	}
-	private void initializeBasics(GameManager manager, int playerCount){
+	private void initializeBasics(GameManager manager, int playerCount) throws IOException {
 		
 		this.manager=manager;
 
@@ -136,7 +137,10 @@ public class Map {
 	public GameObject[] getMapObjects() {
 		return mapObjects;
 	}
-	public void setMapObjects(GameObject[] mapObjects) {
+    public ArrayList<Integer> getObjectIds() {
+        return objectIds;
+    }
+    public void setMapObjects(GameObject[] mapObjects) {
 		this.mapObjects = mapObjects;
 	}
 	public boolean isActive() {

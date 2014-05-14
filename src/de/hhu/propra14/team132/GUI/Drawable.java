@@ -7,9 +7,5 @@ import java.awt.*;
  */
 public abstract interface Drawable {
     //every object that wants to be drawn on the GamePanel has to implement this interface
-    public abstract void draw(Graphics2D g, Paint paint, int posX, int posY);
-
-    public abstract void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY);
-
-    public abstract void draw(Graphics2D g, Paint paint);
+    public abstract void draw(Graphics2D g2d);
 }

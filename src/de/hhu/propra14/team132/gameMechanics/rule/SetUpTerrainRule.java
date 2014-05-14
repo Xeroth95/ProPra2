@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
@@ -18,7 +19,7 @@ public class SetUpTerrainRule extends StartUpRule {
 	
 
 	@Override
-	public void applyRule() {
+	public void applyRule() throws IOException {
 		if(this.terrainToUse==null){
 			terrainToUse = randomGenerateTerrain();
 		}
@@ -26,7 +27,7 @@ public class SetUpTerrainRule extends StartUpRule {
 			gameMap.addObject(t);
 		}
 	}
-	private ArrayList<Terrain> randomGenerateTerrain(){
+	private ArrayList<Terrain> randomGenerateTerrain() throws IOException {
 		ArrayList<Terrain> newTerrain = new ArrayList<>();
 		double[] x = {500,6000,6000,500}, y= {4000,4000,500,500};
 		ConvexCollisionShape stub =new ConvexCollisionShape(x,y);

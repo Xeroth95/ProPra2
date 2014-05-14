@@ -9,23 +9,39 @@ import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Created by isabel on 06.05.14.
  */
 public class Terrain extends GameObject {
-    public Terrain(Map map) {
+    BufferedImage textureImage;
+    TexturePaint texture;
+
+    public Terrain(Map map) throws IOException {
         super(Player.WORLD, map);
+
+        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
+        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
 
-    public Terrain(ConvexCollisionShape[] shapes, Map map) {
+    public Terrain(ConvexCollisionShape[] shapes, Map map) throws IOException {
         super(shapes, Player.WORLD, map);
+
+        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
+        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
 
-    public Terrain(ConvexCollisionShape shape, Map map) {
+    public Terrain(ConvexCollisionShape shape, Map map) throws IOException {
         super(shape, Player.WORLD, map);
+
+        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
+        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
@@ -43,26 +59,15 @@ public class Terrain extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY) {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint, int posX, int posY, int sizeX, int sizeY) {
-
-    }
-
-    @Override
-    public void draw(Graphics2D g, Paint paint) {
-        g.setPaint(paint);
+    public void draw(Graphics2D g2d){
+        g2d.setPaint(this.texture);
         for(ConvexCollisionShape s : this.collisionShapes){
-        	g.fillPolygon(s.getPolygonToDraw());
+        	g2d.fillPolygon(s.getPolygonToDraw());
         }
     }
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Effect>();
 	}
 
 }
