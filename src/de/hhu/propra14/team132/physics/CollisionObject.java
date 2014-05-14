@@ -79,8 +79,8 @@ public abstract strictfp class CollisionObject {
 	public void collideWithCheckTeam(CollisionObject o){
 		if(this.playerID!=o.playerID) collideWith(o);
 	}
-	
 	public void collideWith(CollisionObject o){
+		
 		if (this.getLastCollidedWith() != o.getPhysicsID() && o.getLastCollidedWith() != this.getPhysicsID()){
 			if (o.getCollisionMode() == CollisionMode.NOT_EXPLOADING && this.collisionMode == CollisionMode.NOT_EXPLOADING) {
 				for (ConvexCollisionShape s : this.collisionShapes) {

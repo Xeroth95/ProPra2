@@ -30,7 +30,13 @@ public class SetUpWormsRule extends StartUpRule {
 	}
 	@Override
 	public void applyRule() {
-		stupidTestPlacementOfWorms();
+//		stupidTestPlacementOfWorms();
+
+		Player p = gameMap.getPlayers()[0];
+		Worm w = new Worm(p.getPlayerID(), gameMap, "TestName");
+		w.setPosition(new Vector2D(600,600));
+		gameMap.addObject(w);
+		p.getWorms().add(w);
     }
 	private void stupidTestPlacementOfWorms() {
 		for(int i=0;i<numberOfPlayers;i++){
