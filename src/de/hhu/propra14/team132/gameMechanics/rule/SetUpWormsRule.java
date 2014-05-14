@@ -10,12 +10,24 @@ import java.io.IOException;
 public class SetUpWormsRule extends StartUpRule {
 	int numberOfPlayers;
 	int[] wormsToStartWith;
-	public SetUpWormsRule(Map gameMap) {
+	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith) {
 		super(gameMap);
 		this.numberOfPlayers=gameMap.getPlayers().length;
-		wormsToStartWith = new int[numberOfPlayers];
+		if(wormsToStartWith.length!=numberOfPlayers){
+			System.err.println("Unexpected array size!");
+			System.exit(-1);
+		}
+		this.wormsToStartWith = wormsToStartWith;
+		
 	}
-
+	public SetUpWormsRule(Map gameMap,int wormsToStartWith) {
+		super(gameMap);
+		this.numberOfPlayers=gameMap.getPlayers().length;
+		this.wormsToStartWith = new int[numberOfPlayers];
+		for(int i=0;i<this.wormsToStartWith.length;i++){
+			this.wormsToStartWith[i]=wormsToStartWith;
+		}
+	}
 	@Override
 	public void applyRule() {
 		stupidTestPlacementOfWorms();
@@ -25,7 +37,7 @@ public class SetUpWormsRule extends StartUpRule {
 			for(int j=0;j<wormsToStartWith[i];j++){
 				Player p = gameMap.getPlayers()[i];
 				Worm w = new Worm(p.getPlayerID(), gameMap, "TestName");
-				w.setPosition(new Vector2D(500*i+50*j,1000));
+				w.setPosition(new Vector2D(500*i+50*j,600));
 				gameMap.addObject(w);
 				p.getWorms().add(w);
 			}

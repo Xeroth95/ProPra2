@@ -38,14 +38,17 @@ public class Terrain extends GameObject {
 
     public Terrain(Map map)  {
         super(Player.WORLD, map);
+        this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
     }
 
     public Terrain(ConvexCollisionShape[] shapes, Map map) {
         super(shapes, Player.WORLD, map);
+        this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
     }
 
     public Terrain(ConvexCollisionShape shape, Map map) {
         super(shape, Player.WORLD, map);
+        this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {

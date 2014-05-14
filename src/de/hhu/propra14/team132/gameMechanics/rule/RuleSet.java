@@ -19,7 +19,7 @@ public class RuleSet {
 	public static RuleSet generateStandardRules(Map gameMap){
 		RuleSet r= new RuleSet(gameMap);
 		r.startUpRules.add(new SetUpTerrainRule(gameMap));
-		r.startUpRules.add(new SetUpWormsRule(gameMap));
+		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
 		return r;
 	}
 	

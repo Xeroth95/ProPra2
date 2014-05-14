@@ -29,7 +29,7 @@ public class SetUpTerrainRule extends StartUpRule {
 	}
 	private ArrayList<Terrain> randomGenerateTerrain() {
 		ArrayList<Terrain> newTerrain = new ArrayList<>();
-		double[] x = {500,6000,6000,500}, y= {4000,4000,500,500};
+		double[] x = {500,6000,6000,500}, y= {100,100,500,500};
 		ConvexCollisionShape stub =new ConvexCollisionShape(x,y);
 		newTerrain.add(new Terrain(stub, gameMap));
 		return newTerrain;

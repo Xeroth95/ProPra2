@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class Worm extends GameObject {
     private String name;
     private int life;
-    private static final ConvexCollisionShape shape;
-    
+    private static final Vector2D[] vertices;
+    private final ConvexCollisionShape shape;
     static{
     	Vector2D[] vert=new Vector2D[8];
     	vert[0]=new Vector2D(10,0);
@@ -32,19 +32,20 @@ public class Worm extends GameObject {
     	vert[5]=new Vector2D(10,30);
     	vert[6]=new Vector2D(0,20);
     	vert[7]=new Vector2D(0,10);
-    	shape = new ConvexCollisionShape(vert);
+    	vertices = vert;
     }
 
     BufferedImage textureImage;
     TexturePaint texture;
     
     //constructors:
-    public Worm(int teamID, Map map, String name) {
-        super(shape, teamID, map);
+    public Worm(int teamID, Map map, String name){
+        super(new ConvexCollisionShape(vertices), teamID, map);
+        shape=this.collisionShapes[0];
         this.name = name;
         
         try{
-	        textureImage= ImageIO.read(new File("resources/img/textures/worm.jpg"));
+	        textureImage= ImageIO.read(new File("resources/img/textures/nic.png"));
 	        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms");
@@ -59,7 +60,7 @@ public class Worm extends GameObject {
 
     @Override
     public double getInitialBounciness() {
-        return 0;
+        return 0.7;
     }
 
     @Override

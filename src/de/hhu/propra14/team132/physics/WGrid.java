@@ -343,7 +343,6 @@ public strictfp class WGrid extends CollisionSystem{
 			else{
 				level= (int)  ( Math.log(lratio) * WGrid.ONE_OVER_LN2 );
 			}
-
 			int cellnum = this.cellsBeforeLevel[level] + (int)(y[0] / (this.length / this.linecountAtLevel[level])) * this.linecountAtLevel[level] + (int)(x[0] / (this.width / this.linecountAtLevel[level]));
 			//a + b*a /c + d/a
 			for (int a = 0; a < MAX_OBJECT_COUNT_PER_CELL; a++) {

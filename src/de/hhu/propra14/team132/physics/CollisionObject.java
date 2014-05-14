@@ -28,7 +28,7 @@ public abstract strictfp class CollisionObject {
 	int physicsID;
 	int lastCollidedWith;
 	private CollisionMode collisionMode;
-	int collisionTranslationBehaviour;
+	public int collisionTranslationBehaviour;
 	
 	ArrayList<Effect> effects;
 	

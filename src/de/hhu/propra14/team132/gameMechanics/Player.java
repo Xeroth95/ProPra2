@@ -8,11 +8,12 @@ public class Player {
 	public static final int WORLD = 0;
 	private static int playerCount=1;
 	public int playerID;
-	
+
+	private ArrayList<Worm> worms;
 	public  Player(){
 		this.playerID=getNextPlayerInt();
+		this.worms=new ArrayList<Worm>();
 	}
-	private ArrayList<Worm> worms;
 	
 	private static int getNextPlayerInt(){
 		return playerCount++;
