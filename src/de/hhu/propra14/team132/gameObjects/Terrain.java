@@ -19,29 +19,33 @@ import java.util.ArrayList;
 /**
  * Created by isabel on 06.05.14.
  */
+
+
 public class Terrain extends GameObject {
-    BufferedImage textureImage;
-    TexturePaint texture;
+    static BufferedImage textureImage;
+    static TexturePaint texture;
+    
+    static{
+    	try{
+    		textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
+            texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+    	}catch(IOException e){
+    		System.err.println("could not load the Texture for the Terrain!");
+    		e.printStackTrace();
+    		System.exit(-1);
+    	}
+    }
 
-    public Terrain(Map map) throws IOException {
+    public Terrain(Map map)  {
         super(Player.WORLD, map);
-
-        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
-        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
 
-    public Terrain(ConvexCollisionShape[] shapes, Map map) throws IOException {
+    public Terrain(ConvexCollisionShape[] shapes, Map map) {
         super(shapes, Player.WORLD, map);
-
-        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
-        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
 
-    public Terrain(ConvexCollisionShape shape, Map map) throws IOException {
+    public Terrain(ConvexCollisionShape shape, Map map) {
         super(shape, Player.WORLD, map);
-
-        textureImage= ImageIO.read(new File("resources/img/textures/terrain.jpg"));
-        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {

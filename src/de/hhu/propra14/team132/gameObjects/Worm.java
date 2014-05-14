@@ -39,12 +39,18 @@ public class Worm extends GameObject {
     TexturePaint texture;
     
     //constructors:
-    public Worm(int teamID, Map map, String name) throws IOException {
+    public Worm(int teamID, Map map, String name) {
         super(shape, teamID, map);
         this.name = name;
-
-        textureImage= ImageIO.read(new File("resources/img/textures/worm.jpg"));
-        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+        
+        try{
+	        textureImage= ImageIO.read(new File("resources/img/textures/worm.jpg"));
+	        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+        }catch(IOException e){
+        	System.err.println("Unable to load Texture for the Worms");
+        	e.printStackTrace();
+        	System.exit(-1);
+        }
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {

@@ -17,14 +17,10 @@ public class SetUpWormsRule extends StartUpRule {
 	}
 
 	@Override
-	public void applyRule() throws IOException {
-        try {
-            stupidTestPlacementOfWorms();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	public void applyRule() {
+		stupidTestPlacementOfWorms();
     }
-	private void stupidTestPlacementOfWorms() throws IOException {
+	private void stupidTestPlacementOfWorms() {
 		for(int i=0;i<numberOfPlayers;i++){
 			for(int j=0;j<wormsToStartWith[i];j++){
 				Player p = gameMap.getPlayers()[i];

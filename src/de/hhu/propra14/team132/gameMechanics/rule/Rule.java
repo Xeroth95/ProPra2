@@ -16,5 +16,5 @@ public abstract class Rule {
 	
 	protected abstract MessageType[] defineMessageTypesToReactTo();
 	
-	public abstract void applyRule() throws IOException;
+	public abstract void applyRule();
 }

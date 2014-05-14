@@ -37,16 +37,16 @@ public class Map {
 	
 	Player[] players;
 	
-	public Map(GameManager manager,int playerCount) throws IOException {
+	public Map(GameManager manager,int playerCount) {
 		this.initializeBasics(manager, playerCount);
 		sizeX=0;
 		sizeY=0;
 	}
-	public Map(GameManager manager,int playerCount,RuleSet ruleSet)throws IOException{
+	public Map(GameManager manager,int playerCount,RuleSet ruleSet){
 		this(manager,playerCount);
 		this.ruleset=ruleSet;
 	}
-	private void initializeBasics(GameManager manager, int playerCount) throws IOException {
+	private void initializeBasics(GameManager manager, int playerCount){
 		
 		this.manager=manager;
 

@@ -23,12 +23,12 @@ public class RuleSet {
 		return r;
 	}
 	
-	public void applyRuntimeRules() throws IOException {
+	public void applyRuntimeRules() {
 		for(RuntimeRule s : runtimeRules){
 			s.applyRule();
 		}
 	}
-	public void applyStartUpRules() throws IOException {
+	public void applyStartUpRules() {
 		for(StartUpRule s : startUpRules){
 			s.applyRule();
 		}

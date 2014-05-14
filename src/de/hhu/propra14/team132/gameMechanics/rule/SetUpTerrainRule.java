@@ -19,7 +19,7 @@ public class SetUpTerrainRule extends StartUpRule {
 	
 
 	@Override
-	public void applyRule() throws IOException {
+	public void applyRule() {
 		if(this.terrainToUse==null){
 			terrainToUse = randomGenerateTerrain();
 		}
@@ -27,7 +27,7 @@ public class SetUpTerrainRule extends StartUpRule {
 			gameMap.addObject(t);
 		}
 	}
-	private ArrayList<Terrain> randomGenerateTerrain() throws IOException {
+	private ArrayList<Terrain> randomGenerateTerrain() {
 		ArrayList<Terrain> newTerrain = new ArrayList<>();
 		double[] x = {500,6000,6000,500}, y= {4000,4000,500,500};
 		ConvexCollisionShape stub =new ConvexCollisionShape(x,y);
