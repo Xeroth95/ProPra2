@@ -37,6 +37,8 @@ public class Map {
 	
 	Player[] players;
 	
+	Player currentPlayer;
+	
 	public Map(GameManager manager,int playerCount) {
 		this.initializeBasics(manager, playerCount);
 		sizeX=0;
@@ -67,6 +69,8 @@ public class Map {
 		for(int i = 0; i<playerCount; i++){
 			players[i]=new Player();
 		}
+		
+		this.currentPlayer=players[0];
 		
 		this.ruleset=RuleSet.generateStandardRules(this);
 		
@@ -119,6 +123,12 @@ public class Map {
 		this.aviableIds.add(objectID);
 	}
 	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 	public Integer getCurrentTick() {
 		return currentTick;
 	}
