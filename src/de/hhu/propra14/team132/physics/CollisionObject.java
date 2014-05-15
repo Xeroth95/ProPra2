@@ -3,6 +3,7 @@ package de.hhu.propra14.team132.physics;
 import java.util.ArrayList;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
@@ -78,7 +79,10 @@ public abstract strictfp class CollisionObject {
 	
 	//methods
 	public void collideWithCheckTeam(CollisionObject o){
-		if(this.playerID!=o.playerID) collideWith(o);
+		if(this.playerID==Player.WORLD&&o.playerID==Player.WORLD){
+			return;
+		}
+		collideWith(o);
 	}
 	public void collideWith(CollisionObject o){
 		
@@ -173,9 +177,10 @@ public abstract strictfp class CollisionObject {
 			
 		}
 		else{
+			mtv.multiplyWith(1.01);
 			this.getPosition().addVector(mtv);// get out of the collision completely on your own.
 			this.recalcPosition();
-			mtv.multiplyWith(-1.01);
+			mtv.multiplyWith(-1);
 			try {
 				mtv.makeUnitVector();
 			} catch (Exception e) {
@@ -213,7 +218,7 @@ public abstract strictfp class CollisionObject {
 			e.apply(this);
 		}
 		this.speed.addVector(this.acceleration);
-		if(this.speed.getLength()<0.01){
+		if(this.speed.getLength()<0.001){
 			this.speed.multiplyWith(0);
 			return;
 		}
