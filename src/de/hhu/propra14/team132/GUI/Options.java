@@ -28,7 +28,7 @@ public class Options implements Serializable{
     public void save()
     {
         try {
-            FileOutputStream fileOut = new FileOutputStream("resources/options/options.ser");
+            FileOutputStream fileOut = new FileOutputStream("res/options/options.ser");
             ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
             objectOut.writeObject(this);
             objectOut.close();

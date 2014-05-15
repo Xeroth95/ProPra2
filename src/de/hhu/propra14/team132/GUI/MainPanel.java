@@ -69,7 +69,7 @@ public class MainPanel extends JPanel {
 
     public void loadOptions() {
         //check if "resources/options/options.ser" exists, if yes, deserialize it, if not, create standard optionsobject
-        optionsFile=new File("resources/options/options.ser");
+        optionsFile=new File("res/options/options.ser");
         if(optionsFile.exists()) {
             //if an optionsfile already exists, load it
             try {
