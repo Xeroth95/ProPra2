@@ -68,6 +68,7 @@ public abstract strictfp class CollisionObject {
 		this.effects=this.getInitalEffects();
 		this.bounciness=this.getInitialBounciness();
 		this.friction=this.getInitialFriction();
+		this.collisionMode=this.getInitialCollisionMode();
 
 		collisionTranslationBehaviour=TRANSLATION_BEHAVIOUR_NORMAL;
 		
@@ -237,7 +238,7 @@ public abstract strictfp class CollisionObject {
 	public abstract double getInitialBounciness();
 	public abstract double getInitialFriction();
 	public abstract ArrayList<Effect> getInitalEffects();
-	
+	public abstract CollisionMode getInitialCollisionMode();
 	
 	public ArrayList<Effect> getEffects() {
 		return effects;

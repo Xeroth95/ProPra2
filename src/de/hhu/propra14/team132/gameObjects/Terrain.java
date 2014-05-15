@@ -4,12 +4,14 @@ import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,6 +41,7 @@ public class Terrain extends GameObject {
     public Terrain(Map map)  {
         super(Player.WORLD, map);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
+        
     }
 
     public Terrain(ConvexCollisionShape[] shapes, Map map) {
@@ -75,6 +78,11 @@ public class Terrain extends GameObject {
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
 		return new ArrayList<Effect>();
+	}
+
+	@Override
+	public CollisionMode getInitialCollisionMode() {
+		return CollisionMode.NOT_EXPLOADING;
 	}
 
 }

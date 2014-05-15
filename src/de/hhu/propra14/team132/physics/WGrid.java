@@ -265,8 +265,6 @@ public strictfp class WGrid extends CollisionSystem{
 			boolean lastRow=(i-this.cellsBeforeLevel[currentlevel]-1)/this.linecountAtLevel[currentlevel]==this.linecountAtLevel[currentlevel]-1;
 			boolean firstColumn=(i-this.cellsBeforeLevel[currentlevel]-1)%this.linecountAtLevel[currentlevel]==0;
 			boolean lastColumn=(i-this.cellsBeforeLevel[currentlevel]-1)%this.linecountAtLevel[currentlevel]==this.linecountAtLevel[currentlevel]-1;
-			
-			
 			wut:
 			if(firstColumn){//then do not try to put the parents of the cells left of it into the array
 				if(firstRow){//don't put the upper ones into it
@@ -278,7 +276,9 @@ public strictfp class WGrid extends CollisionSystem{
 					break wut;
 				}
 				//ok, both!
-				System.out.println(lastRow+", cell "+i+" level "+currentlevel+" linecount "+linecountAtLevel[currentlevel]+" cellsbeforelevel: " +cellsBeforeLevel[currentlevel+1] +"  "+cellsBeforeLevel[currentlevel]);
+//				System.out.println("first row: "+firstRow+" lastRow: "+lastRow+" firstColumn:" +firstColumn+" last column: "+lastColumn);
+//				System.out.println("cell "+i+" level "+currentlevel+" linecount "+linecountAtLevel[currentlevel]+" cellsbeforelevel: " +cellsBeforeLevel[currentlevel+1] +"  "+cellsBeforeLevel[currentlevel]);
+				
 				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
 				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
 			}
@@ -324,13 +324,13 @@ public strictfp class WGrid extends CollisionSystem{
 					int parent=parentsOfneighbors.get(j)[j2];
 					boolean parentAlreadySortedIn = false;
 					int pos = 0;
-					for (int a = 0; parentsOfI[i][a] != 0; a++, pos = a) { // go through until there is a free entry
-						if (parentsOfI[i][a] == parent) {// is this parentCell already in there???
+					for (int a = 0; parentsOfI[i-1][a] != 0; a++, pos = a) { // go through until there is a free entry
+						if (parentsOfI[i-1][a] == parent) {// is this parentCell already in there???
 							parentAlreadySortedIn = true;
 						}
 					}
 					if (!parentAlreadySortedIn) {// if it is in there don't put it in there multiple times!
-						parentsOfI[i][pos] = parent;
+						parentsOfI[i-1][pos] = parent;
 					}
 				}
 			}
@@ -374,7 +374,7 @@ public strictfp class WGrid extends CollisionSystem{
 //		System.out.println("row: "+row+" column: "+ column);
 //		System.out.println("rowOfParent: "+rowOfParent+",columnOfParent: "+columnOfParent);
 //		System.out.println("parentCellnum: "+parentCellNum+1);
-		return parentCellNum+1;
+		return parentCellNum;
 	}
 	
 	public void syncCollisionCheck(){
