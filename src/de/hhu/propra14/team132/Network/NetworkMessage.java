@@ -1,4 +1,4 @@
-package de.hhu.propra14.team132.network;
+package de.hhu.propra14.team132.Network;
 
 import java.io.Serializable;
 
