@@ -12,12 +12,15 @@ import de.hhu.propra14.team132.physics.util.Vector2D;
 public strictfp class  SetUpTerrainRule extends StartUpRule {
 	ArrayList<Terrain> terrainToUse;
 	
+	static private final double[][] noshape;
 	static private final double[][] square;
 	static private final double[][] triangleLeft;
 	static private final double[][] triangleRight;
 	
 	static private final double[][][]shapeverts;
 	static{
+		noshape=new double[0][0];
+		
 		square=new double[4][2];
 		square[0]=new double[]{0,0};
 		square[1]=new double[]{10,0};
@@ -34,10 +37,11 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 		triangleRight[1]=new double[]{10,0};
 		triangleRight[2]=new double[]{10,10};
 		
-		shapeverts=new double[3][][];
+		shapeverts=new double[4][][];
 		shapeverts[0]=square;
 		shapeverts[1]=triangleLeft;
 		shapeverts[2]=triangleRight;
+		shapeverts[3]=noshape;
 	}
 	
 	public SetUpTerrainRule(Map gameMap) {
@@ -82,6 +86,7 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 			double[][] randomshape;
 			int shapevert=(int)Math.round(Math.random()*(shapeverts.length-1));
 			randomshape=shapeverts[shapevert];
+			if(randomshape.length==0)continue;
 				Vector2D[] shape = new Vector2D[randomshape.length];
 				for(int a=0;a<randomshape.length;a++){
 					shape[a]=new Vector2D(randomshape[a][0]*10,randomshape[a][1]*10);
