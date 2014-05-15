@@ -42,8 +42,6 @@ public class MenuPanel extends JPanel{
         button_exit=new JButton("Exit");
         button_exit.addActionListener(new ExitListener());
 
-        chooser=new JFileChooser();
-
         this.setLayout(new GridLayout(5,1,10,10));
 
         this.add(button_new_game);
@@ -69,6 +67,7 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.soundEngine.play(klickSoundFile);
             try {
+                chooser=new JFileChooser();
                 chooser.showOpenDialog(null);
                 MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
             }
