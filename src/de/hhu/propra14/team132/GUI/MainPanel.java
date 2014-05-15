@@ -26,6 +26,7 @@ public class MainPanel extends JPanel {
     GameSettingsPanel gameSettingsPanel;
     StartGamePanel startGamePanel;
     LobbyPanel lobbyPanel;
+    InGameMenuPanel inGameMenuPanel;
 
     CardLayout mainPanelLayout;
 
@@ -47,6 +48,8 @@ public class MainPanel extends JPanel {
         gameSettingsPanel=new GameSettingsPanel(this);
         startGamePanel=new StartGamePanel(this);
         lobbyPanel=new LobbyPanel(this);
+        inGameMenuPanel=new InGameMenuPanel(this, gameManager);
+
         applyOptions();
 
         mainPanelLayout=new CardLayout();
@@ -65,6 +68,7 @@ public class MainPanel extends JPanel {
         this.add(startGamePanel, "8");
         this.add(lobbyPanel, "9");
         this.add(gameSettingsPanel, "10");
+        this.add(inGameMenuPanel, "11");
     }
 
     public void loadOptions() {
