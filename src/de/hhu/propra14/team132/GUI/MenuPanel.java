@@ -18,11 +18,11 @@ public class MenuPanel extends JPanel{
     SoundEngine soundEngine;
     File klickSoundFile;
 
-    JButton button_new_game;
-    JButton button_load_game;
-    JButton button_settings;
-    JButton button_about;
-    JButton button_exit;
+    JButton newGameButton;
+    JButton loadGameButton;
+    JButton settingsButton;
+    JButton aboutButton;
+    JButton exitButton;
     JFileChooser chooser;
     String pathToSavedGame;
 
@@ -31,24 +31,24 @@ public class MenuPanel extends JPanel{
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;
 
-        button_new_game=new JButton("New Game");
-        button_new_game.addActionListener(new NewGameListener());
-        button_load_game=new JButton("Load Game");
-        button_load_game.addActionListener(new LoadGameListener());
-        button_settings=new JButton("Settings");
-        button_settings.addActionListener(new SettingsListener());
-        button_about=new JButton("About");
-        button_about.addActionListener(new AboutListener());
-        button_exit=new JButton("Exit");
-        button_exit.addActionListener(new ExitListener());
+        newGameButton=new JButton("New Game");
+        newGameButton.addActionListener(new NewGameListener());
+        loadGameButton=new JButton("Load Game");
+        loadGameButton.addActionListener(new LoadGameListener());
+        settingsButton=new JButton("Settings");
+        settingsButton.addActionListener(new SettingsListener());
+        aboutButton=new JButton("About");
+        aboutButton.addActionListener(new AboutListener());
+        exitButton=new JButton("Exit");
+        exitButton.addActionListener(new ExitListener());
 
         this.setLayout(new GridLayout(5,1,10,10));
 
-        this.add(button_new_game);
-        this.add(button_load_game);
-        this.add(button_settings);
-        this.add(button_about);
-        this.add(button_exit);
+        this.add(newGameButton);
+        this.add(loadGameButton);
+        this.add(settingsButton);
+        this.add(aboutButton);
+        this.add(exitButton);
     }
 
     class NewGameListener implements ActionListener
