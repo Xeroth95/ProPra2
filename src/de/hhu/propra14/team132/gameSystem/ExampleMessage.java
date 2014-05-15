@@ -9,7 +9,5 @@ public class ExampleMessage extends Message {
         super(messageType);
         this.messageType=super.getMessageType();
     }
-    //add all the parameters and methods you need. Regarding the names:
-    //Choose Name of this class as <Messagetype>Message, where <Messagetype> is the Typ of your Message in Kleinbuchstaben
-
+    
 }
