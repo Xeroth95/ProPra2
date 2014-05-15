@@ -15,7 +15,7 @@ public interface Communicable {
                                             //cast it to the right Object and get the things it needs to do what it should to
 
     
-    public void register();  //todo: delete GameManager here. Is not needed
+    public void register();
     //ruft Registermethoden des GameManager auf und trägt sich in die arraylist die zu dem messagetype die diese Klasse erhalten will,
     //gehört. Es bekommt dann Methoden von diesem Typ
 }

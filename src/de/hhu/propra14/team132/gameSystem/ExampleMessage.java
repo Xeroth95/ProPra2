@@ -9,5 +9,5 @@ public class ExampleMessage extends Message {
         super(messageType);
         this.messageType=super.getMessageType();
     }
-    
+
 }

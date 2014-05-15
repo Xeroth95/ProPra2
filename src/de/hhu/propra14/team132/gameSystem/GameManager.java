@@ -210,14 +210,6 @@ public class GameManager {
         this.beforeStart = beforeStart;
     }
 
-    public static int getTicksPerSecond() {
-        return ticksPerSecond;
-    }
-
-    public static long getLengthOfTickInNanoSeconds() {
-        return lengthOfTickInNanoSeconds;
-    }
-
     public int getCurrentTick() {
         return currentTick;
     }
