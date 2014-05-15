@@ -1,9 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 02.05.14.
@@ -13,6 +16,8 @@ public class ControlSettingsPanel extends JPanel {
     //but for now it is just a placeholder
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JPanel panelMoveControls;
     JButton GoBackButton;
@@ -20,8 +25,11 @@ public class ControlSettingsPanel extends JPanel {
     JRadioButton buttonArrowControls;
     JRadioButton buttonWasdControls;
 
-    public ControlSettingsPanel(MainPanel mainPanel) {
+    public ControlSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel = mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
+
         this.setLayout(new GridLayout(2, 1, 10, 10));
 
         panelMoveControls=new JPanel(new FlowLayout());
@@ -54,6 +62,7 @@ public class ControlSettingsPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            ControlSettingsPanel.this.soundEngine.play(klickSoundFile);
             ControlSettingsPanel.this.mainPanel.showPanel("3");//switch back to setting menu
         }
     }

@@ -19,6 +19,7 @@ public class GamePanel extends JPanel {
     //this is where the action will take place
     //but for now there is not much to show
 
+    MainFrame mainFrame;
     MainPanel mainPanel;
     MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
@@ -28,12 +29,13 @@ public class GamePanel extends JPanel {
     Graphics2D g2d;
     GameObject[] gameObjects;
     ArrayList<Integer> objectIDs;
+    Font playerFont;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
 
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) throws IOException {
-        //this.mainFrame=mainFrame;
+        this.mainFrame=mainFrame;
         this.mainPanel=mainPanel;
         this.mainGamePanel=mainGamePanel;
         this.weaponsPanel=weaponsPanel;
@@ -42,6 +44,7 @@ public class GamePanel extends JPanel {
         autoscrolling=false;
         gameObjects=gameManager.gameMap.getMapObjects();
         objectIDs=gameManager.gameMap.getObjectIds();
+        playerFont=new Font("Arial", Font.BOLD, 20);
         this.setPreferredSize(new Dimension(8192, 8192));
         this.setFocusable(true);
         this.addKeyListener(new GameKeyListener());
@@ -56,6 +59,9 @@ public class GamePanel extends JPanel {
         for(int i : objectIDs) {
             gameObjects[i].draw(g2d, this);
         }
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(playerFont);
+        g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0,18);
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();

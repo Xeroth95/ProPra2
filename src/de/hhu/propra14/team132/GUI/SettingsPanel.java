@@ -1,10 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Set;
+import java.io.File;
 
 /**
  * Created by fabian on 02.05.14.
@@ -14,6 +16,9 @@ public class SettingsPanel extends JPanel {
     //for now, it contains Video-, Audio-, and Controlsettings
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
+
     JButton videoButton;
     JButton audioButton;
     JButton controlsButton;
@@ -22,9 +27,11 @@ public class SettingsPanel extends JPanel {
     JButton goBackButton;
     Options options;
 
-    public SettingsPanel(MainPanel mainPanel, Options options) {
+    public SettingsPanel(MainPanel mainPanel, Options options, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
         this.options=options;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
         videoButton = new JButton("Video Settings");
         videoButton.addActionListener(new VideoListener());
@@ -52,6 +59,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             SettingsPanel.this.mainPanel.showPanel("5");//switch to VideoSettingsPanel
         }
     }
@@ -60,6 +68,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             SettingsPanel.this.mainPanel.showPanel("6");//switch to AudioSettingsPanel
         }
     }
@@ -68,6 +77,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             SettingsPanel.this.mainPanel.showPanel("7");//switch to ControlSettingsPanel
         }
     }
@@ -76,6 +86,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             SettingsPanel.this.mainPanel.showPanel("10");//switch to GameSettingsPanel
         }
     }
@@ -83,6 +94,7 @@ public class SettingsPanel extends JPanel {
     class SetStandardListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             options.setStandard();
             SettingsPanel.this.mainPanel.audioSettingsPanel.bgVolumeSlider.setValue(options.getBgVolume());
             SettingsPanel.this.mainPanel.audioSettingsPanel.fxVolumeSlider.setValue(options.getFxVolume());
@@ -101,8 +113,8 @@ public class SettingsPanel extends JPanel {
 
     class GoBackListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
+            SettingsPanel.this.soundEngine.play(klickSoundFile);
             SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel
             options.setBgVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getBgVolume());
             options.setFxVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getFxVolume());

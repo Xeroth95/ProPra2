@@ -8,6 +8,8 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.sound.sampled.AudioInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class GameManager {
     public Worm worm2_3;
     public Worm worm2_4;
     public MainFrame mainFrame;
+    public File introSoundFile;
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
     public static int ticksPerSecond;
     public static long lengthOfTickInNanoSeconds;
@@ -98,6 +101,8 @@ public class GameManager {
         worm2_2=new Worm(2, gameMap, "Worm2_2");
         worm2_3=new Worm(2, gameMap, "Worm2_3");
         worm2_4=new Worm(2, gameMap, "Worm2_4");
+        //create introsound
+        introSoundFile=new File("res/audio/intro.wav");
         //create MainFrame
         mainFrame=new MainFrame(this);
         stopped =false;
@@ -132,6 +137,7 @@ public class GameManager {
         currentTick=0;
         System.out.println("switched loops");
         //when the game starts, the gui sets the beforeStart to false;
+        this.mainFrame.mainPanel.soundEngine.play(introSoundFile);
         try {
             while (true) {
                 if(!stopped) {

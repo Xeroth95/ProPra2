@@ -1,12 +1,11 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -17,13 +16,17 @@ public class MainGamePanel extends JPanel{
     public GamePanel gamePanel;
     WeaponsPanel weaponsPanel;
     JScrollPane scrollPane;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
-    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager) throws IOException {
+    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) throws IOException {
         //this panel contains all in-game related panels
         //for now that would be scrollPane(GamePanel) and WeaponsPanel
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
-        weaponsPanel=new WeaponsPanel(mainPanel);
+        weaponsPanel=new WeaponsPanel(mainPanel, soundEngine, klickSoundFile);
         gamePanel=new GamePanel(mainFrame, mainPanel, this, weaponsPanel, gameManager);
         scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
