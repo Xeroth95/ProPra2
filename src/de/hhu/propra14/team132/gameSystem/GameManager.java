@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by isabel on 06.05.14.
  */
 public class GameManager {
-    private boolean stopped; //is there to pause the thread;
+    private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;
     //declares the necessary objects
     public Map gameMap;
