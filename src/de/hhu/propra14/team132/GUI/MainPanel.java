@@ -4,7 +4,10 @@ import de.hhu.propra14.team132.gameSystem.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * Created by fabian on 02.05.14.
@@ -23,15 +26,21 @@ public class MainPanel extends JPanel {
     GameSettingsPanel gameSettingsPanel;
     StartGamePanel startGamePanel;
     LobbyPanel lobbyPanel;
+    InGameMenuPanel inGameMenuPanel;
 
     CardLayout mainPanelLayout;
 
+    Options options;
+    File optionsFile;
+
     public MainPanel(MainFrame mainFrame, GameManager gameManager) throws IOException {
+        loadOptions();
+
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
         mainGamePanel=new MainGamePanel(mainFrame, this, gameManager);
         menuPanel=new MenuPanel(this);
-        settingsPanel=new SettingsPanel(this);
+        settingsPanel=new SettingsPanel(this, options);
         aboutPanel=new AboutPanel(this);
         videoSettingsPanel=new VideoSettingsPanel(this);
         audioSettingsPanel=new AudioSettingsPanel(this);
@@ -39,6 +48,9 @@ public class MainPanel extends JPanel {
         gameSettingsPanel=new GameSettingsPanel(this);
         startGamePanel=new StartGamePanel(this);
         lobbyPanel=new LobbyPanel(this);
+        inGameMenuPanel=new InGameMenuPanel(this, gameManager);
+
+        applyOptions();
 
         mainPanelLayout=new CardLayout();
 
@@ -56,6 +68,55 @@ public class MainPanel extends JPanel {
         this.add(startGamePanel, "8");
         this.add(lobbyPanel, "9");
         this.add(gameSettingsPanel, "10");
+        this.add(inGameMenuPanel, "11");
+    }
+
+    public void loadOptions() {
+        //check if "resources/options/options.ser" exists, if yes, deserialize it, if not, create standard optionsobject
+        optionsFile=new File("res/options/options.ser");
+        if(optionsFile.exists()) {
+            //if an optionsfile already exists, load it
+            try {
+                FileInputStream fileIn = new FileInputStream(optionsFile);
+                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+                options = (Options) objectIn.readObject();
+            }
+            catch(Exception e) {
+                System.err.println("Error loading Options!");
+                e.printStackTrace();
+            }
+
+        }
+        else {
+            //if no optionsfile exists, create one
+            try {
+                optionsFile.getParentFile().mkdirs();
+                optionsFile.createNewFile();
+                options = new Options();
+                options.setStandard();
+                options.save();
+            }
+            catch (Exception e) {
+                System.err.println("Error creating File!");
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void applyOptions() {
+        audioSettingsPanel.bgVolumeSlider.setValue(options.getBgVolume());
+        audioSettingsPanel.fxVolumeSlider.setValue(options.getFxVolume());
+        if(options.getControls()==options.ARROWS) {
+            controlSettingsPanel.groupMoveControls.setSelected(controlSettingsPanel.buttonArrowControls.getModel(), true);
+            controlSettingsPanel.groupMoveControls.setSelected(controlSettingsPanel.buttonWasdControls.getModel(), false);
+        }
+        if(options.getControls()==options.WASD) {
+            controlSettingsPanel.groupMoveControls.setSelected(controlSettingsPanel.buttonWasdControls.getModel(), true);
+            controlSettingsPanel.groupMoveControls.setSelected(controlSettingsPanel.buttonArrowControls.getModel(), false);
+        }
+        gameSettingsPanel.timeTextField.setText(String.valueOf(options.getRoundLength()));
+        gameSettingsPanel.wormNumberTextField.setText(String.valueOf(options.getWormsNumber()));
     }
 
     public void showPanel(String ID)

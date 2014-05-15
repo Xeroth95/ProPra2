@@ -14,17 +14,14 @@ public class MenuPanel extends JPanel{
     //this panel contains the Main Menu of the game
 
     MainPanel mainPanel;
-    CardLayout mainPanelLayout;
 
     JButton button_new_game;
     JButton button_load_game;
     JButton button_settings;
     JButton button_about;
     JButton button_exit;
-
-    String path_to_saved_game;
-
     JFileChooser chooser;
+    String pathToSavedGame;
 
     public MenuPanel(MainPanel mainPanel) {
         this.mainPanel=mainPanel;
@@ -66,10 +63,10 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
             try {
                 chooser.showOpenDialog(null);
-                MenuPanel.this.path_to_saved_game = chooser.getSelectedFile().getPath();//open a filechooser dialog
+                MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
             }
             catch(Exception ex) {
-                if(path_to_saved_game==null) {
+                if(pathToSavedGame==null) {
                     JOptionPane.showMessageDialog(null,"No file was chosen!", "Error", JOptionPane.ERROR_MESSAGE);//show an error if no file was chosen
                 }
                 else {

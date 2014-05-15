@@ -1,17 +1,14 @@
 package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
-import de.hhu.propra14.team132.gameObjects.Obstacle;
-import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -46,11 +43,14 @@ public class GamePanel extends JPanel {
         gameObjects=gameManager.gameMap.getMapObjects();
         objectIDs=gameManager.gameMap.getObjectIds();
         this.setPreferredSize(new Dimension(8192, 8192));
+        this.setFocusable(true);
+        this.addKeyListener(new GameKeyListener());
         this.addMouseListener(new GameMouseListener());
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        this.requestFocus();
         g2d=(Graphics2D) g;
 
         for(int i : objectIDs) {
@@ -144,6 +144,26 @@ public class GamePanel extends JPanel {
         }
 
         public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+    class GameKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
+                GamePanel.this.mainPanel.showPanel("11");
+                gameManager.setStopped(true);
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
 
         }
     }

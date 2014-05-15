@@ -48,6 +48,15 @@ public class AudioSettingsPanel extends JPanel{
         this.add(GoBackButton);
     }
 
+    public int getBgVolume() {
+        return bgVolumeSlider.getValue();
+    }
+
+    public int getFxVolume() {
+        return fxVolumeSlider.getValue();
+    }
+
+
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
