@@ -11,6 +11,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -69,7 +70,7 @@ public class Terrain extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d, JPanel p){
         g2d.setPaint(this.texture);
         for(ConvexCollisionShape s : this.collisionShapes){
         	g2d.fillPolygon(s.getPolygonToDraw());

@@ -54,7 +54,7 @@ public class GamePanel extends JPanel {
         g2d=(Graphics2D) g;
 
         for(int i : objectIDs) {
-            gameObjects[i].draw(g2d);
+            gameObjects[i].draw(g2d, this);
         }
 
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();

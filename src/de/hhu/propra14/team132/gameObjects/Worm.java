@@ -9,6 +9,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -37,8 +38,7 @@ public class Worm extends GameObject {
     	vertices = vert;
     }
 
-    BufferedImage textureImage;
-    TexturePaint texture;
+    Image textureImage;
     
     //constructors:
     public Worm(int teamID, Map map, String name){
@@ -47,8 +47,8 @@ public class Worm extends GameObject {
         this.name = name;
         
         try{
-	        textureImage= ImageIO.read(new File("resources/img/textures/nic.png"));
-	        texture=new TexturePaint(textureImage, new Rectangle(0,0,30,30));
+	        textureImage=ImageIO.read(new File("resources/img/textures/nic.png"));
+            textureImage=textureImage.getScaledInstance(30,30,0);
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms");
         	e.printStackTrace();
@@ -71,9 +71,8 @@ public class Worm extends GameObject {
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
-        g2d.setPaint(texture);
-        g2d.fillPolygon(shape.getPolygonToDraw());
+    public void draw(Graphics2D g2d, JPanel p) {
+        g2d.drawImage(textureImage, (int)shape.getPositionX(), (int)shape.getPositionY(), p);
     }
 
 	@Override

@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -7,5 +8,5 @@ import java.awt.*;
  */
 public abstract interface Drawable {
     //every object that wants to be drawn on the GamePanel has to implement this interface
-    public abstract void draw(Graphics2D g2d);
+    public abstract void draw(Graphics2D g2d, JPanel p);
 }

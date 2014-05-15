@@ -8,6 +8,7 @@ import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class Weapon implements Drawable{
     }
 
     @Override
-    public void draw(Graphics2D g2d) {
+    public void draw(Graphics2D g2d, JPanel p) {
 
     }
 
