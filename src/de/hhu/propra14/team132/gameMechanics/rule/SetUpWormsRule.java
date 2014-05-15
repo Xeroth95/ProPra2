@@ -37,7 +37,7 @@ public class SetUpWormsRule extends StartUpRule {
 			for(int j=0;j<wormsToStartWith[i];j++){
 				Player p = gameMap.getPlayers()[i];
 				Worm w = new Worm(p.getPlayerID(), gameMap, "TestName");
-				w.setPosition(new Vector2D(480*i+50*j,600));
+				w.setPosition(new Vector2D(10+480*i+50*j,600));
 				gameMap.addObject(w);
 				p.getWorms().add(w);
 			}
