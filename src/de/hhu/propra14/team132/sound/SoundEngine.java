@@ -9,7 +9,7 @@ import java.io.File;
  * Created by fabian on 15.05.14.
  */
 public class SoundEngine {
-    public synchronized void play(File audioFile) {
+    public synchronized void play(final File audioFile) {
         new Thread(new Runnable() {
             @Override
             public void run() {
