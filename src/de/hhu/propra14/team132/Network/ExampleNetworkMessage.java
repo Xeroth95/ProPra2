@@ -1,4 +1,4 @@
-package de.hhu.propra14.team132.network;
+package de.hhu.propra14.team132.Network;
 
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;

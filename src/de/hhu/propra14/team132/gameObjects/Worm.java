@@ -48,7 +48,7 @@ public class Worm extends GameObject {
         
         try{
 	        textureImage= ImageIO.read(new File("resources/img/textures/nic.png"));
-	        texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+	        texture=new TexturePaint(textureImage, new Rectangle(0,0,30,30));
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms");
         	e.printStackTrace();
@@ -67,7 +67,7 @@ public class Worm extends GameObject {
 
     @Override
     public double getInitialFriction() {
-        return 0;
+        return 0.7;
     }
 
     @Override

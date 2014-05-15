@@ -163,15 +163,13 @@ public abstract strictfp class CollisionObject {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
-			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
 			
 			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
 			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
 
 			//set only the other object
-			o.getSpeed().setX(o.getBounciness()*thisSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
-			o.getSpeed().setY(o.getBounciness()*thisSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
+			o.getSpeed().setX(o.getBounciness()*-oSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
+			o.getSpeed().setY(o.getBounciness()*-oSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
 			
 		}
 		else{
@@ -187,12 +185,9 @@ public abstract strictfp class CollisionObject {
 			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
 			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
 			
-			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
-			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
-			
 			//set only this object
-			this.speed.setX(this.bounciness*oSpeedDotMtvTimesMtvX+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
-			this.speed.setY(this.bounciness*oSpeedDotMtvTimesMtvY+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
+			this.speed.setX(this.bounciness*-thisSpeedDotMtvTimesMtvX+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
+			this.speed.setY(this.bounciness*-thisSpeedDotMtvTimesMtvY+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
 			
 		}
 		this.furtherCollisionWith(o);
@@ -218,11 +213,16 @@ public abstract strictfp class CollisionObject {
 			e.apply(this);
 		}
 		this.speed.addVector(this.acceleration);
+		if(this.speed.getLength()<0.01){
+			this.speed.multiplyWith(0);
+			return;
+		}
 		this.position.addVector(this.speed);
 		for(ConvexCollisionShape s:this.collisionShapes){
 			s.setPositionX(this.position.getX());
 			s.setPositionY(this.position.getY());
 		}
+		this.acceleration.multiplyWith(0);
 	}
 	
 	public void OOBReactX(){

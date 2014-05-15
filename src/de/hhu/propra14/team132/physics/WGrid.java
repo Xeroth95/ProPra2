@@ -78,7 +78,7 @@ public strictfp class WGrid extends CollisionSystem{
 								}
 							}
 							for(int p=0;parentsOfI[i][p]!=0;p++){
-								System.out.println("parent of Cell "+i+" is cell "+parentsOfI[i][p]);
+//								System.out.println("parent of Cell "+i+" is cell "+parentsOfI[i][p]);
 								for(int q=0;cells[parentsOfI[i][p]][q]!=0;q++){
 									//every object in those cells
 									CollisionObject oParent=objects[cells[parentsOfI[i][p]][q]];
@@ -165,7 +165,6 @@ public strictfp class WGrid extends CollisionSystem{
 		
 		
 		magic4ofI=new int[this.resultingCells+1][4];
-		System.out.println(resultingCells);
 		this.levelOfI=new int[this.resultingCells+1];
 		
 		int help=0;
@@ -231,29 +230,7 @@ public strictfp class WGrid extends CollisionSystem{
 			}
 		}
 		this.levelOfI[resultingCells]=this.levelOfI[resultingCells-1];
-		//TODO:THE FOLLOWING LOOP SEEMS ONLY TO SORT IN PARENT CELLS OF ONE LEVEL OVER THE CURRENT ONE AND NOT ALL! MAKE IT SORT IN ALL PARENT CELLS! 
-		/*
-		for(int i=0;i<this.resultingCells;i++){
-			for(int e:this.magic4ofI[i]){
-				for(int currentlevel=this.levelOfI[i];currentlevel>0;currentlevel--){
-					//check parents
-					int row=e/(2*this.linecountAtLevel[currentlevel]-1);
-					int parent=linecountAtLevel[currentlevel-1]*row+(e%this.linecountAtLevel[currentlevel])/2;
-					//now look if parent is already in parentsOfI[i]. If not, add
-					boolean parentAlreadySortedIn=false;
-					int pos=0;
-					for(int a=0;parentsOfI[i][a]!=0;a++,pos=a){ // go through until there is a free entry
-						if(parentsOfI[i][a]==parent){
-							parentAlreadySortedIn=true;
-						}
-					}
-					if(!parentAlreadySortedIn){
-						parentsOfI[i][pos]=parent;
-					}
-				}
-			}
-		}
-		*/
+
 		//just for the record: this code is commented out and not just deleted because I need to see what I originally wrote and I cannot do this if it's gone.
 		//now the probably really ugly new version of the sort-in of the parent cells!
 		for(int i=0;i<this.cellsBeforeLevel[this.subLevels];i++){
@@ -276,8 +253,6 @@ public strictfp class WGrid extends CollisionSystem{
 					break wut;
 				}
 				//ok, both!
-//				System.out.println("first row: "+firstRow+" lastRow: "+lastRow+" firstColumn:" +firstColumn+" last column: "+lastColumn);
-//				System.out.println("cell "+i+" level "+currentlevel+" linecount "+linecountAtLevel[currentlevel]+" cellsbeforelevel: " +cellsBeforeLevel[currentlevel+1] +"  "+cellsBeforeLevel[currentlevel]);
 				
 				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
 				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
@@ -370,10 +345,6 @@ public strictfp class WGrid extends CollisionSystem{
 		int columnOfParent=column/2;
 		int parentCellNum=rowOfParent*linecountAtLevel[currentlevel-1] + columnOfParent + cellsBeforeLevel[currentlevel-1];
 		
-//		System.out.println("in: "+i+", level of I: "+currentlevel);
-//		System.out.println("row: "+row+" column: "+ column);
-//		System.out.println("rowOfParent: "+rowOfParent+",columnOfParent: "+columnOfParent);
-//		System.out.println("parentCellnum: "+parentCellNum+1);
 		return parentCellNum;
 	}
 	
@@ -395,13 +366,15 @@ public strictfp class WGrid extends CollisionSystem{
 		collThreads[numberOfProcessors-1].setEnd(this.activeCells.size());
 		
 		nextTickSignal.countDown(); // prepare for start
-		
-		this.startSignal.countDown();//counted down the start signal latch
-		//setting up the new nextTickLatch for the next Tick. TODO: should this not be BEFORE startSignal.countdown????
+
+		//setting up the new nextTickLatch for the next Tick.
 		nextTickSignal=new CountDownLatch(1);
 		for(int i=0;i<numberOfProcessors;i++){
 			this.collThreads[i].nextTickSignal=this.nextTickSignal;//make them wait for it.
 		}
+		
+		this.startSignal.countDown();//counted down the start signal latch
+
 		//wait for completion
 		try {
 			doneSignal.await();
@@ -458,7 +431,7 @@ public strictfp class WGrid extends CollisionSystem{
 			}
 			int cellnum = this.cellsBeforeLevel[level] + (int)(y[0] / (this.length / this.linecountAtLevel[level])) * this.linecountAtLevel[level] + (int)(x[0] / (this.width / this.linecountAtLevel[level]));
 			//a + b*a /c + d/a
-			System.out.println("Sorted into Level:"+level+" cellnum is:"+cellnum);
+//			System.out.println("Sorted into Level:"+level+" cellnum is:"+cellnum);
 			for (int a = 0; a < MAX_OBJECT_COUNT_PER_CELL; a++) {
 				if (cells[cellnum][a] == 0) {
 					cells[cellnum][a] = this.objects[i].getPhysicsID();
