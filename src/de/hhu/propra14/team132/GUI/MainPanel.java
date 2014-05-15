@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class MainPanel extends JPanel {
     //and because it uses a CardLayout it is easy to switch between all these panels
 
     public MainGamePanel mainGamePanel;
+    public SoundEngine soundEngine;
+    File klickSoundFile;
     MenuPanel menuPanel;
     SettingsPanel settingsPanel;
     AboutPanel aboutPanel;
@@ -35,20 +38,22 @@ public class MainPanel extends JPanel {
 
     public MainPanel(MainFrame mainFrame, GameManager gameManager) throws IOException {
         loadOptions();
+        soundEngine=new SoundEngine();
+        klickSoundFile=new File("res/audio/klick.wav");
 
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
-        mainGamePanel=new MainGamePanel(mainFrame, this, gameManager);
-        menuPanel=new MenuPanel(this);
-        settingsPanel=new SettingsPanel(this, options);
-        aboutPanel=new AboutPanel(this);
-        videoSettingsPanel=new VideoSettingsPanel(this);
-        audioSettingsPanel=new AudioSettingsPanel(this);
-        controlSettingsPanel=new ControlSettingsPanel(this);
-        gameSettingsPanel=new GameSettingsPanel(this);
-        startGamePanel=new StartGamePanel(this);
-        lobbyPanel=new LobbyPanel(this);
-        inGameMenuPanel=new InGameMenuPanel(this, gameManager);
+        mainGamePanel=new MainGamePanel(mainFrame, this, gameManager, soundEngine, klickSoundFile);
+        menuPanel=new MenuPanel(this, soundEngine, klickSoundFile);
+        settingsPanel=new SettingsPanel(this, options, soundEngine, klickSoundFile);
+        aboutPanel=new AboutPanel(this, soundEngine, klickSoundFile);
+        videoSettingsPanel=new VideoSettingsPanel(this, soundEngine, klickSoundFile);
+        audioSettingsPanel=new AudioSettingsPanel(this, soundEngine, klickSoundFile);
+        controlSettingsPanel=new ControlSettingsPanel(this, soundEngine, klickSoundFile);
+        gameSettingsPanel=new GameSettingsPanel(this, soundEngine, klickSoundFile);
+        startGamePanel=new StartGamePanel(this, soundEngine, klickSoundFile);
+        lobbyPanel=new LobbyPanel(this, soundEngine, klickSoundFile);
+        inGameMenuPanel=new InGameMenuPanel(this, gameManager, soundEngine, klickSoundFile);
 
         applyOptions();
 

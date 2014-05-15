@@ -1,9 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 06.05.14.
@@ -12,14 +15,18 @@ public class StartGamePanel extends JPanel {
     //this panel lets the player choose wether he wants to start a local or a network game
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JButton button_local_game;
     JButton button_network_game_host;
     JButton button_network_game_client;
     JButton button_go_back;
 
-    public StartGamePanel(MainPanel mainPanel) {
+    public StartGamePanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(4,1,10,10));
 
@@ -41,7 +48,7 @@ public class StartGamePanel extends JPanel {
     class LocalGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            StartGamePanel.this.soundEngine.play(klickSoundFile);
             StartGamePanel.this.mainPanel.showPanel("2");
             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
         }
@@ -50,14 +57,15 @@ public class StartGamePanel extends JPanel {
     class NetworkGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            StartGamePanel.this.soundEngine.play(klickSoundFile);
             StartGamePanel.this.mainPanel.showPanel("9");
         }
     }
 
     class GoBackListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
+            StartGamePanel.this.soundEngine.play(klickSoundFile);
             StartGamePanel.this.mainPanel.showPanel("1");
         }
     }

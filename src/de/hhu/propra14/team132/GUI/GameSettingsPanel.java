@@ -1,9 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 09.05.14.
@@ -11,6 +14,8 @@ import java.awt.event.ActionListener;
 public class GameSettingsPanel extends JPanel {
     //this panel contain all the settings that influence the GameMechanics
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JPanel timePanel;
     JPanel wormNumberPanel;
@@ -27,8 +32,11 @@ public class GameSettingsPanel extends JPanel {
 
     JButton goBackButton;
 
-    public GameSettingsPanel(MainPanel mainPanel) {
+    public GameSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
+
         this.setLayout(new GridLayout(3,1,10,10));
 
         timePanel=new JPanel(new FlowLayout());
@@ -84,6 +92,7 @@ public class GameSettingsPanel extends JPanel {
     class TimePlusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time>=99999) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(99999));
@@ -97,6 +106,7 @@ public class GameSettingsPanel extends JPanel {
     class TimeMinusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(0));
@@ -110,6 +120,7 @@ public class GameSettingsPanel extends JPanel {
     class TimePlus10Listener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time>=99999) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(99999));
@@ -123,6 +134,7 @@ public class GameSettingsPanel extends JPanel {
     class TimeMinus10Listener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(0));
@@ -136,6 +148,7 @@ public class GameSettingsPanel extends JPanel {
     class WormNumberPlus implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.wormNumberTextField.getText());
             if(time>=9) {
                 GameSettingsPanel.this.wormNumberTextField.setText(String.valueOf(9));
@@ -149,6 +162,7 @@ public class GameSettingsPanel extends JPanel {
     class WormNumberMinus implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             int time=Integer.parseInt(GameSettingsPanel.this.wormNumberTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.wormNumberTextField.setText(String.valueOf(0));

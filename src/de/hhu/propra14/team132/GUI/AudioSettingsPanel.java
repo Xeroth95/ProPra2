@@ -1,11 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 02.05.14.
@@ -15,6 +16,8 @@ public class AudioSettingsPanel extends JPanel{
     //but for now it is just a placeholder
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JPanel volumePanel;
     JLabel bgVolumeLabel;
@@ -24,9 +27,12 @@ public class AudioSettingsPanel extends JPanel{
     JSlider fxVolumeSlider;
     JButton GoBackButton;
 
-    public AudioSettingsPanel(MainPanel mainPanel)
+    public AudioSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile)
     {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
+
         this.setLayout(new GridLayout(2,1,10,10));
 
         volumePanel=new JPanel(new FlowLayout());
@@ -60,6 +66,7 @@ public class AudioSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            AudioSettingsPanel.this.soundEngine.play(klickSoundFile);
             AudioSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

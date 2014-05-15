@@ -1,8 +1,11 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -10,10 +13,15 @@ import java.util.ArrayList;
  */
 public class WeaponsPanel extends JPanel {
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
+
     ArrayList<JButton> weapons;
 
-    public WeaponsPanel(MainPanel mainPanel) {
+    public WeaponsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
         weapons=new ArrayList<JButton>();
 
@@ -40,6 +48,7 @@ public class WeaponsPanel extends JPanel {
     class WeaponsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            WeaponsPanel.this.soundEngine.play(klickSoundFile);
             String pressed=((JButton)e.getSource()).getText();
         }
     }

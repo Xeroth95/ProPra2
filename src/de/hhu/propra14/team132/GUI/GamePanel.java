@@ -19,6 +19,7 @@ public class GamePanel extends JPanel {
     //this is where the action will take place
     //but for now there is not much to show
 
+    MainFrame mainFrame;
     MainPanel mainPanel;
     MainGamePanel mainGamePanel;
     WeaponsPanel weaponsPanel;
@@ -33,7 +34,7 @@ public class GamePanel extends JPanel {
 
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) throws IOException {
-        //this.mainFrame=mainFrame;
+        this.mainFrame=mainFrame;
         this.mainPanel=mainPanel;
         this.mainGamePanel=mainGamePanel;
         this.weaponsPanel=weaponsPanel;

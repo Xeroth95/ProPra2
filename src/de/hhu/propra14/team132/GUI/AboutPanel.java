@@ -1,9 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.sound.SoundEngine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 02.05.14.
@@ -14,14 +17,18 @@ public class AboutPanel extends JPanel{
     //therefore, it should be pretty self explanatory
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JLabel about_label1;
     JLabel about_label2;
     JButton button_go_back;
 
-    public AboutPanel(MainPanel mainPanel)
+    public AboutPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile)
     {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(3,1));
 
@@ -41,6 +48,7 @@ public class AboutPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            AboutPanel.this.soundEngine.play(klickSoundFile);
             AboutPanel.this.mainPanel.showPanel("1");//switch back to main menu
         }
     }

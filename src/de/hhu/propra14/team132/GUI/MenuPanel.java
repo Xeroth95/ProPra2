@@ -1,11 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Created by fabian on 02.05.14.
@@ -14,6 +15,8 @@ public class MenuPanel extends JPanel{
     //this panel contains the Main Menu of the game
 
     MainPanel mainPanel;
+    SoundEngine soundEngine;
+    File klickSoundFile;
 
     JButton button_new_game;
     JButton button_load_game;
@@ -23,8 +26,10 @@ public class MenuPanel extends JPanel{
     JFileChooser chooser;
     String pathToSavedGame;
 
-    public MenuPanel(MainPanel mainPanel) {
+    public MenuPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
+        this.soundEngine=soundEngine;
+        this.klickSoundFile=klickSoundFile;
 
         button_new_game=new JButton("New Game");
         button_new_game.addActionListener(new NewGameListener());
@@ -52,6 +57,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
+            MenuPanel.this.soundEngine.play(klickSoundFile);
             MenuPanel.this.mainPanel.showPanel("8");//switch to GamePanel
         }
 
@@ -61,6 +67,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            MenuPanel.this.soundEngine.play(klickSoundFile);
             try {
                 chooser.showOpenDialog(null);
                 MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
@@ -82,6 +89,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            MenuPanel.this.soundEngine.play(klickSoundFile);
             MenuPanel.this.mainPanel.showPanel("3");//switch to SettingsPanel
         }
 
@@ -91,6 +99,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            MenuPanel.this.soundEngine.play(klickSoundFile);
             MenuPanel.this.mainPanel.showPanel("4");//switch to AboutPanel
         }
 
@@ -100,6 +109,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
+            MenuPanel.this.soundEngine.play(klickSoundFile);
             System.exit(0);
         }
 
