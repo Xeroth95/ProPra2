@@ -44,7 +44,7 @@ public class GameManager {
     public GameManager() throws IOException {
         beforeStart=true;
         currentTick=0;
-        ticksPerSecond=60; //todo:where should this be declared?
+        ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         int playerCount=2;//TODO: Isabel, hier muss du ran.
