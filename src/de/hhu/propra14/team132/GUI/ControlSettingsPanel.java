@@ -1,7 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
 import javax.swing.*;
-import javax.xml.ws.Holder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +39,16 @@ public class ControlSettingsPanel extends JPanel {
 
         this.add(panelMoveControls);
         this.add(GoBackButton);
+    }
+
+    public int getControls() {
+        if(buttonArrowControls.isSelected()) {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
     }
 
     class GoBackListener implements ActionListener {

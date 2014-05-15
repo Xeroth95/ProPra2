@@ -73,6 +73,14 @@ public class GameSettingsPanel extends JPanel {
         this.add(goBackButton);
     }
 
+    public int getRoundLength() {
+        return Integer.parseInt(timeTextField.getText());
+    }
+
+    public int getWormNumber() {
+        return Integer.parseInt(wormNumberTextField.getText());
+    }
+
     class TimePlusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
