@@ -48,7 +48,7 @@ public class Worm extends GameObject {
         
         try{
 	        textureImage=ImageIO.read(new File("resources/img/textures/nic.png"));
-            textureImage=textureImage.getScaledInstance(30,30,0);
+            textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms");
         	e.printStackTrace();
