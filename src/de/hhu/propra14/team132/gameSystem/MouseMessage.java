@@ -20,7 +20,5 @@ public class MouseMessage extends Message {
     public Button getButton() {
         return button;
     }
-//add all the parameters and methods you need. Regarding the names:
-    //Choose Name of this class as <Messagetype>Message, where <Messagetype> is the Typ of your Message in Kleinbuchstaben
 
 }
