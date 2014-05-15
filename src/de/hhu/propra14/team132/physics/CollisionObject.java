@@ -179,10 +179,10 @@ public abstract strictfp class CollisionObject {
 			
 		}
 			else{
-				mtv.multiplyWith(-1.01);
+//				mtv.multiplyWith(-1.01);
 				this.getPosition().addVector(mtv);// get out of the collision completely on your own.
 				this.recalcPosition();
-				mtv.multiplyWith(-1);
+				mtv.multiplyWith(-1.01);
 				try {
 					mtv.makeUnitVector();
 				} catch (Exception e) {
@@ -221,11 +221,11 @@ public abstract strictfp class CollisionObject {
 			e.apply(this);
 		}
 		this.speed.addVector(this.acceleration);
-//		if(this.speed.getLength()<0.01){
-//			this.speed.multiplyWith(0);
-//			this.acceleration.multiplyWith(0);
-//			return;
-//		}
+		if(this.speed.getLength()<0.001){
+			this.speed.multiplyWith(0);
+			this.acceleration.multiplyWith(0);
+			return;
+		}
 		this.position.addVector(this.speed);
 		for(ConvexCollisionShape s:this.collisionShapes){
 			s.setPositionX(this.position.getX());

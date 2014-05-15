@@ -67,7 +67,7 @@ public class Worm extends GameObject {
 
     @Override
     public double getInitialFriction() {
-        return 0.7;
+        return 0.5;
     }
 
     @Override
