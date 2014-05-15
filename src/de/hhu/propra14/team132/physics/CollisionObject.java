@@ -158,42 +158,45 @@ public abstract strictfp class CollisionObject {
 			
 			
 		}
-		else if(this.collisionTranslationBehaviour<o.getCollisionTranslationBehaviour()){
-			mtv.multiplyWith(-1.01);
-			o.getPosition().addVector(mtv);// get out of the collision completely on your own.
-			o.recalcPosition();
-			try {
-				mtv.makeUnitVector();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
-			double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
-
-			//set only the other object
-			o.getSpeed().setX(o.getBounciness()*-oSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
-			o.getSpeed().setY(o.getBounciness()*-oSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
+		else {
+			if(this.collisionTranslationBehaviour<o.getCollisionTranslationBehaviour()){
+		
+				mtv.multiplyWith(-1.01);
+				o.getPosition().addVector(mtv);// get out of the collision completely on your own.
+				o.recalcPosition();
+				try {
+					mtv.makeUnitVector();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				double oSpeedDotMtvTimesMtvX=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getX();
+				double oSpeedDotMtvTimesMtvY=(o.getSpeed().getX()*mtv.getX()+o.getSpeed().getY()*mtv.getY())*mtv.getY();
+	
+				//set only the other object
+				o.getSpeed().setX(o.getBounciness()*-oSpeedDotMtvTimesMtvX+(o.getSpeed().getX()-oSpeedDotMtvTimesMtvX)*o.getFriction());
+				o.getSpeed().setY(o.getBounciness()*-oSpeedDotMtvTimesMtvY+(o.getSpeed().getY()-oSpeedDotMtvTimesMtvY)*o.getFriction());
 			
 		}
-		else{
-			mtv.multiplyWith(1.01);
-			this.getPosition().addVector(mtv);// get out of the collision completely on your own.
-			this.recalcPosition();
-			mtv.multiplyWith(-1);
-			try {
-				mtv.makeUnitVector();
-			} catch (Exception e) {
-				e.printStackTrace();
+			else{
+				mtv.multiplyWith(-1.01);
+				this.getPosition().addVector(mtv);// get out of the collision completely on your own.
+				this.recalcPosition();
+				mtv.multiplyWith(-1);
+				try {
+					mtv.makeUnitVector();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
+				double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
+				
+				//set only this object
+				this.speed.setX(this.bounciness*(-thisSpeedDotMtvTimesMtvX)+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
+				this.speed.setY(this.bounciness*(-thisSpeedDotMtvTimesMtvY)+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
+				
 			}
-			
-			double thisSpeedDotMtvTimesMtvX=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getX();
-			double thisSpeedDotMtvTimesMtvY=(this.speed.getX()*mtv.getX()+this.speed.getY()*mtv.getY())*mtv.getY();
-			
-			//set only this object
-			this.speed.setX(this.bounciness*-thisSpeedDotMtvTimesMtvX+(this.speed.getX()-thisSpeedDotMtvTimesMtvX)*this.friction);
-			this.speed.setY(this.bounciness*-thisSpeedDotMtvTimesMtvY+(this.speed.getY()-thisSpeedDotMtvTimesMtvY)*this.friction);
-			
 		}
 		this.furtherCollisionWith(o);
 	}
@@ -218,16 +221,18 @@ public abstract strictfp class CollisionObject {
 			e.apply(this);
 		}
 		this.speed.addVector(this.acceleration);
-		if(this.speed.getLength()<0.001){
-			this.speed.multiplyWith(0);
-			return;
-		}
+//		if(this.speed.getLength()<0.01){
+//			this.speed.multiplyWith(0);
+//			this.acceleration.multiplyWith(0);
+//			return;
+//		}
 		this.position.addVector(this.speed);
 		for(ConvexCollisionShape s:this.collisionShapes){
 			s.setPositionX(this.position.getX());
 			s.setPositionY(this.position.getY());
 		}
-		this.acceleration.multiplyWith(0);
+		this.acceleration.setX(0);
+		this.acceleration.setY(0);
 	}
 	
 	public void OOBReactX(){
