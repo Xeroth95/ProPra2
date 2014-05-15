@@ -78,6 +78,7 @@ public strictfp class WGrid extends CollisionSystem{
 								}
 							}
 							for(int p=0;parentsOfI[i][p]!=0;p++){
+								System.out.println("parent of Cell "+i+" is cell "+parentsOfI[i][p]);
 								for(int q=0;cells[parentsOfI[i][p]][q]!=0;q++){
 									//every object in those cells
 									CollisionObject oParent=objects[cells[parentsOfI[i][p]][q]];
@@ -164,8 +165,8 @@ public strictfp class WGrid extends CollisionSystem{
 		
 		
 		magic4ofI=new int[this.resultingCells+1][4];
-		
-		this.levelOfI=new int[this.resultingCells];
+		System.out.println(resultingCells);
+		this.levelOfI=new int[this.resultingCells+1];
 		
 		int help=0;
 		for(int i=0;i<this.subLevels;i++){
@@ -229,7 +230,9 @@ public strictfp class WGrid extends CollisionSystem{
 				this.levelOfI[this.cellsBeforeLevel[i]+j]=i; //this is perfectly fine
 			}
 		}
-		
+		this.levelOfI[resultingCells]=this.levelOfI[resultingCells-1];
+		//TODO:THE FOLLOWING LOOP SEEMS ONLY TO SORT IN PARENT CELLS OF ONE LEVEL OVER THE CURRENT ONE AND NOT ALL! MAKE IT SORT IN ALL PARENT CELLS! 
+		/*
 		for(int i=0;i<this.resultingCells;i++){
 			for(int e:this.magic4ofI[i]){
 				for(int currentlevel=this.levelOfI[i];currentlevel>0;currentlevel--){
@@ -239,7 +242,7 @@ public strictfp class WGrid extends CollisionSystem{
 					//now look if parent is already in parentsOfI[i]. If not, add
 					boolean parentAlreadySortedIn=false;
 					int pos=0;
-					for(int a=0;parentsOfI[i][a]!=0;a++,pos=a){ // !! Change !! -1 in parentsOfI[i][a] is now 0 instead
+					for(int a=0;parentsOfI[i][a]!=0;a++,pos=a){ // go through until there is a free entry
 						if(parentsOfI[i][a]==parent){
 							parentAlreadySortedIn=true;
 						}
@@ -250,6 +253,90 @@ public strictfp class WGrid extends CollisionSystem{
 				}
 			}
 		}
+		*/
+		//just for the record: this code is commented out and not just deleted because I need to see what I originally wrote and I cannot do this if it's gone.
+		//now the probably really ugly new version of the sort-in of the parent cells!
+		for(int i=0;i<this.cellsBeforeLevel[this.subLevels];i++){
+			//add the parents and their parents! This sounds like recursion, but we can make that in an iterative manner because we begin working at the top
+			if(i==0)continue;
+			ArrayList<int[]> parentsOfneighbors=new ArrayList<>();
+			int currentlevel=this.levelOfI[i];
+			boolean firstRow=(i-this.cellsBeforeLevel[currentlevel]-1)/this.linecountAtLevel[currentlevel]==0;
+			boolean lastRow=(i-this.cellsBeforeLevel[currentlevel]-1)/this.linecountAtLevel[currentlevel]==this.linecountAtLevel[currentlevel]-1;
+			boolean firstColumn=(i-this.cellsBeforeLevel[currentlevel]-1)%this.linecountAtLevel[currentlevel]==0;
+			boolean lastColumn=(i-this.cellsBeforeLevel[currentlevel]-1)%this.linecountAtLevel[currentlevel]==this.linecountAtLevel[currentlevel]-1;
+			wut:
+			if(firstColumn){//then do not try to put the parents of the cells left of it into the array
+				if(firstRow){//don't put the upper ones into it
+					parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
+					break wut;//this turns out to be one hell of spaghetti code once it's finished
+				}
+				if(lastRow){//only the upper 
+					parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
+					break wut;
+				}
+				//ok, both!
+//				System.out.println("first row: "+firstRow+" lastRow: "+lastRow+" firstColumn:" +firstColumn+" last column: "+lastColumn);
+//				System.out.println("cell "+i+" level "+currentlevel+" linecount "+linecountAtLevel[currentlevel]+" cellsbeforelevel: " +cellsBeforeLevel[currentlevel+1] +"  "+cellsBeforeLevel[currentlevel]);
+				
+				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
+				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
+			}
+			wut2:
+			if(lastColumn){//then do not try to put the parents of the cells right of it into the array
+				if(firstRow){//don't put the upper ones into it
+					parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]-1));
+					break wut2;
+				}
+				if(lastRow){//only the upper 
+					parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]-1));
+					break wut2;
+				}
+				//ok, both!
+				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]-1));
+				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]-1));
+			}
+			wut3:
+			if(!firstColumn&&!lastColumn){//do not care for left/right just upper and lower
+				if(firstRow){//don't put the upper ones into it
+					parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]-1));
+					parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
+					break wut3;
+				}
+				if(lastRow){//only the upper 
+					parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]-1));
+					parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
+					break wut3;
+				}
+				//add all four!
+				
+				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]-1));
+				parentsOfneighbors.add(getParentsOfCell(i+linecountAtLevel[currentlevel]+1));
+				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]-1));
+				parentsOfneighbors.add(getParentsOfCell(i-linecountAtLevel[currentlevel]+1));
+			}
+			
+			//now put the elements of the int[]s in parentsOfI[]. check for doubles!
+			
+			for (int j = 0; j < parentsOfneighbors.size(); j++) {
+				
+				for (int j2 = 0; j2 < parentsOfneighbors.get(j).length; j2++) {
+					int parent=parentsOfneighbors.get(j)[j2];
+					boolean parentAlreadySortedIn = false;
+					int pos = 0;
+					for (int a = 0; parentsOfI[i-1][a] != 0; a++, pos = a) { // go through until there is a free entry
+						if (parentsOfI[i-1][a] == parent) {// is this parentCell already in there???
+							parentAlreadySortedIn = true;
+						}
+					}
+					if (!parentAlreadySortedIn) {// if it is in there don't put it in there multiple times!
+						parentsOfI[i-1][pos] = parent;
+					}
+				}
+			}
+			
+		}
+		//that's it! does it work?
 		rowcount=(int) Math.round(Math.pow(2, this.subLevels));
 		cells=new int[this.resultingCells][MAX_OBJECT_COUNT_PER_CELL];
 		
@@ -262,6 +349,32 @@ public strictfp class WGrid extends CollisionSystem{
 			collThreads[i]=new CollThread(startSignal,doneSignal,nextTickSignal);
 			collThreads[i].start();
 		}
+	}
+	private int[] getParentsOfCell(int cellnum){
+		int[] parentcells = new int[this.levelOfI[cellnum]];//the parentCells of a particular Cell.
+		for(int a=0,r=cellnum;a<this.levelOfI[cellnum]-1;a++){
+			parentcells[a]=getParentCell(r);
+			r=parentcells[a];
+		}
+		return parentcells;
+	}
+
+	//now look if parent is already in parentsOfI[i]. If not, add
+	
+	private int getParentCell(int cell){
+		int i = cell-1;
+		int currentlevel=this.levelOfI[i]; 
+		int row=(i-this.cellsBeforeLevel[currentlevel])/this.linecountAtLevel[currentlevel];
+		int column=(i-this.cellsBeforeLevel[currentlevel])%this.linecountAtLevel[currentlevel];
+		int rowOfParent=row/2;
+		int columnOfParent=column/2;
+		int parentCellNum=rowOfParent*linecountAtLevel[currentlevel-1] + columnOfParent + cellsBeforeLevel[currentlevel-1];
+		
+//		System.out.println("in: "+i+", level of I: "+currentlevel);
+//		System.out.println("row: "+row+" column: "+ column);
+//		System.out.println("rowOfParent: "+rowOfParent+",columnOfParent: "+columnOfParent);
+//		System.out.println("parentCellnum: "+parentCellNum+1);
+		return parentCellNum;
 	}
 	
 	public void syncCollisionCheck(){
@@ -345,6 +458,7 @@ public strictfp class WGrid extends CollisionSystem{
 			}
 			int cellnum = this.cellsBeforeLevel[level] + (int)(y[0] / (this.length / this.linecountAtLevel[level])) * this.linecountAtLevel[level] + (int)(x[0] / (this.width / this.linecountAtLevel[level]));
 			//a + b*a /c + d/a
+			System.out.println("Sorted into Level:"+level+" cellnum is:"+cellnum);
 			for (int a = 0; a < MAX_OBJECT_COUNT_PER_CELL; a++) {
 				if (cells[cellnum][a] == 0) {
 					cells[cellnum][a] = this.objects[i].getPhysicsID();

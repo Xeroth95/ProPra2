@@ -3,6 +3,7 @@ package de.hhu.propra14.team132.gameObjects;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.Gravity;
@@ -54,5 +55,10 @@ public class Projectile extends GameObject{
 		ArrayList<Effect> effects = new ArrayList<>();
 		effects.add(Gravity.GLOBAL_GRAVITY);
 		return null;
+	}
+
+	@Override
+	public CollisionMode getInitialCollisionMode() {
+		return CollisionMode.NOT_EXPLOADING;
 	}
 }

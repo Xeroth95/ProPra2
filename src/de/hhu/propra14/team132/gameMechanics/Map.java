@@ -90,9 +90,9 @@ public class Map {
 		moveAllObjects();
 		this.collsys.calcCollision();
 	}
-	private void moveAllObjects() {
+	private strictfp void moveAllObjects() {
 		for(int i:this.objectIds){
-//			this.mapObjects[i].getSpeed().multiplyWith(0.9999);
+			this.mapObjects[i].getSpeed().multiplyWith(0.99999);
 			this.mapObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
 			this.mapObjects[i].move();
 		}

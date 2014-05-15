@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.gameObjects;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.Gravity;
@@ -8,6 +9,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -79,5 +81,9 @@ public class Worm extends GameObject {
 		ArrayList<Effect> effects = new ArrayList<>();
 		effects.add(Gravity.GLOBAL_GRAVITY);
 		return effects;
+	}
+	@Override
+	public CollisionMode getInitialCollisionMode() {
+		return CollisionMode.NOT_EXPLOADING;
 	}
 }
