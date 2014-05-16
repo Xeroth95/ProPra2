@@ -40,7 +40,7 @@ public class Map implements Serializable{
 	int round;
 
     @Expose
-	Integer currentTick;
+	Integer currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static
 
     @Expose
 	RuleSet ruleset;
