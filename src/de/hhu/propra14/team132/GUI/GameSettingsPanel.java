@@ -176,6 +176,7 @@ public class GameSettingsPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
             GameSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

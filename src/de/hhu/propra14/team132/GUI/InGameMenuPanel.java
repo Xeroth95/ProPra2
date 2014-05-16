@@ -19,6 +19,7 @@ public class InGameMenuPanel extends JPanel {
     File klickSoundFile;
 
     JButton buttonNewGame;
+    JButton buttonSaveGame;
     JButton buttonLoadGame;
     JButton buttonGoBack;
     JFileChooser chooser;
@@ -31,16 +32,19 @@ public class InGameMenuPanel extends JPanel {
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;
 
-        this.setLayout(new GridLayout(3,1,10,10));
+        this.setLayout(new GridLayout(4,1,10,10));
 
         buttonNewGame=new JButton("New Game");
         buttonNewGame.addActionListener(new NewGameListener());
+        buttonSaveGame=new JButton("Save Game");
+        buttonSaveGame.addActionListener(new SaveGameListener());
         buttonLoadGame=new JButton("Load Game");
         buttonLoadGame.addActionListener(new LoadGameListener());
         buttonGoBack=new JButton("Go back to the Game");
         buttonGoBack.addActionListener(new GoBackListener());
 
         this.add(buttonNewGame);
+        this.add(buttonSaveGame);
         this.add(buttonLoadGame);
         this.add(buttonGoBack);
     }
@@ -52,6 +56,14 @@ public class InGameMenuPanel extends JPanel {
         }
     }
 
+    class SaveGameListener implements  ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String filename=JOptionPane.showInputDialog("Please enter a name for the savegame:");
+            InGameMenuPanel.this.gameManager.save("res/savegames/"+filename+".ser");
+        }
+    }
+
     class LoadGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -60,6 +72,8 @@ public class InGameMenuPanel extends JPanel {
                 chooser=new JFileChooser();
                 chooser.showOpenDialog(null);
                 InGameMenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
+                InGameMenuPanel.this.gameManager.load(pathToSavedGame);
+                InGameMenuPanel.this.mainPanel.showPanel("2");
             }
             catch(Exception ex) {
                 if(pathToSavedGame==null) {

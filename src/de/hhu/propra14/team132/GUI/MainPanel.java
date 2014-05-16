@@ -44,7 +44,7 @@ public class MainPanel extends JPanel {
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
         mainGamePanel=new MainGamePanel(mainFrame, this, gameManager, soundEngine, klickSoundFile);
-        menuPanel=new MenuPanel(this, soundEngine, klickSoundFile);
+        menuPanel=new MenuPanel(gameManager, this, soundEngine, klickSoundFile);
         settingsPanel=new SettingsPanel(this, options, soundEngine, klickSoundFile);
         aboutPanel=new AboutPanel(this, soundEngine, klickSoundFile);
         videoSettingsPanel=new VideoSettingsPanel(this, soundEngine, klickSoundFile);

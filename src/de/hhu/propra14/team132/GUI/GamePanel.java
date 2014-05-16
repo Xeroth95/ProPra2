@@ -54,6 +54,8 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.requestFocus();
+        hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
+        vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
         g2d=(Graphics2D) g;
 
         for(int i : objectIDs) {
@@ -61,10 +63,8 @@ public class GamePanel extends JPanel {
         }
         g2d.setColor(Color.BLACK);
         g2d.setFont(playerFont);
-        g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0,18);
+        g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0+hbar.getValue(),18+vbar.getValue());
 
-        hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
-        vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
 
         //get x and y coordinates of the moues relatively to MainGamePanel
         //MouseInfo.getPointerInfo().getLocation() returns a Point with the cursor position relatively to the screen
