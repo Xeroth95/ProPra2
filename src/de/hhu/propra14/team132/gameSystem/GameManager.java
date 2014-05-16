@@ -141,7 +141,7 @@ public class GameManager {
             e.printStackTrace();
         }
     }
-    public void start() { //todo: start, when the game starts, not before. GUI should call this!
+    public void start() {
         try {
             while (beforeStart) {
                 long t1 = System.nanoTime();   //time before
