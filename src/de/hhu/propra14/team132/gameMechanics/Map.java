@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.gameMechanics;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
@@ -10,7 +11,7 @@ import de.hhu.propra14.team132.physics.CollisionSystem;
 import de.hhu.propra14.team132.physics.WGrid;
 
 
-public class Map {
+public class Map implements Serializable{
 	CollisionSystem collsys;
 
 	ArrayList<Integer> objectIds;

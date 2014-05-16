@@ -5,8 +5,8 @@ package de.hhu.propra14.team132.gameSystem;
  */
 public class ExampleMessage extends Message {
     MessageType messageType;
-    public ExampleMessage(MessageType messageType) {
-        super(messageType);
+    public ExampleMessage(MessageType messageType, int tick) {
+        super(messageType,tick);
         this.messageType=super.getMessageType();
     }
 

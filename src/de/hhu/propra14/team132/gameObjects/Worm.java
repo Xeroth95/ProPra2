@@ -7,6 +7,8 @@ import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
+import jdk.nashorn.api.scripting.JSObject;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,12 +17,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by isabel on 02.05.14.
  */
-public class Worm extends GameObject {
+public class Worm extends GameObject implements Serializable {
     private String name;
     private int life;
     private static final Vector2D[] vertices;
@@ -85,4 +88,5 @@ public class Worm extends GameObject {
 	public CollisionMode getInitialCollisionMode() {
 		return CollisionMode.NOT_EXPLOADING;
 	}
+   
 }

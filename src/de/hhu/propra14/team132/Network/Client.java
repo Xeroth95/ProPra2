@@ -111,7 +111,7 @@ public class Client implements Communicable {
 	 }
 	 
 	@Override
-	public void register(GameManager gameManager) {
+	public void register() {
 		// TODO Auto-generated method stub
 	}
 	 

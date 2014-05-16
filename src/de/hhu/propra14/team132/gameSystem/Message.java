@@ -8,7 +8,9 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
     //with Message-Object one can exchange messages between the Objects
     MessageType messageType;
-    public Message(MessageType type) {
+    private int sentAtTick;
+    public Message(MessageType type, int tick) {
+        this.sentAtTick=tick;
         this.messageType=type;
     }
 
@@ -18,5 +20,13 @@ public abstract class Message implements Serializable {
 
     public void setMessageType(MessageType type) {
         this.messageType = type;
+    }
+
+    public int getSentAtTick() {
+        return sentAtTick;
+    }
+
+    public void setSentAtTick(int sentAtTick) {
+        this.sentAtTick = sentAtTick;
     }
 }

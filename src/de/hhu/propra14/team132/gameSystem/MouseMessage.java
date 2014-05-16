@@ -11,8 +11,8 @@ public class MouseMessage extends Message {
     }
     MessageType messageType;
     Button button;
-    public MouseMessage(MessageType messageType, Button button) {
-        super(messageType);
+    public MouseMessage(MessageType messageType, int tick, Button button) {
+        super(messageType, tick);
         this.messageType=super.getMessageType();
         this.button=button;
     }

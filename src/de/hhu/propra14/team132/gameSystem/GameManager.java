@@ -8,9 +8,12 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+
 import javax.sound.sampled.AudioInputStream;
-import java.io.File;
-import java.io.IOException;
+
+
+import java.io.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +22,7 @@ import java.util.HashMap;
  */
 public class GameManager {
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
-    private boolean beforeStart;
+    private boolean beforeStart;  //is for the loop before the gamestart
     //declares the necessary objects
     public Map gameMap;
     public Terrain terrain;
@@ -47,7 +50,7 @@ public class GameManager {
         ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANASECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
-        int playerCount=2;//TODO: Isabel, hier muss du ran.
+        int playerCount=2;//TODO: Was soll ich denn hier machen?
         gameMap=new Map(this,playerCount);
         //generate the ArrayList for all the MessagesTypes:
         //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
@@ -112,11 +115,32 @@ public class GameManager {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         //gameManager.beforeStart();
+
         gameManager.start();  //starts the game
+        //gameManager.save();
 
     }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
-
+    public void save(String path){
+        try {
+            File file = new File(path);
+            FileOutputStream fileOut=new FileOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(gameMap);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void load(String path) {
+        try {
+            File file = new File(path);
+            FileInputStream fileIn=new FileInputStream(file);
+            ObjectInputStream in=new ObjectInputStream(fileIn);
+            this.gameMap=(Map)in.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
         try {
             while (beforeStart) {
@@ -229,14 +253,7 @@ public class GameManager {
     }
 }
 
-/*
-Problem/Idee: Durch das Abarbeiten der ArrayLists in einer Schleife werden nach jeder Gesendeten message erst die daraus
-resultierenden Anweisung abgearbeitet. Dies bewirkt, dass die receiveMessage der selben Stufe erst spät gesendet werden oder
-wir in einer Endlosschleife landen. Eine Idee wäre, wenn eine Message gesendet werden soll, sie stattdessen in eine Queue einzufügen
-Neue resultierende Messages werden dann also am Ende eingefügt, der GameManager fängt nun an, vom Anfang aus die Queue zu bearbeiten
-Problem: Es muss die Message und das Objekk, dass sie erhalten soll, gespeichert werden. WIe soll das in einer Queue gehen?
---> Eine MessageQueue, eine Object-Queue die zusammen gepopt und gepusht werden.
- */
+
 
 
 
