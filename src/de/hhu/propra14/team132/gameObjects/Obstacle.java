@@ -26,6 +26,9 @@ public class Obstacle extends Terrain{
         super(shape, map);
         this.destroyable = destroyable;
     }
+    public Obstacle() {
+
+    }
 
     public boolean isDestroyable() {
         return destroyable;

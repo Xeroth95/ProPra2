@@ -23,17 +23,17 @@ public class GameManager {
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
     //declares the necessary objects
-    public Map gameMap;
-    public Terrain terrain;
-    public Obstacle[] obstacles;
-    public Worm worm1_1;
-    public Worm worm1_2;
-    public Worm worm1_3;
-    public Worm worm1_4;
-    public Worm worm2_1;
-    public Worm worm2_2;
-    public Worm worm2_3;
-    public Worm worm2_4;
+    transient public Map gameMap;
+    transient public Terrain terrain;
+    transient public Obstacle[] obstacles;
+    transient public Worm worm1_1;
+    transient public Worm worm1_2;
+    transient public Worm worm1_3;
+    transient public Worm worm1_4;
+    transient public Worm worm2_1;
+    transient public Worm worm2_2;
+    transient public Worm worm2_3;
+    transient public Worm worm2_4;
     transient public MainFrame mainFrame;
     transient public File introSoundFile;
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
@@ -120,11 +120,53 @@ public class GameManager {
 
 
     }
-    //
+    public void saveWorms(String path) {
+        try {
+            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+            String jsonString = gson.toJson(this.terrain);
+             FileWriter fileWriter=new FileWriter("res/savegames/terrain");
+             fileWriter.write(jsonString);
+
+             jsonString = gson.toJson(this.worm1_1);
+            FileWriter fileWriter1=new FileWriter("res/savegames/worm1_1");
+             fileWriter1.write(jsonString);
+
+             jsonString = gson.toJson(this.worm1_2);
+            FileWriter fileWriter2=new FileWriter("res/savegames/worm1_2");
+             fileWriter2.write(jsonString);
+
+
+
+
+
+            fileWriter.close();
+            fileWriter1.close();
+            fileWriter2.close();
+
+        } catch (Exception e) {
+
+        }
+    }
+    public void loadWorm(String path) {
+        try {
+
+            FileInputStream input = new FileInputStream(path);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+            this.terrain=gson.fromJson(reader,Terrain.class);
+            System.out.println("Worm 11 gespeichert");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
     public void save(String path){
         try {
-            Gson gson1=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+            Gson gson1=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
             //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
             //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
 
@@ -132,18 +174,21 @@ public class GameManager {
             FileWriter fileWriter=new FileWriter(path);
             fileWriter.write(jsonString);
             fileWriter.close();
+            /**/
+        //this.saveWorms(path);
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
     public void load(String path) {
         try {
-
+              /**/
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
             this.gameMap=gson.fromJson(reader,Map.class);
-
+               /**/
+        //this.loadWorm(path);
         } catch (Exception e) {
             e.printStackTrace();
         }

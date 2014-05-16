@@ -42,7 +42,7 @@ public abstract strictfp class CollisionObject {
     @Expose
 	public int collisionTranslationBehaviour;
 
-    @Expose
+
 	ArrayList<Effect> effects;
 
     @Expose
