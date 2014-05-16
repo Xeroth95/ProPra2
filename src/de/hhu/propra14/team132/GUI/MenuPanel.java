@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.io.File;
 public class MenuPanel extends JPanel{
     //this panel contains the Main Menu of the game
 
+    GameManager gameManager;
     MainPanel mainPanel;
     SoundEngine soundEngine;
     File klickSoundFile;
@@ -26,7 +28,8 @@ public class MenuPanel extends JPanel{
     JFileChooser chooser;
     String pathToSavedGame;
 
-    public MenuPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public MenuPanel(GameManager gameManager,MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+        this.gameManager=gameManager;
         this.mainPanel=mainPanel;
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;
@@ -70,6 +73,7 @@ public class MenuPanel extends JPanel{
                 chooser=new JFileChooser();
                 chooser.showOpenDialog(null);
                 MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
+                MenuPanel.this.gameManager.load(pathToSavedGame);
             }
             catch(Exception ex) {
                 if(pathToSavedGame==null) {
