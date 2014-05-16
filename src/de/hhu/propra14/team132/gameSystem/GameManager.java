@@ -107,30 +107,30 @@ public class GameManager {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         //gameManager.beforeStart();
-        gameManager.save(1);
+
         gameManager.start();  //starts the game
         //gameManager.save();
 
     }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
-    public void save(int x){
+    public void save(String path){
         try {
-            File file = new File("resources/SaveGame"+x+".ser");
+            File file = new File(path);
             FileOutputStream fileOut=new FileOutputStream(file);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(gameMap);
         } catch(Exception e) {
-
+            e.printStackTrace();
         }
     }
-    public Map load(int x) {
+    public void load(String path) {
         try {
-            File file = new File("resources/SaveGame"+x+".ser");
+            File file = new File(path);
             FileInputStream fileIn=new FileInputStream(file);
             ObjectInputStream in=new ObjectInputStream(fileIn);
-            return (Map)in.readObject();
+            this.gameMap=(Map)in.readObject();
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
         }
     }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
