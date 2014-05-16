@@ -74,6 +74,7 @@ public class MenuPanel extends JPanel{
                 chooser.showOpenDialog(null);
                 MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
                 MenuPanel.this.gameManager.load(pathToSavedGame);
+                MenuPanel.this.mainPanel.showPanel("2");
             }
             catch(Exception ex) {
                 if(pathToSavedGame==null) {
