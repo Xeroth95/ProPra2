@@ -130,13 +130,12 @@ public class GameManager {
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
     public void save(String path){
         try {
-            Exclude ex = new Exclude();
             Gson gson1=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
             //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
             //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
 
             String jsonString = gson1.toJson(this.gameMap);
-            FileWriter fileWriter=new FileWriter(path+"5");
+            FileWriter fileWriter=new FileWriter(path);
             fileWriter.write(jsonString);
             fileWriter.close();
         } catch(Exception e) {
@@ -145,10 +144,10 @@ public class GameManager {
     }
     public void load(String path) {
         try {
-            File file = new File(path);
-            FileInputStream fileIn=new FileInputStream(file);
-            ObjectInputStream in=new ObjectInputStream(fileIn);
-            this.gameMap=(Map)in.readObject();
+            FileInputStream input = new FileInputStream(path);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            this.gameMap=gson.fromJson(reader,Map.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
