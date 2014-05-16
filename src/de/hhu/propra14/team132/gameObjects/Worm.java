@@ -7,6 +7,8 @@ import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
+import jdk.nashorn.api.scripting.JSObject;
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 
 import javax.imageio.ImageIO;
 
@@ -86,4 +88,5 @@ public class Worm extends GameObject {
 	public CollisionMode getInitialCollisionMode() {
 		return CollisionMode.NOT_EXPLOADING;
 	}
+   
 }
