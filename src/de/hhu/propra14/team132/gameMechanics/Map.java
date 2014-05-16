@@ -22,7 +22,7 @@ public class Map implements Serializable{
 	int IdCounter;
     @Expose ArrayList<Integer> aviableIds;
 
-    @Expose
+
 	private  GameObject[] mapObjects;
 
     @Expose double sizeX;
