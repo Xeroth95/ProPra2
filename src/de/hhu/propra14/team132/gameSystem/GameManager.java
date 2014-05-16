@@ -8,7 +8,7 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -107,11 +107,32 @@ public class GameManager {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         //gameManager.beforeStart();
+        gameManager.save(1);
         gameManager.start();  //starts the game
+        //gameManager.save();
 
     }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
+    public void save(int x){
+        try {
+            File file = new File("resources/SaveGame"+x+".ser");
+            FileOutputStream fileOut=new FileOutputStream(file);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(gameMap);
+        } catch(Exception e) {
 
+        }
+    }
+    public Map load(int x) {
+        try {
+            File file = new File("resources/SaveGame"+x+".ser");
+            FileInputStream fileIn=new FileInputStream(file);
+            ObjectInputStream in=new ObjectInputStream(fileIn);
+            return (Map)in.readObject();
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public void start() { //todo: start, when the game starts, not before. GUI should call this!
         try {
             while (beforeStart) {

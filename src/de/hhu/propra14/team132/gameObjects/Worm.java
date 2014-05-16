@@ -16,12 +16,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by isabel on 02.05.14.
  */
-public class Worm extends GameObject {
+public class Worm extends GameObject implements Serializable {
     private String name;
     private int life;
     private static final Vector2D[] vertices;
