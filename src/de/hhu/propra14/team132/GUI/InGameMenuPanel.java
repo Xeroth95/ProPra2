@@ -60,7 +60,7 @@ public class InGameMenuPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             String filename=JOptionPane.showInputDialog("Please enter a name for the savegame:");
-            InGameMenuPanel.this.gameManager.save("res/savegames/"+filename);
+            InGameMenuPanel.this.gameManager.save("res/savegames/"+filename+".ser");
         }
     }
 
