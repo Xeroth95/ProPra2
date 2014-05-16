@@ -126,6 +126,7 @@ public class GameManager {
 
 
     }
+    //
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
     public void save(String path){
         try {
