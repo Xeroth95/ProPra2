@@ -50,10 +50,12 @@ public abstract strictfp class CollisionObject {
 	
 	
 	//constructors
+    public CollisionObject() {  //is used for serializing/deseralizing
+    }
 	public CollisionObject(ConvexCollisionShape[] shapes, int teamID, Map map) {
-		this.initializeBasics(teamID, map);
-		this.collisionShapes=shapes;
-	}
+        this.initializeBasics(teamID, map);
+        this.collisionShapes = shapes;
+    }
 	public CollisionObject(ConvexCollisionShape shape, int teamID, Map map) {
 		this.initializeBasics(teamID, map);
 		this.collisionShapes=new ConvexCollisionShape[1];

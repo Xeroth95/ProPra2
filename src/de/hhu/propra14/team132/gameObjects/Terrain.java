@@ -39,6 +39,10 @@ public class Terrain extends GameObject {
     	}
     }
 
+    public Terrain() {
+        super();
+
+    }
     public Terrain(Map map)  {
         super(Player.WORLD, map);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;

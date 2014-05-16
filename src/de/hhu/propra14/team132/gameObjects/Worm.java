@@ -65,6 +65,22 @@ public class Worm extends GameObject implements Serializable {
         	System.exit(-1);
         }
     }
+
+    public Worm() {
+        super(new ConvexCollisionShape(vertices), 0, null);
+        shape=this.collisionShapes[0];
+        this.name = name;
+
+        try{
+            textureImage=ImageIO.read(new File("res/img/textures/nic.png"));
+            textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
+        }catch(IOException e){
+            System.err.println("Unable to load Texture for the Worms!");
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
     @Override
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing
