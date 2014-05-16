@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 
 public class Terrain extends GameObject {
-    static BufferedImage textureImage;
-    static TexturePaint texture;
+    transient static BufferedImage textureImage;
+    transient static TexturePaint texture;
     
     static{
     	try{

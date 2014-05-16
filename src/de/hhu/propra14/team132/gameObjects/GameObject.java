@@ -16,4 +16,5 @@ public abstract class GameObject extends CollisionObject implements Drawable {
     public GameObject(ConvexCollisionShape shape, int teamID, Map map) {
         super(shape,teamID,map);
     }
+
 }

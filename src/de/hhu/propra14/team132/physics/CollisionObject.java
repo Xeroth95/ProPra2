@@ -2,6 +2,7 @@ package de.hhu.propra14.team132.physics;
 
 import java.util.ArrayList;
 
+import com.google.gson.annotations.Expose;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
@@ -15,24 +16,36 @@ public abstract strictfp class CollisionObject {
 	public static final int TRANSLATION_BEHAVIOUR_YIELDING=2;
 	
 	//instance variables
+    @Expose
 	Vector2D speed;
+    @Expose
 	Vector2D position;
+    @Expose
 	Vector2D acceleration;
-	
+
+    @Expose
 	double bounciness;
+    @Expose
 	double friction;
 	
-	public ConvexCollisionShape[] collisionShapes;
+	transient public ConvexCollisionShape[] collisionShapes;
 	
-	Map mapPlacedIn;
+	transient Map mapPlacedIn;
+    @Expose
 	int playerID;
+    @Expose
 	int physicsID;
+    @Expose
 	int lastCollidedWith;
+    @Expose
 	private CollisionMode collisionMode;
+    @Expose
 	public int collisionTranslationBehaviour;
-	
+
+    @Expose
 	ArrayList<Effect> effects;
-	
+
+    @Expose
 	private boolean markedForDeletion;
 	
 	

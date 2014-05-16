@@ -1,5 +1,8 @@
 package de.hhu.propra14.team132.gameObjects;
 
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
@@ -24,10 +27,14 @@ import java.util.ArrayList;
  * Created by isabel on 02.05.14.
  */
 public class Worm extends GameObject implements Serializable {
+    @Expose
     private String name;
+    @Expose
     private int life;
+    @Expose
     private static final Vector2D[] vertices;
-    private final ConvexCollisionShape shape;
+
+    transient private final ConvexCollisionShape shape;
     static{
     	Vector2D[] vert=new Vector2D[8];
     	vert[0]=new Vector2D(10,0);
@@ -41,14 +48,14 @@ public class Worm extends GameObject implements Serializable {
     	vertices = vert;
     }
 
-    Image textureImage;
+    transient Image textureImage;
     
     //constructors:
     public Worm(int teamID, Map map, String name){
         super(new ConvexCollisionShape(vertices), teamID, map);
         shape=this.collisionShapes[0];
         this.name = name;
-        
+
         try{
 	        textureImage=ImageIO.read(new File("res/img/textures/nic.png"));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);

@@ -1,9 +1,13 @@
 package de.hhu.propra14.team132.gameSystem;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
+import de.hhu.propra14.team132.gameObjects.Test;
 import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
@@ -14,6 +18,7 @@ import javax.sound.sampled.AudioInputStream;
 
 import java.io.*;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,19 +29,19 @@ public class GameManager {
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
     //declares the necessary objects
-    public Map gameMap;
-    public Terrain terrain;
-    public Obstacle[] obstacles;
-    public Worm worm1_1;
-    public Worm worm1_2;
-    public Worm worm1_3;
-    public Worm worm1_4;
-    public Worm worm2_1;
-    public Worm worm2_2;
-    public Worm worm2_3;
-    public Worm worm2_4;
-    public MainFrame mainFrame;
-    public File introSoundFile;
+    transient public Map gameMap;
+    transient public Terrain terrain;
+    transient public Obstacle[] obstacles;
+    transient public Worm worm1_1;
+    transient public Worm worm1_2;
+    transient public Worm worm1_3;
+    transient public Worm worm1_4;
+    transient public Worm worm2_1;
+    transient public Worm worm2_2;
+    transient public Worm worm2_3;
+    transient public Worm worm2_4;
+    transient public MainFrame mainFrame;
+    transient public File introSoundFile;
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
     public static int ticksPerSecond;
     public static long lengthOfTickInNanoSeconds;
@@ -116,17 +121,23 @@ public class GameManager {
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         //gameManager.beforeStart();
 
+        gameManager.save("res/map");
         gameManager.start();  //starts the game
-        //gameManager.save();
+
 
     }
     //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
     public void save(String path){
         try {
-            File file = new File(path);
-            FileOutputStream fileOut=new FileOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(gameMap);
+            Exclude ex = new Exclude();
+            Gson gson1=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
+            //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
+
+            String jsonString = gson1.toJson(this.gameMap);
+            FileWriter fileWriter=new FileWriter(path+"5");
+            fileWriter.write(jsonString);
+            fileWriter.close();
         } catch(Exception e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gson.annotations.Expose;
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
@@ -12,32 +13,42 @@ import de.hhu.propra14.team132.physics.WGrid;
 
 
 public class Map implements Serializable{
-	CollisionSystem collsys;
+	transient CollisionSystem collsys;
 
+    @Expose
 	ArrayList<Integer> objectIds;
-	
+
+    @Expose
 	int IdCounter;
-	ArrayList<Integer> aviableIds;
-	
+    @Expose ArrayList<Integer> aviableIds;
+
+    @Expose
 	private  GameObject[] mapObjects;
-	
-	double sizeX;
-	double sizeY;
-	
+
+    @Expose double sizeX;
+    @Expose double sizeY;
+
+    @Expose
 	boolean isActive;
-	
+
+    @Expose
 	static int MAX_OBJECT_COUNT=21000; // arbitrary value. Has direct influence on a few very important array sizes.
 	
-	GameManager manager;
-	
+	transient GameManager manager;
+
+    @Expose
 	int round;
-	
+
+    @Expose
 	Integer currentTick;
-	
+
+    @Expose
 	RuleSet ruleset;
-	
+
+    @Expose
 	Player[] players;
-	
+
+    @Expose
 	Player currentPlayer;
 	
 	public Map(GameManager manager,int playerCount) {
