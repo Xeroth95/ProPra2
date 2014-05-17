@@ -1,7 +1,5 @@
 package de.hhu.propra14.team132.GUI;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
@@ -25,19 +23,8 @@ public class Options implements Serializable{
         this.wormsNumber=4;
     }
 
-    public void save()
-    {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("res/options/options.ser");
-            ObjectOutputStream objectOut= new ObjectOutputStream(fileOut);
-            objectOut.writeObject(this);
-            objectOut.close();
-            fileOut.close();
-        }
-        catch (Exception e) {
-            System.err.println("Error saving Options!");
-            e.printStackTrace();
-        }
+    public void save() {
+
     }
 
     public void setBgVolume(int bgVolume) {

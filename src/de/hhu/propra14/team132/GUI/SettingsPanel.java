@@ -115,13 +115,14 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             SettingsPanel.this.soundEngine.play(klickSoundFile);
-            SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel
+            //set and save options
             options.setBgVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getBgVolume());
             options.setFxVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getFxVolume());
             options.setControls(SettingsPanel.this.mainPanel.controlSettingsPanel.getControls());
             options.setRoundLength(SettingsPanel.this.mainPanel.gameSettingsPanel.getRoundLength());
             options.setWormsNumber(SettingsPanel.this.mainPanel.gameSettingsPanel.getWormNumber());
-            options.save();
+            SettingsPanel.this.mainPanel.saveOptions();
+            SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel
         }
     }
 }
