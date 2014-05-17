@@ -9,7 +9,7 @@ import java.io.FileWriter;
  * Created by isabel on 17.05.14.
  */
 public class SaveManager {
-    public SaveManager(Map map, String path) {
+    public void save(Map map, String path) {
         try {
             Gson gson = new Gson();
             FileWriter fw = new FileWriter(path);
@@ -17,6 +17,5 @@ public class SaveManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
