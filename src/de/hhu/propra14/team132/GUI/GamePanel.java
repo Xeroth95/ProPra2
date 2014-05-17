@@ -53,6 +53,7 @@ public class GamePanel extends JPanel {
     }
     public void refresh() {
         this.gameObjects=gameManager.gameMap.getMapObjects();
+        this.objectIDs=gameManager.gameMap.getObjectIds();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
