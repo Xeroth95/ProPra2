@@ -59,7 +59,7 @@ public class Map implements Serializable{
 		this(manager,playerCount);
 		this.ruleset=ruleSet;
 	}
-	private void initializeBasics(GameManager manager, int playerCount){
+	public void initializeBasics(GameManager manager, int playerCount){
 		
 		this.manager=manager;
 

@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
@@ -50,7 +51,9 @@ public class GamePanel extends JPanel {
         this.addKeyListener(new GameKeyListener());
         this.addMouseListener(new GameMouseListener());
     }
-
+    public void refresh() {
+        this.gameObjects=gameManager.gameMap.getMapObjects();
+    }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.requestFocus();

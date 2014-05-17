@@ -37,6 +37,8 @@ public class GameManager {
     public static long lengthOfTickInNanoSeconds;
     public static int currentTick;
 
+    int playerCount;
+
     public static final long LENGTH_OF_A_SECOND_IN_NANOSECONDS =1000000000L;
     int Round;
     public GameManager() throws IOException {
@@ -45,7 +47,7 @@ public class GameManager {
         ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANOSECONDS /ticksPerSecond;
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
-        int playerCount=2;//TODO: Was soll ich denn hier machen?
+        playerCount=2;//TODO: Was soll ich denn hier machen?
         gameMap=new Map(this,playerCount);
         //generate the ArrayList for all the MessagesTypes:
         //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
@@ -64,17 +66,11 @@ public class GameManager {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         //gameManager.beforeStart();
-
-
         gameManager.start();  //starts the game
-
-
     }
     public void save(String path){
         try {
         	GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
-            //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
-            //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
         	gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
@@ -91,20 +87,38 @@ public class GameManager {
             e.printStackTrace();
         }
     }
+    public void restart() { //is there to start a new Game todo: impementieren
+        currentTick=0;
+        this.setBeforeStart(false);
+        this.setStopped(false);
+        gameMap=new Map(this,playerCount);
+    }
     public void load(String path) {
         try {
               /**/
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            GsonBuilder gB=new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
             gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
         	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
             Gson gson=gB.create();
-            
-            this.gameMap=gson.fromJson(reader,Map.class);
+
+            Map mapNew=gson.fromJson(reader,Map.class);
+            this.gameMap=mapNew;
+            this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
+            this.setBeforeStart(false);
+
+            /** Map wird wieder in Datei geschrieben, für Testzwecke
+            Map map1=gson.fromJson(reader,Map.class);
+            String jsonString = gson.toJson(map1);
+            FileWriter fileWriter=new FileWriter(path+"x");
+            fileWriter.write(jsonString);
+            fileWriter.close();
+             **/
+
                /**/
         //this.loadWorm(path);
         } catch (Exception e) {
@@ -139,7 +153,7 @@ public class GameManager {
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     gameMap.nextTick();
-                    //System.out.println("zweite Schleife, Tick: "+currentTick);
+                    System.out.println("zweite Schleife, Tick: "+currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
