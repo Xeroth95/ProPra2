@@ -12,22 +12,22 @@ import java.io.IOException;
 public class Obstacle extends Terrain{
     private boolean destroyable;
 
-    public Obstacle(Map map, boolean destroyable) {
-        super(map);
+    public Obstacle(boolean destroyable) {
+        super();
         this.destroyable = destroyable;
     }
 
-    public Obstacle(ConvexCollisionShape[] shapes, Map map, boolean destroyable) {
-        super(shapes, map);
+    public Obstacle(ConvexCollisionShape[] shapes, boolean destroyable) {
+        super(shapes);
         this.destroyable = destroyable;
     }
 
-    public Obstacle(ConvexCollisionShape shape, Map map, boolean destroyable) {
-        super(shape, map);
+    public Obstacle(ConvexCollisionShape shape, boolean destroyable) {
+        super(shape);
         this.destroyable = destroyable;
     }
     public Obstacle() {
-
+    	this.destroyable=true;
     }
 
     public boolean isDestroyable() {

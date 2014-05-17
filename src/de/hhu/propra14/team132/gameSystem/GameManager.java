@@ -2,17 +2,21 @@ package de.hhu.propra14.team132.gameSystem;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameObjects.Obstacle;
+import de.hhu.propra14.team132.gameMechanics.rule.Rule;
+import de.hhu.propra14.team132.gameMechanics.rule.RuntimeRule;
+import de.hhu.propra14.team132.gameMechanics.rule.StartUpRule;
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameObjects.Worm;
-import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
-import de.hhu.propra14.team132.physics.util.Vector2D;
 
+
+
+import de.hhu.propra14.team132.physics.Effect;
 
 import java.io.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -68,11 +72,15 @@ public class GameManager {
     }
     public void save(String path){
         try {
-
-            Gson gson1=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+        	GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
             //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
             //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
-            
+        	gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
+        	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
+        	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
+        	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
+        	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
+            Gson gson1=gB.create();
             String jsonString = gson1.toJson(this.gameMap);
             FileWriter fileWriter=new FileWriter(path);
             fileWriter.write(jsonString);
@@ -88,7 +96,14 @@ public class GameManager {
               /**/
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+            GsonBuilder gB=new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
+            gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
+        	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
+        	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
+        	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
+        	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
+            Gson gson=gB.create();
+            
             this.gameMap=gson.fromJson(reader,Map.class);
                /**/
         //this.loadWorm(path);

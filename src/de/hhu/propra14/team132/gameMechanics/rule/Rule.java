@@ -5,14 +5,16 @@ import de.hhu.propra14.team132.gameSystem.MessageType;
 
 import java.io.IOException;
 
+import com.google.gson.annotations.Expose;
+
 public abstract class Rule {
-	Map gameMap;
+	transient Map gameMap;
 	public Rule(Map gameMap){
 		this.gameMap=gameMap;
 		messageTypesToReactTo=defineMessageTypesToReactTo();
 	}
 	
-	MessageType[] messageTypesToReactTo;
+	@Expose MessageType[] messageTypesToReactTo;
 	
 	protected abstract MessageType[] defineMessageTypesToReactTo();
 	

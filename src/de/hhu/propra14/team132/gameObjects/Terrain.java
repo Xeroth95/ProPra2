@@ -39,23 +39,19 @@ public class Terrain extends GameObject {
     	}
     }
 
-    public Terrain() {
-        super();
-
-    }
-    public Terrain(Map map)  {
-        super(Player.WORLD, map);
+    public Terrain()  {
+        super(Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
         
     }
 
-    public Terrain(ConvexCollisionShape[] shapes, Map map) {
-        super(shapes, Player.WORLD, map);
+    public Terrain(ConvexCollisionShape[] shapes) {
+        super(shapes, Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
     }
 
-    public Terrain(ConvexCollisionShape shape, Map map) {
-        super(shape, Player.WORLD, map);
+    public Terrain(ConvexCollisionShape shape) {
+        super(shape, Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
     }
     @Override

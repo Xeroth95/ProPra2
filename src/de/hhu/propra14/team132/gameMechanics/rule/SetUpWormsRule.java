@@ -5,11 +5,11 @@ import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
-import java.io.IOException;
+import com.google.gson.annotations.Expose;
 
 public class SetUpWormsRule extends StartUpRule {
-	int numberOfPlayers;
-	int[] wormsToStartWith;
+	@Expose int numberOfPlayers;
+	@Expose int[] wormsToStartWith;
 	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith) {
 		super(gameMap);
 		this.numberOfPlayers=gameMap.getPlayers().length;
@@ -36,7 +36,7 @@ public class SetUpWormsRule extends StartUpRule {
 		for(int i=0;i<numberOfPlayers;i++){
 			for(int j=0;j<wormsToStartWith[i];j++){
 				Player p = gameMap.getPlayers()[i];
-				Worm w = new Worm(p.getPlayerID(), gameMap, "TestName");
+				Worm w = new Worm(p.getPlayerID(), "TestName");
 				w.setPosition(new Vector2D(10+480*i+50*j,600));
 				gameMap.addObject(w);
 				p.getWorms().add(w);

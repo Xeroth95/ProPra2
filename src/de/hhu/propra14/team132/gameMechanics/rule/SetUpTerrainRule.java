@@ -1,8 +1,10 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
+
+
+import com.google.gson.annotations.Expose;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Terrain;
@@ -10,7 +12,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public strictfp class  SetUpTerrainRule extends StartUpRule {
-	ArrayList<Terrain> terrainToUse;
+	@Expose ArrayList<Terrain> terrainToUse;
 	
 	static private final double[][] noshape;
 	static private final double[][] square;
@@ -66,7 +68,7 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 		ArrayList<Terrain> newTerrain = new ArrayList<>();
 		double[] x = {500,6000,6000,500}, y= {100,100,500,500};
 		ConvexCollisionShape stub =new ConvexCollisionShape(x,y);
-		newTerrain.add(new Terrain(stub, gameMap));
+		newTerrain.add(new Terrain(stub));
 		return newTerrain;
 	}
 	private ArrayList<Terrain> randomGenerateTerrainv1(){
@@ -77,7 +79,7 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 				for(int a=0;a<square.length;a++){
 					mysquare[a]=new Vector2D(square[a][0]*10,square[a][1]*10);
 				}
-				Terrain t = new Terrain(new ConvexCollisionShape(mysquare), gameMap);
+				Terrain t = new Terrain(new ConvexCollisionShape(mysquare));
 				t.setPosition(new Vector2D((double)j*100,(double)i*100));
 				newTerrain.add(t);
 			}
@@ -91,7 +93,7 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 				for(int a=0;a<randomshape.length;a++){
 					shape[a]=new Vector2D(randomshape[a][0]*10,randomshape[a][1]*10);
 				}
-				Terrain t = new Terrain(new ConvexCollisionShape(shape), gameMap);
+				Terrain t = new Terrain(new ConvexCollisionShape(shape));
 				t.setPosition(new Vector2D((double)j*100,300));
 				newTerrain.add(t);
 			

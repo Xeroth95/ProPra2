@@ -1,10 +1,11 @@
 package de.hhu.propra14.team132.physics;
 
-import de.hhu.propra14.team132.gameObjects.GameObject;
+import com.google.gson.annotations.Expose;
+
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public class Wind extends Effect{
-	public Vector2D windVector;
+	@Expose public Vector2D windVector;
 	public Wind(){
 		windVector = new Vector2D(Math.random(),0);
 	}

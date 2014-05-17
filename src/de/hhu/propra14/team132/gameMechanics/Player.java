@@ -2,12 +2,14 @@ package de.hhu.propra14.team132.gameMechanics;
 
 import java.util.ArrayList;
 
+import com.google.gson.annotations.Expose;
+
 import de.hhu.propra14.team132.gameObjects.Worm;
 
 public class Player {
-	public static final int WORLD = 0;
-	private static int playerCount=1;
-	public int playerID;
+	@Expose public static final int WORLD = 0;
+	@Expose private static int playerCount=1;
+	@Expose public int playerID;
 
 	private ArrayList<Worm> worms;
 	public  Player(){
