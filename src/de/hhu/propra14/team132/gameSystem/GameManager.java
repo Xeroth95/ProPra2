@@ -25,15 +25,7 @@ public class GameManager {
     //declares the necessary objects
     transient public Map gameMap;
     transient public Terrain terrain;
-    transient public Obstacle[] obstacles;
-    transient public Worm worm1_1;
-    transient public Worm worm1_2;
-    transient public Worm worm1_3;
-    transient public Worm worm1_4;
-    transient public Worm worm2_1;
-    transient public Worm worm2_2;
-    transient public Worm worm2_3;
-    transient public Worm worm2_4;
+
     transient public MainFrame mainFrame;
     transient public File introSoundFile;
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
@@ -57,52 +49,6 @@ public class GameManager {
         for(MessageType t: MessageType.values()){
             hashMap.put(t, new ArrayList<Communicable>());
         }
-        //creates Map
-
-        //create vectors, that form the terrain
-        Vector2D[] verticesTerrain=new Vector2D[10];
-        verticesTerrain[0]=new Vector2D(0, 550);
-        verticesTerrain[1]=new Vector2D(100, 450);
-        verticesTerrain[2]=new Vector2D(250, 400);
-        verticesTerrain[3]=new Vector2D(375, 370);
-        verticesTerrain[4]=new Vector2D(500, 480);
-        verticesTerrain[5]=new Vector2D(615, 300);
-        verticesTerrain[6]=new Vector2D(690, 280);
-        verticesTerrain[7]=new Vector2D(820, 340);
-        verticesTerrain[8]=new Vector2D(900, 400);
-        verticesTerrain[9]=new Vector2D(1000, 550);
-        //create terrain
-        terrain=new Terrain(new ConvexCollisionShape(verticesTerrain), gameMap);
-        //create some obstacles
-        obstacles=new Obstacle[3];
-        Vector2D[] verticesObstacle0=new Vector2D[4];
-        verticesObstacle0[0]=new Vector2D(600,285);
-        verticesObstacle0[1]=new Vector2D(630,280);
-        verticesObstacle0[2]=new Vector2D(630,330);
-        verticesObstacle0[3]=new Vector2D(600,330);
-        obstacles[0]=new Obstacle(new ConvexCollisionShape(verticesObstacle0),gameMap,false);
-        Vector2D[] verticesObstacle1=new Vector2D[4];
-        verticesObstacle1[0]=new Vector2D(300,405);
-        verticesObstacle1[1]=new Vector2D(330,405);
-        verticesObstacle1[2]=new Vector2D(330,355);
-        verticesObstacle1[3]=new Vector2D(300,350);
-        obstacles[1]=new Obstacle(new ConvexCollisionShape(verticesObstacle1),gameMap,false);
-        Vector2D[] verticesObstacle2=new Vector2D[4];
-        verticesObstacle2[0]=new Vector2D(450,500);
-        verticesObstacle2[1]=new Vector2D(510,500);
-        verticesObstacle2[2]=new Vector2D(510,310);
-        verticesObstacle2[3]=new Vector2D(450,290);
-        obstacles[2]=new Obstacle(new ConvexCollisionShape(verticesObstacle2),gameMap,false);
-        //create worms for team1
-        worm1_1=new Worm(1, gameMap, "Worm1_1");
-        worm1_2=new Worm(1, gameMap, "Worm1_2");
-        worm1_3=new Worm(1, gameMap, "Worm1_3");
-        worm1_4=new Worm(1, gameMap, "Worm1_4");
-        //create worms for team2
-        worm2_1=new Worm(2, gameMap, "Worm2_1");
-        worm2_2=new Worm(2, gameMap, "Worm2_2");
-        worm2_3=new Worm(2, gameMap, "Worm2_3");
-        worm2_4=new Worm(2, gameMap, "Worm2_4");
         //create introsound
         introSoundFile=new File("res/audio/intro.wav");
         //create MainFrame
@@ -120,49 +66,6 @@ public class GameManager {
 
 
     }
-    public void saveWorms(String path) {
-        try {
-            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
-            String jsonString = gson.toJson(this.terrain);
-             FileWriter fileWriter=new FileWriter("res/savegames/terrain");
-             fileWriter.write(jsonString);
-
-             jsonString = gson.toJson(this.worm1_1);
-            FileWriter fileWriter1=new FileWriter("res/savegames/worm1_1");
-             fileWriter1.write(jsonString);
-
-             jsonString = gson.toJson(this.worm1_2);
-            FileWriter fileWriter2=new FileWriter("res/savegames/worm1_2");
-             fileWriter2.write(jsonString);
-
-
-
-
-
-            fileWriter.close();
-            fileWriter1.close();
-            fileWriter2.close();
-
-        } catch (Exception e) {
-
-        }
-    }
-    public void loadWorm(String path) {
-        try {
-
-            FileInputStream input = new FileInputStream(path);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
-            this.terrain=gson.fromJson(reader,Terrain.class);
-            System.out.println("Worm 11 gespeichert");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    //Idea: gameManager calls this method before the start, and when the new game starts, the method starts() will be called bei the GUI
     public void save(String path){
         try {
 
