@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
+import com.google.gson.annotations.Expose;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public strictfp class  SetUpTerrainRule extends StartUpRule {
-	ArrayList<Terrain> terrainToUse;
+	@Expose ArrayList<Terrain> terrainToUse;
 	
 	static private final double[][] noshape;
 	static private final double[][] square;

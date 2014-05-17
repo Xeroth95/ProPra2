@@ -28,7 +28,7 @@ public abstract strictfp class CollisionObject {
     @Expose
 	double friction;
 	
-	transient public ConvexCollisionShape[] collisionShapes;
+	@Expose public ConvexCollisionShape[] collisionShapes;
 	
 	transient Map mapPlacedIn;
     @Expose
@@ -43,7 +43,7 @@ public abstract strictfp class CollisionObject {
 	public int collisionTranslationBehaviour;
 
 
-	ArrayList<Effect> effects;
+	@Expose ArrayList<Effect> effects;
 
     @Expose
 	private boolean markedForDeletion;

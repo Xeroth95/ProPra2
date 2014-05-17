@@ -1,11 +1,13 @@
 package de.hhu.propra14.team132.physics.util;
 
+import com.google.gson.annotations.Expose;
+
 public strictfp class Vector2D {
-	double x;
-	double y;
-	double length;
-	Vector2D rightHandNormal;
-	Vector2D leftHandNormal;
+	@Expose double x;
+	@Expose double y;
+	@Expose double length;
+	@Expose Vector2D rightHandNormal;
+	@Expose Vector2D leftHandNormal;
 	//constructors
 	public Vector2D(){
 		this.x=0;

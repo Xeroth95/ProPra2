@@ -1,16 +1,18 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
+import com.google.gson.annotations.Expose;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
 public class RoundRule extends PassiveRule{
-	private int currentRound;
-	private int currentRoundStart;
-	private int numberOfPlayers;
-	private Player currentPlayer;
-	private double roundLengthInSeconds;
+	@Expose private int currentRound;
+	@Expose private int currentRoundStart;
+	@Expose private int numberOfPlayers;
+	@Expose private Player currentPlayer;
+	@Expose private double roundLengthInSeconds;
 	
 	public RoundRule(Map gameMap, double roundLengthInSeconds) {
 		super(gameMap);

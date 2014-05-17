@@ -3,12 +3,14 @@ package de.hhu.propra14.team132.gameMechanics.rule;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.google.gson.annotations.Expose;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 
 public class RuleSet {
-	Map gameMap;
-	ArrayList<StartUpRule> startUpRules;
-	ArrayList<RuntimeRule> runtimeRules;
+	transient Map gameMap;
+	@Expose ArrayList<StartUpRule> startUpRules;
+	@Expose ArrayList<RuntimeRule> runtimeRules;
 	
 	public RuleSet(Map gameMap){
 		this.gameMap=gameMap;

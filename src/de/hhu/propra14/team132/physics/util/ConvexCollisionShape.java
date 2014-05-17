@@ -2,23 +2,25 @@ package de.hhu.propra14.team132.physics.util;
 
 import java.awt.Polygon;
 
+import com.google.gson.annotations.Expose;
+
 
 public strictfp class ConvexCollisionShape {
 	
 //probably really nasty class with a lot of attributes and a lot of algorithms for collision. Think thrice before changing!
-	double[] xPoints;
-	double[] yPoints;
-	double[] originalxPoints;
-	double[] originalyPoints;
-	Vector2D[] collisionAxes;
-	double positionX;
-	double positionY;
-	double minOnX;
-	double maxOnX;
-	double minOnY;
-	double maxOnY;
-	double xSize;
-	double ySize;
+	@Expose double[] xPoints;
+	@Expose double[] yPoints;
+	@Expose double[] originalxPoints;
+	@Expose double[] originalyPoints;
+	@Expose Vector2D[] collisionAxes;
+	@Expose double positionX;
+	@Expose double positionY;
+	@Expose double minOnX;
+	@Expose double maxOnX;
+	@Expose double minOnY;
+	@Expose double maxOnY;
+	@Expose double xSize;
+	@Expose double ySize;
 	public ConvexCollisionShape(){
 		
 	}
