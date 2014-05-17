@@ -10,14 +10,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import de.hhu.propra14.team132.gameObjects.GameObject;
 
-public class GameObjectAdapter implements JsonDeserializer<GameObject>, JsonSerializer<GameObject> {
+public class JsonAdapter <T> implements JsonDeserializer<T>, JsonSerializer<T> {
 	
 	private static final String CLASS_META_KEY = "CLASS_META_KEY";
 
     @Override
-    public GameObject deserialize(JsonElement jsonElement, Type type,JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public T deserialize(JsonElement jsonElement, Type type,JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
 	    JsonObject jsonObj = jsonElement.getAsJsonObject();
 	    String className = jsonObj.get(CLASS_META_KEY).getAsString();
 	    try {
@@ -29,7 +28,7 @@ public class GameObjectAdapter implements JsonDeserializer<GameObject>, JsonSeri
     }
 
 	@Override
-	public JsonElement serialize(GameObject src, Type typeOfSrc,JsonSerializationContext context) {
+	public JsonElement serialize(T src, Type typeOfSrc,JsonSerializationContext context) {
         JsonElement jsonEle = context.serialize(src, src.getClass());
         jsonEle.getAsJsonObject().addProperty(CLASS_META_KEY,src.getClass().getCanonicalName());
         return jsonEle;
