@@ -29,7 +29,7 @@ public class Worm extends GameObject implements Serializable {
     @Expose
     private static final Vector2D[] vertices;
 
-    transient private final ConvexCollisionShape shape;
+    @Expose private final ConvexCollisionShape shape; //TODO: weird behaviour after loading!!
     static{
     	Vector2D[] vert=new Vector2D[8];
     	vert[0]=new Vector2D(10,0);
@@ -63,7 +63,7 @@ public class Worm extends GameObject implements Serializable {
 
     public Worm() {
         super(new ConvexCollisionShape(vertices), 0);
-        shape=this.collisionShapes[0];
+        shape=this.collisionShapes[0]; 
         this.name = "TestName";
 
         try{
@@ -93,7 +93,7 @@ public class Worm extends GameObject implements Serializable {
 
     @Override
     public void draw(Graphics2D g2d, JPanel p) {
-        g2d.drawImage(textureImage, (int)shape.getPositionX(), (int)shape.getPositionY(), p);
+        g2d.drawImage(textureImage, (int)this.collisionShapes[0].getPositionX(), (int)this.collisionShapes[0].getPositionY(), p); //TODO: using shape results in the worm being painted at 0,0 when being deserialized!
     }
 
 	@Override
