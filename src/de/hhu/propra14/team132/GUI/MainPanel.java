@@ -1,6 +1,7 @@
 package de.hhu.propra14.team132.GUI;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
@@ -77,7 +78,7 @@ public class MainPanel extends JPanel {
     }
 
     public void saveOptions() {
-        gson=new Gson();
+        gson=new GsonBuilder().setPrettyPrinting().create();
         try {
             optionsFileWriter=new FileWriter("res/options/options.json");
             gson.toJson(options, optionsFileWriter);

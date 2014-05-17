@@ -1,1 +1,7 @@
-{"bgVolume":100,"fxVolume":100,"controls":1,"roundLength":120,"wormsPerTeam":4}
+{
+  "bgVolume": 100,
+  "fxVolume": 100,
+  "controls": 1,
+  "roundLength": 120,
+  "wormsPerTeam": 4
+}
