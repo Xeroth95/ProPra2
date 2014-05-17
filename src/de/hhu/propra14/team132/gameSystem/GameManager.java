@@ -108,11 +108,11 @@ public class GameManager {
 
             Map mapNew=gson.fromJson(reader,Map.class);
             this.gameMap=mapNew;
-            this.gameMap.generateNewCollisionSystem();;
+            this.gameMap.generateNewCollisionSystem();
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
 
-            /** Map wird wieder in Datei geschrieben, für Testzwecke
+            /** Map wird wieder in Datei geschrieben, wegen Testzwecke
             Map map1=gson.fromJson(reader,Map.class);
             String jsonString = gson.toJson(map1);
             FileWriter fileWriter=new FileWriter(path+"x");
