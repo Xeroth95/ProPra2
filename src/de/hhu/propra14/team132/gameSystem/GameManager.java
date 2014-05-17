@@ -69,10 +69,10 @@ public class GameManager {
     public void save(String path){
         try {
 
-            Gson gson1=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+            Gson gson1=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
             //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
             //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
-
+            
             String jsonString = gson1.toJson(this.gameMap);
             FileWriter fileWriter=new FileWriter(path);
             fileWriter.write(jsonString);
