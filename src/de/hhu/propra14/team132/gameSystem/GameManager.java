@@ -95,7 +95,6 @@ public class GameManager {
     }
     public void load(String path) {
         try {
-              /**/
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
