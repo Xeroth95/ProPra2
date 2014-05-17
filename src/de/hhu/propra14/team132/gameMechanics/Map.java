@@ -134,6 +134,10 @@ public class Map implements Serializable{
 		this.aviableIds.add(objectID);
 	}
 	
+	public void generateNewCollisionSystem(){
+		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
+	}
+	
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}

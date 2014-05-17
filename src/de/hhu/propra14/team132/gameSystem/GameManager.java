@@ -108,6 +108,7 @@ public class GameManager {
 
             Map mapNew=gson.fromJson(reader,Map.class);
             this.gameMap=mapNew;
+            this.gameMap.generateNewCollisionSystem();;
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
 
@@ -153,7 +154,6 @@ public class GameManager {
                     //Update everything;
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     gameMap.nextTick();
-                    System.out.println("zweite Schleife, Tick: "+currentTick);
                     long t2 = System.nanoTime();  //time after
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
