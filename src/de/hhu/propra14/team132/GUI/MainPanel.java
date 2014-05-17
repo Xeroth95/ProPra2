@@ -1,14 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.sound.SoundEngine;
+import com.google.gson.Gson;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 
 /**
  * Created by fabian on 02.05.14.
@@ -35,6 +33,8 @@ public class MainPanel extends JPanel {
 
     Options options;
     File optionsFile;
+    FileWriter optionsFileWriter;
+    Gson gson;
 
     public MainPanel(MainFrame mainFrame, GameManager gameManager) throws IOException {
         loadOptions();
@@ -76,15 +76,28 @@ public class MainPanel extends JPanel {
         this.add(inGameMenuPanel, "11");
     }
 
+    public void saveOptions() {
+        gson=new Gson();
+        try {
+            optionsFileWriter=new FileWriter("res/options/options.json");
+            gson.toJson(options, optionsFileWriter);
+            optionsFileWriter.close();
+        }
+        catch(Exception e) {
+            System.err.println("Error saving Options!");
+            e.printStackTrace();
+        }
+    }
+
     public void loadOptions() {
         //check if "resources/options/options.ser" exists, if yes, deserialize it, if not, create standard optionsobject
-        optionsFile=new File("res/options/options.ser");
+        optionsFile=new File("res/options/options.json");
         if(optionsFile.exists()) {
             //if an optionsfile already exists, load it
             try {
-                FileInputStream fileIn = new FileInputStream(optionsFile);
-                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                options = (Options) objectIn.readObject();
+                gson=new Gson();
+                BufferedReader optionsReader=new BufferedReader(new FileReader(optionsFile));
+                options=gson.fromJson(optionsReader, Options.class);
             }
             catch(Exception e) {
                 System.err.println("Error loading Options!");
@@ -99,7 +112,7 @@ public class MainPanel extends JPanel {
                 optionsFile.createNewFile();
                 options = new Options();
                 options.setStandard();
-                options.save();
+                saveOptions();
             }
             catch (Exception e) {
                 System.err.println("Error creating File!");
