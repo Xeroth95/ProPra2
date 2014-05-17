@@ -49,6 +49,7 @@ public abstract strictfp class CollisionObject {
 	
 	//constructors
     public CollisionObject() {  //is used for serializing/deseralizing
+    	this(0);
     }
 	public CollisionObject(ConvexCollisionShape[] shapes, int teamID) {
         this.initializeBasics(teamID);

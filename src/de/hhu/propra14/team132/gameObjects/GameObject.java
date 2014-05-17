@@ -5,7 +5,7 @@ import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 public abstract class GameObject extends CollisionObject implements Drawable {
-
+	Class<?> clz;
     public GameObject(int teamID) {
        super(teamID);
     }
@@ -16,6 +16,7 @@ public abstract class GameObject extends CollisionObject implements Drawable {
         super(shape,teamID);
     }
     public GameObject() {
+    	super();
     }
 
 }

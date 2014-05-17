@@ -2,14 +2,16 @@ package de.hhu.propra14.team132.gameSystem;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameObjects.Worm;
 
 
-import java.io.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,7 +68,7 @@ public class GameManager {
     public void save(String path){
         try {
 
-            Gson gson1=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+            Gson gson1=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(GameObject.class, new GameObjectAdapter()).create();
             //Gson gson= new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.STATIC, Modifier.FINAL).create();
             //Gson gson = new GsonBuilder().addDeserializationExclusionStrategy(ex).addSerializationExclusionStrategy(ex).create();
             
@@ -85,7 +87,7 @@ public class GameManager {
               /**/
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(Worm.class, new WormInstanceCreator()).create();
+            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().registerTypeAdapter(GameObject.class, new GameObjectAdapter()).create();
             this.gameMap=gson.fromJson(reader,Map.class);
                /**/
         //this.loadWorm(path);
