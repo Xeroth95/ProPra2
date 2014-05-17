@@ -3,7 +3,6 @@ package de.hhu.propra14.team132.physics;
 import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
-import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
@@ -30,7 +29,6 @@ public abstract strictfp class CollisionObject {
 	
 	@Expose public ConvexCollisionShape[] collisionShapes;
 	
-	transient Map mapPlacedIn;
     @Expose
 	int playerID;
     @Expose
@@ -52,17 +50,17 @@ public abstract strictfp class CollisionObject {
 	//constructors
     public CollisionObject() {  //is used for serializing/deseralizing
     }
-	public CollisionObject(ConvexCollisionShape[] shapes, int teamID, Map map) {
-        this.initializeBasics(teamID, map);
+	public CollisionObject(ConvexCollisionShape[] shapes, int teamID) {
+        this.initializeBasics(teamID);
         this.collisionShapes = shapes;
     }
-	public CollisionObject(ConvexCollisionShape shape, int teamID, Map map) {
-		this.initializeBasics(teamID, map);
+	public CollisionObject(ConvexCollisionShape shape, int teamID) {
+		this.initializeBasics(teamID);
 		this.collisionShapes=new ConvexCollisionShape[1];
 		this.collisionShapes[0]=shape;
 	}
-	public CollisionObject(int teamID, Map map) {
-		this.initializeBasics(teamID, map);
+	public CollisionObject(int teamID) {
+		this.initializeBasics(teamID);
 		this.collisionShapes=new ConvexCollisionShape[1];
 		double[] x ={
 			0,20,20,0	
@@ -73,13 +71,11 @@ public abstract strictfp class CollisionObject {
 		this.collisionShapes[0]=new ConvexCollisionShape(x,y);
 	}	
 	//helper method for constructors
-	private void initializeBasics(int teamID, Map map){
+	private void initializeBasics(int teamID){
 		this.playerID=teamID;
 		this.speed=new Vector2D();
 		this.position=new Vector2D();
 		this.acceleration=new Vector2D();
-		
-		this.mapPlacedIn=map;
 		
 		this.effects=this.getInitalEffects();
 		this.bounciness=this.getInitialBounciness();
@@ -308,12 +304,7 @@ public abstract strictfp class CollisionObject {
 	public void setCollisionShapes(ConvexCollisionShape[] collisionShapes) {
 		this.collisionShapes = collisionShapes;
 	}
-	public Map getMapPlacedIn() {
-		return mapPlacedIn;
-	}
-	public void setMapPlacedIn(Map mapPlacedIn) {
-		this.mapPlacedIn = mapPlacedIn;
-	}
+
 	public int getPlayerID() {
 		return playerID;
 	}

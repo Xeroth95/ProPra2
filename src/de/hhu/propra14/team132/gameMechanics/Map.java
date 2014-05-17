@@ -1,6 +1,5 @@
 package de.hhu.propra14.team132.gameMechanics;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class Map implements Serializable{
 	int round;
 
     @Expose
-	Integer currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static
+	Integer currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static. ja ist es ;)
 
     @Expose
 	RuleSet ruleset;

@@ -2,7 +2,6 @@ package de.hhu.propra14.team132.physics;
 
 import com.google.gson.annotations.Expose;
 
-import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public class Wind extends Effect{

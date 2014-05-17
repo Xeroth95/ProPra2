@@ -4,11 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.gameObjects.Worm;
-import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
-import de.hhu.propra14.team132.physics.util.Vector2D;
 
 
 import java.io.*;

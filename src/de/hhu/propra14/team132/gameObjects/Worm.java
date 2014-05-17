@@ -1,9 +1,6 @@
 package de.hhu.propra14.team132.gameObjects;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
@@ -49,8 +46,8 @@ public class Worm extends GameObject implements Serializable {
     transient Image textureImage;
     
     //constructors:
-    public Worm(int teamID, Map map, String name){
-        super(new ConvexCollisionShape(vertices), teamID, map);
+    public Worm(int teamID, String name){
+        super(new ConvexCollisionShape(vertices), teamID);
         shape=this.collisionShapes[0];
         this.name = name;
 
@@ -65,9 +62,9 @@ public class Worm extends GameObject implements Serializable {
     }
 
     public Worm() {
-        super(new ConvexCollisionShape(vertices), 0, null);
+        super(new ConvexCollisionShape(vertices), 0);
         shape=this.collisionShapes[0];
-        this.name = name;
+        this.name = "TestName";
 
         try{
             textureImage=ImageIO.read(new File("res/img/textures/nic.png"));
