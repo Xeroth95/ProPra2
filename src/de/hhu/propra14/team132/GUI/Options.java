@@ -13,14 +13,14 @@ public class Options implements Serializable{
     public int fxVolume;
     public int controls;
     public int roundLength;
-    public int wormsNumber;
+    public int wormsPerTeam;
 
     public void setStandard() {
         this.bgVolume=100;
         this.fxVolume=100;
         this.controls=ARROWS;
         this.roundLength=120;
-        this.wormsNumber=4;
+        this.wormsPerTeam =4;
     }
 
     public void save() {
@@ -59,11 +59,11 @@ public class Options implements Serializable{
         return roundLength;
     }
 
-    public void setWormsNumber(int wormsNumber) {
-        this.wormsNumber=wormsNumber;
+    public void setWormsPerTeam(int wormsPerTeam) {
+        this.wormsPerTeam = wormsPerTeam;
     }
 
-    public int getWormsNumber() {
-        return wormsNumber;
+    public int getWormsPerTeam() {
+        return wormsPerTeam;
     }
 }

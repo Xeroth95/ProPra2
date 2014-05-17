@@ -134,7 +134,7 @@ public class MainPanel extends JPanel {
             controlSettingsPanel.groupMoveControls.setSelected(controlSettingsPanel.buttonArrowControls.getModel(), false);
         }
         gameSettingsPanel.timeTextField.setText(String.valueOf(options.getRoundLength()));
-        gameSettingsPanel.wormNumberTextField.setText(String.valueOf(options.getWormsNumber()));
+        gameSettingsPanel.wormNumberTextField.setText(String.valueOf(options.getWormsPerTeam()));
     }
 
     public void showPanel(String ID)
