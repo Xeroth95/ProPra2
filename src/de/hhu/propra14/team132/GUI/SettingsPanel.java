@@ -107,7 +107,7 @@ public class SettingsPanel extends JPanel {
                 SettingsPanel.this.mainPanel.controlSettingsPanel.groupMoveControls.setSelected(SettingsPanel.this.mainPanel.controlSettingsPanel.buttonArrowControls.getModel(), false);
             }
             SettingsPanel.this.mainPanel.gameSettingsPanel.timeTextField.setText(String.valueOf(options.getRoundLength()));
-            SettingsPanel.this.mainPanel.gameSettingsPanel.wormNumberTextField.setText(String.valueOf(options.getWormsNumber()));
+            SettingsPanel.this.mainPanel.gameSettingsPanel.wormNumberTextField.setText(String.valueOf(options.getWormsPerTeam()));
         }
     }
 
@@ -120,7 +120,7 @@ public class SettingsPanel extends JPanel {
             options.setFxVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getFxVolume());
             options.setControls(SettingsPanel.this.mainPanel.controlSettingsPanel.getControls());
             options.setRoundLength(SettingsPanel.this.mainPanel.gameSettingsPanel.getRoundLength());
-            options.setWormsNumber(SettingsPanel.this.mainPanel.gameSettingsPanel.getWormNumber());
+            options.setWormsPerTeam(SettingsPanel.this.mainPanel.gameSettingsPanel.getWormNumber());
             SettingsPanel.this.mainPanel.saveOptions();
             SettingsPanel.this.mainPanel.showPanel("1");//switch back to MenuPanel
         }

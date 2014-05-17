@@ -69,7 +69,7 @@ public class InGameMenuPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             InGameMenuPanel.this.soundEngine.play(klickSoundFile);
             try {
-                chooser=new JFileChooser();
+                chooser=new JFileChooser("res/savegames");
                 chooser.showOpenDialog(null);
                 InGameMenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
                 InGameMenuPanel.this.gameManager.load(pathToSavedGame);

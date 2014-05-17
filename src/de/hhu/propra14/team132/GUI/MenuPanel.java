@@ -70,7 +70,7 @@ public class MenuPanel extends JPanel{
         public void actionPerformed(ActionEvent e) {
             MenuPanel.this.soundEngine.play(klickSoundFile);
             try {
-                chooser=new JFileChooser();
+                chooser=new JFileChooser("res/savegames");
                 chooser.showOpenDialog(null);
                 MenuPanel.this.pathToSavedGame = chooser.getSelectedFile().getPath();//open a filechooser dialog
                 MenuPanel.this.gameManager.load(pathToSavedGame);
