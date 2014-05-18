@@ -31,7 +31,7 @@ public class Terrain extends GameObject {
     
     static{
     	try{
-    		textureImage= ImageIO.read(new File("res/img/textures/terrain2.png"));
+    		textureImage= ImageIO.read(new File("res/img/textures/terrain2.jpg"));
             texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     	}catch(IOException e){
     		System.err.println("could not load the Texture for the Terrain!");
