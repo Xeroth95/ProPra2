@@ -40,7 +40,7 @@ public class Map implements Serializable{
 	int round;
 
     @Expose
-	Integer currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static. ja ist es ;)
+	int currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static. ja ist es ;)
 
     @Expose
 	RuleSet ruleset;
@@ -77,7 +77,7 @@ public class Map implements Serializable{
 		Player.playerCount=1;
 		players = new Player[playerCount];
 		
-		currentTick = manager.getCurrentTick();
+		currentTick = 0;
 		
 		for(int i = 0; i<playerCount; i++){
 			players[i]=new Player();
@@ -104,6 +104,8 @@ public class Map implements Serializable{
 		return this.IdCounter;
 	}
 	public void nextTick(){
+		this.currentTick++;
+		this.ruleset.applyPassiveRules();
 		moveAllObjects();
 		this.collsys.calcCollision();
 	}

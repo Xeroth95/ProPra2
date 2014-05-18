@@ -32,7 +32,7 @@ public class GameManager {
     HashMap<MessageType,ArrayList<Communicable>> hashMap; //arrayList with all the Objects who want to receive Message
     public static int ticksPerSecond;
     public static long lengthOfTickInNanoSeconds;
-    public static int currentTick;
+    public static Integer currentTick;
 
     int playerCount;
     Queue<Message> MessageList;

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class Terrain extends GameObject {
     transient static BufferedImage textureImage;
     transient static TexturePaint texture;
+    TexturePaint runTimeTexture;
     
     static{
     	try{
@@ -42,17 +43,19 @@ public class Terrain extends GameObject {
     public Terrain()  {
         super(Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
-        
+        runTimeTexture=texture;
     }
 
     public Terrain(ConvexCollisionShape[] shapes) {
         super(shapes, Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
+        runTimeTexture=texture;
     }
 
     public Terrain(ConvexCollisionShape shape) {
         super(shape, Player.WORLD);
         this.collisionTranslationBehaviour=CollisionObject.TRANSLATION_BEHAVIOUR_UNMOVING;
+        runTimeTexture=texture;
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
@@ -71,7 +74,7 @@ public class Terrain extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d, JPanel p){
-        g2d.setPaint(this.texture);
+        g2d.setPaint(this.runTimeTexture);
         for(ConvexCollisionShape s : this.collisionShapes){
         	g2d.fillPolygon(s.getPolygonToDraw());
         }

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 
 
+
 import com.google.gson.annotations.Expose;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
@@ -93,7 +95,7 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 				for(int a=0;a<randomshape.length;a++){
 					shape[a]=new Vector2D(randomshape[a][0]*10,randomshape[a][1]*10);
 				}
-				Terrain t = new Terrain(new ConvexCollisionShape(shape));
+				Obstacle t = new Obstacle(new ConvexCollisionShape(shape));
 				t.setPosition(new Vector2D((double)j*100,300));
 				newTerrain.add(t);
 			

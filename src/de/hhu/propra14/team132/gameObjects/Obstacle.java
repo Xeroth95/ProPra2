@@ -4,37 +4,50 @@ import de.hhu.propra14.team132.GUI.Drawable;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 /**
  * Created by isabel on 09.05.14.
  */
 public class Obstacle extends Terrain{
-    private boolean destroyable;
+	
+    transient static BufferedImage textureImage;
+    transient static TexturePaint texture;
+    
+    static{
+    	try{
+    		textureImage= ImageIO.read(new File("res/img/textures/obstacle.png"));
+            texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+    	}catch(IOException e){
+    		System.err.println("could not load the Texture for the Terrain!");
+    		e.printStackTrace();
+    		System.exit(-1);
+    	}
+    }
 
     public Obstacle(boolean destroyable) {
         super();
-        this.destroyable = destroyable;
+        runTimeTexture=texture;
     }
 
-    public Obstacle(ConvexCollisionShape[] shapes, boolean destroyable) {
+    public Obstacle(ConvexCollisionShape[] shapes) {
         super(shapes);
-        this.destroyable = destroyable;
+        runTimeTexture=texture;
     }
 
-    public Obstacle(ConvexCollisionShape shape, boolean destroyable) {
+    public Obstacle(ConvexCollisionShape shape) {
         super(shape);
-        this.destroyable = destroyable;
+        runTimeTexture=texture;
     }
     public Obstacle() {
-    	this.destroyable=true;
+    	super();
+    	runTimeTexture=texture;
     }
 
-    public boolean isDestroyable() {
-        return destroyable;
-    }
-
-    public void setDestroyable(boolean destroyable) {
-        this.destroyable = destroyable;
-    }
 }
