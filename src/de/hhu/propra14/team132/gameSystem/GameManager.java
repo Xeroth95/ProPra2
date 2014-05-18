@@ -26,9 +26,11 @@ import java.util.HashMap;
 public class GameManager {
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
+    private boolean waiting;
+    private int waitUntil; //with this yu can stop the GameManager so that it wait till a specific tic
     //declares the necessary objects
     transient public Map gameMap;
-    transient public Terrain terrain;
+
 
     transient public MainFrame mainFrame;
     transient public File introSoundFile;
@@ -43,6 +45,8 @@ public class GameManager {
     int Round;
     public GameManager() throws IOException {
         beforeStart=true;
+        waiting=false;
+        waitTillTick(-1);
         currentTick=0;
         ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANOSECONDS /ticksPerSecond;
@@ -87,7 +91,7 @@ public class GameManager {
             e.printStackTrace();
         }
     }
-    public void restart() { //is there to start a new Game todo: impementieren
+    public void restart() { //is there to start a new Game
         currentTick=0;
         this.setBeforeStart(false);
         this.setStopped(false);
@@ -149,16 +153,21 @@ public class GameManager {
         try {
             while (true) {
                 if(!stopped) {
-                    long t1 = System.nanoTime();   //time before
-                    //Update everything;
-                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-                    gameMap.nextTick();
-                    long t2 = System.nanoTime();  //time after
-                    if (t2 - t1 < lengthOfTickInNanoSeconds) {
-                        double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
-                        Thread.sleep(((int) (diff / 1000000)));   //
+                    if(waiting) {
+                        if(waitUntil==currentTick)
+                            waiting=false;
+                    } else {
+                        long t1 = System.nanoTime();
+                        //Update everything;
+                        mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                        gameMap.nextTick();
+                        long t2 = System.nanoTime();  //time after
+                        if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                            double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
+                            Thread.sleep(((int) (diff / 1000000)));   //
+                        }
                     }
-                    currentTick++;
+                    currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
@@ -167,6 +176,7 @@ public class GameManager {
                    e.printStackTrace();
          }
      }
+
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
         //which Objects want messages of this type
@@ -212,8 +222,19 @@ public class GameManager {
     public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
         return (hashMap.get(type).contains(o));
     }
-
+    public void waitTillTick(int x) {
+        this.waitUntil=x;
+    }
     //regulary getter and setter
+
+
+    public boolean isWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(boolean waiting) {
+        this.waiting = waiting;
+    }
 
     public boolean isBeforeStart() {
         return beforeStart;

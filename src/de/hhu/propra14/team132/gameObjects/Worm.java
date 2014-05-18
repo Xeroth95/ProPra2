@@ -64,7 +64,7 @@ public class Worm extends GameObject implements Serializable {
     public Worm() {
 
         super(new ConvexCollisionShape(vertices), 0);
-        shape=this.collisionShapes[0]; 
+        shape=this.collisionShapes[0];
         this.name = "TestName";
 
         try{
