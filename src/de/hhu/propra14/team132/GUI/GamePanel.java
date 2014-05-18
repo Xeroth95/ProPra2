@@ -67,7 +67,7 @@ public class GamePanel extends JPanel {
         g2d.setColor(Color.RED);
         g2d.setFont(displayFont);
         g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0+hbar.getValue(),18+vbar.getValue());
-        g2d.drawString("Time left: "+gameManager.gameMap.getTimeLeftInTicks()/gameManager.ticksPerSecond,0+hbar.getValue(),36+vbar.getValue());
+        g2d.drawString("Time left: "+(gameManager.gameMap.getTimeLeftInTicks()/gameManager.ticksPerSecond+1),0+hbar.getValue(),36+vbar.getValue());
 
 
         //get x and y coordinates of the moues relatively to MainGamePanel
