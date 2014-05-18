@@ -54,7 +54,6 @@ public class InGameMenuPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             InGameMenuPanel.this.soundEngine.play(klickSoundFile);
             InGameMenuPanel.this.gameManager.restart();
-            InGameMenuPanel.this.mainPanel.mainGamePanel.gamePanel.refresh();
             InGameMenuPanel.this.gameManager.setStopped(false);
             InGameMenuPanel.this.mainPanel.showPanel("2");
 
