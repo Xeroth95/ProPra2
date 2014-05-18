@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
     Graphics2D g2d;
     GameObject[] gameObjects;
     ArrayList<Integer> objectIDs;
-    Font playerFont;
+    Font displayFont;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
 
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel {
         autoscrolling=false;
         gameObjects=gameManager.gameMap.getMapObjects();
         objectIDs=gameManager.gameMap.getObjectIds();
-        playerFont=new Font("Arial", Font.BOLD, 20);
+        displayFont=new Font("Arial", Font.BOLD, 20);
         this.setPreferredSize(new Dimension(8192, 8192));
         this.setFocusable(true);
         this.addKeyListener(new GameKeyListener());
@@ -64,8 +64,8 @@ public class GamePanel extends JPanel {
         for(int i : objectIDs) {
             gameObjects[i].draw(g2d, this);
         }
-        g2d.setColor(Color.BLACK);
-        g2d.setFont(playerFont);
+        g2d.setColor(Color.RED);
+        g2d.setFont(displayFont);
         g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0+hbar.getValue(),18+vbar.getValue());
         g2d.drawString("Time left: "+gameManager.gameMap.getTimeLeftInTicks()/gameManager.ticksPerSecond,0+hbar.getValue(),36+vbar.getValue());
 
