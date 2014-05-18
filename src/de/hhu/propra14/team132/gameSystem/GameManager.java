@@ -170,7 +170,7 @@ public class GameManager {
                         }
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
-                    System.out.println("tick "+currentTick);
+                  //  System.out.println("tick "+currentTick);
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
