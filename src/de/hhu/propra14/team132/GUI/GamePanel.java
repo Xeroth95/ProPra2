@@ -133,11 +133,6 @@ public class GamePanel extends JPanel {
             if(e.getButton()==e.BUTTON3) {
                 GamePanel.this.weaponsPanel.setVisible(!weaponsPanel.isVisible());
             }
-
-            if(e.getButton()==e.BUTTON1) {
-                //scroll to upper left corner (for testing purposes)
-                GamePanel.this.scroll(GamePanel.this.mainGamePanel.scrollPane.getHorizontalScrollBar(), GamePanel.this.mainGamePanel.scrollPane.getVerticalScrollBar(), 0, 0);
-            }
         }
 
 
