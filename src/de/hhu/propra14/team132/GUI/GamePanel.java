@@ -1,6 +1,5 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
@@ -68,6 +67,7 @@ public class GamePanel extends JPanel {
         g2d.setColor(Color.BLACK);
         g2d.setFont(playerFont);
         g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0+hbar.getValue(),18+vbar.getValue());
+        g2d.drawString("Time left: "+gameManager.gameMap.getTimeLeftInTicks()/gameManager.ticksPerSecond,0+hbar.getValue(),36+vbar.getValue());
 
 
         //get x and y coordinates of the moues relatively to MainGamePanel
