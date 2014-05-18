@@ -8,7 +8,7 @@ import de.hhu.propra14.team132.gameObjects.Worm;
 
 public class Player {
 	@Expose public static final int WORLD = 0;
-	@Expose private static int playerCount=1;
+	@Expose protected static int playerCount=1;
 	@Expose public int playerID;
 
 	private ArrayList<Worm> worms;

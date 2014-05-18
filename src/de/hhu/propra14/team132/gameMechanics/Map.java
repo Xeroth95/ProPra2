@@ -11,9 +11,9 @@ import de.hhu.propra14.team132.physics.CollisionSystem;
 import de.hhu.propra14.team132.physics.WGrid;
 
 
-public class Map implements Serializable{
+public class Map implements Serializable{ 
+	
 	transient CollisionSystem collsys;
-
     @Expose
 	ArrayList<Integer> objectIds;
 
@@ -29,6 +29,7 @@ public class Map implements Serializable{
 
     @Expose
 	boolean isActive;
+    boolean dead;
 
     @Expose
 	static int MAX_OBJECT_COUNT=21000; // arbitrary value. Has direct influence on a few very important array sizes.
@@ -66,13 +67,14 @@ public class Map implements Serializable{
 		mapObjects=new GameObject[MAX_OBJECT_COUNT];
 		
 		isActive=false;
+		dead=false;
 		
 		aviableIds=new ArrayList<Integer>();
 		
 		IdCounter=1; // zero is reserved!
 
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
-		
+		Player.playerCount=1;
 		players = new Player[playerCount];
 		
 		currentTick = manager.getCurrentTick();
@@ -138,6 +140,7 @@ public class Map implements Serializable{
 		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
 	}
 	
+	
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -180,6 +183,25 @@ public class Map implements Serializable{
 	public double getSizeY() {
 		return sizeY;
 	}
+	public GameManager getManager() {
+		return manager;
+	}
+	public void setManager(GameManager manager) {
+		this.manager = manager;
+	}
+	public int getRound() {
+		return round;
+	}
+	public void setRound(int round) {
+		this.round = round;
+	}
+	public void setObjectIds(ArrayList<Integer> objectIds) {
+		this.objectIds = objectIds;
+	}
+	public void setCurrentTick(Integer currentTick) {
+		this.currentTick = currentTick;
+	}
+	
 	
 	
 }

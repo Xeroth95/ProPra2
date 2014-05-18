@@ -95,7 +95,8 @@ public class GameManager {
         currentTick=0;
         this.setBeforeStart(false);
         this.setStopped(false);
-        gameMap=new Map(this,playerCount);
+        this.gameMap=new Map(this,playerCount);
+        this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
     }
     public void load(String path) {
         try {
@@ -110,11 +111,12 @@ public class GameManager {
             Gson gson=gB.create();
 
             Map mapNew=gson.fromJson(reader,Map.class);
+            mapNew.setManager(this);
             this.gameMap=mapNew;
             this.gameMap.generateNewCollisionSystem();
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
-
+            currentTick=this.gameMap.getCurrentTick();//@ISA: this is why you need currentTick in Map
             /** Map wird wieder in Datei geschrieben, wegen Testzwecke
             Map map1=gson.fromJson(reader,Map.class);
             String jsonString = gson.toJson(map1);

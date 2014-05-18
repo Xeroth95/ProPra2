@@ -20,11 +20,10 @@ public strictfp class WGrid extends CollisionSystem{
 		int start;
 		int end;
 		boolean ready;
-		public CollThread(CountDownLatch startSignal,CountDownLatch doneSignal,CountDownLatch nextTickSignal){
+		public CollThread(CountDownLatch startSignal,CountDownLatch doneSignal,CountDownLatch nextTickSignal,WGrid w){
 			this.startSignal=startSignal;
 			this.doneSignal=doneSignal;
 			this.nextTickSignal=nextTickSignal;
-
 
 			ready=false;
 			this.start=0;
@@ -43,7 +42,7 @@ public strictfp class WGrid extends CollisionSystem{
 						nextTickSignal.await();
 				}
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 			
 				
@@ -124,7 +123,6 @@ public strictfp class WGrid extends CollisionSystem{
 	double width;
 	double length;
 	CollisionObject[] objects;
-	Map map;
 	
 	ArrayList<Integer> IDs;
 	
@@ -142,6 +140,8 @@ public strictfp class WGrid extends CollisionSystem{
 	final int[] levelOfI;
 	final int[][] parentsOfI;
 	
+	Map map;
+	
 	static final int numberOfProcessors=Runtime.getRuntime().availableProcessors()*2;
 	
 	final CollThread[] collThreads;
@@ -153,8 +153,8 @@ public strictfp class WGrid extends CollisionSystem{
 		this.length=length;
 		this.subLevels=subLevels;
 		this.map=map;
-		objects= map.getMapObjects();
 		this.IDs=IDs;
+		this.objects=map.getMapObjects();
 		
 		activeCells=new ArrayList<Integer>(500);
 		for(int i=0;i<this.subLevels;i++){
@@ -231,7 +231,6 @@ public strictfp class WGrid extends CollisionSystem{
 		}
 		this.levelOfI[resultingCells]=this.levelOfI[resultingCells-1];
 
-		//just for the record: this code is commented out and not just deleted because I need to see what I originally wrote and I cannot do this if it's gone.
 		//now the probably really ugly new version of the sort-in of the parent cells!
 		for(int i=0;i<this.cellsBeforeLevel[this.subLevels];i++){
 			//add the parents and their parents! This sounds like recursion, but we can make that in an iterative manner because we begin working at the top
@@ -321,7 +320,7 @@ public strictfp class WGrid extends CollisionSystem{
 		
 		collThreads=new CollThread[numberOfProcessors];
 		for(int i=0;i!=collThreads.length;++i){
-			collThreads[i]=new CollThread(startSignal,doneSignal,nextTickSignal);
+			collThreads[i]=new CollThread(startSignal,doneSignal,nextTickSignal,this);
 			collThreads[i].start();
 		}
 	}
@@ -458,6 +457,7 @@ public strictfp class WGrid extends CollisionSystem{
 	public void calcCollision() {
 		this.syncCollisionCheck();
 	}
+
 	
 }
 
