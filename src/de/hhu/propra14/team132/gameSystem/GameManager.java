@@ -9,16 +9,11 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuntimeRule;
 import de.hhu.propra14.team132.gameMechanics.rule.StartUpRule;
 import de.hhu.propra14.team132.gameObjects.GameObject;
-import de.hhu.propra14.team132.gameObjects.Terrain;
-import de.hhu.propra14.team132.gameObjects.Worm;
-
-
 
 import de.hhu.propra14.team132.physics.Effect;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by isabel on 06.05.14.
@@ -40,13 +35,15 @@ public class GameManager {
     public static int currentTick;
 
     int playerCount;
+    Queue<Message> MessageList;
 
     public static final long LENGTH_OF_A_SECOND_IN_NANOSECONDS =1000000000L;
     int Round;
     public GameManager() throws IOException {
         beforeStart=true;
-        waiting=false;
-        waitTillTick(-1);
+        waiting=true;
+        stopped =false;
+        waitTillTick(100);
         currentTick=0;
         ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANOSECONDS /ticksPerSecond;
@@ -63,7 +60,10 @@ public class GameManager {
         introSoundFile=new File("res/audio/intro.wav");
         //create MainFrame
         mainFrame=new MainFrame(this);
-        stopped =false;
+
+
+
+        MessageList=new LinkedList<Message>();
     }
 
     public static void main(String[] args) throws IOException {
@@ -154,13 +154,15 @@ public class GameManager {
             while (true) {
                 if(!stopped) {
                     if(waiting) {
-                        if(waitUntil==currentTick)
-                            waiting=false;
+                        if(waitUntil==currentTick) {
+                            waiting = false;
+                        }
                     } else {
                         long t1 = System.nanoTime();
                         //Update everything;
                         mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                         gameMap.nextTick();
+                        this.sendMessagesOfQueue(this.getCurrentTick());
                         long t2 = System.nanoTime();  //time after
                         if (t2 - t1 < lengthOfTickInNanoSeconds) {
                             double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
@@ -168,6 +170,7 @@ public class GameManager {
                         }
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
+                    System.out.println("tick "+currentTick);
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
@@ -190,8 +193,24 @@ public class GameManager {
             case MOUSE:
                 helpSend(MessageType.MOUSE, m);
         }
-
-
+    }
+    //this method is for the Idea, that we stop the other systems.
+    // When Network sends them a Message they are stored here. The System then proceed and get the messages at the right tick
+    public void addMessageToMessageQueue (Message m) {  //should be used by network
+        MessageList.add(m);
+    }
+    public void sendMessagesOfQueue(int currentTick) {
+        while(MessageList.element().getSentAtTick()==currentTick) {
+            Message message=MessageList.remove();
+            MessageType messageType=message.getMessageType();  //reads the MessageType
+            //makes a Decision what to do with the message:
+            switch(messageType) {
+                case KEYBOARD:
+                    helpSend(MessageType.KEYBOARD, message);
+                case MOUSE:
+                    helpSend(MessageType.MOUSE, message);
+            }
+        }
     }
     public void helpSend(MessageType messageType, Message m) {
         for(Communicable o : hashMap.get(messageType)) {
@@ -203,6 +222,7 @@ public class GameManager {
         //Decide what to do with Message.
         Message message=m;
         MessageType messageType=message.getMessageType();
+
 
     }
     public void register(Communicable o, ArrayList<MessageType> type) {
