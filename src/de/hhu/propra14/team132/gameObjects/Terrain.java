@@ -1,18 +1,13 @@
 package de.hhu.propra14.team132.gameObjects;
 
-import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
-import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
-import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,7 +27,7 @@ public class Terrain extends GameObject {
     static{
     	try{
     		textureImage= ImageIO.read(new File("res/img/textures/terrain2.jpg"));
-            texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+            texture=new TexturePaint(textureImage, new Rectangle(0,0,256,256));
     	}catch(IOException e){
     		System.err.println("could not load the Texture for the Terrain!");
     		e.printStackTrace();

@@ -1,16 +1,12 @@
 package de.hhu.propra14.team132.gameObjects;
 
-import de.hhu.propra14.team132.GUI.Drawable;
-import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 /**
  * Created by isabel on 09.05.14.
@@ -23,7 +19,7 @@ public class Obstacle extends Terrain{
     static{
     	try{
     		textureImage= ImageIO.read(new File("res/img/textures/obstacle2.png"));
-            texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
+            texture=new TexturePaint(textureImage, new Rectangle(0,0,128,128));
     	}catch(IOException e){
     		System.err.println("could not load the Texture for the Terrain!");
     		e.printStackTrace();
