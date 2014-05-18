@@ -22,7 +22,7 @@ public class Obstacle extends Terrain{
     
     static{
     	try{
-    		textureImage= ImageIO.read(new File("res/img/textures/obstacle.png"));
+    		textureImage= ImageIO.read(new File("res/img/textures/obstacle2.png"));
             texture=new TexturePaint(textureImage, new Rectangle(0,0,48,48));
     	}catch(IOException e){
     		System.err.println("could not load the Texture for the Terrain!");
