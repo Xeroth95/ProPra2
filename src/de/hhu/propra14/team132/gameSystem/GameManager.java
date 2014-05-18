@@ -200,18 +200,19 @@ public class GameManager {
         MessageList.add(m);
     }
     public void sendMessagesOfQueue(int currentTick) {
-        while(MessageList.element().getSentAtTick()==currentTick) {
-            Message message=MessageList.remove();
-            MessageType messageType=message.getMessageType();  //reads the MessageType
-            //makes a Decision what to do with the message:
-            switch(messageType) {
-                case KEYBOARD:
-                    helpSend(MessageType.KEYBOARD, message);
-                case MOUSE:
-                    helpSend(MessageType.MOUSE, message);
+        while ((!MessageList.isEmpty())&&MessageList.element().getSentAtTick() == currentTick) {
+                Message message = MessageList.remove();
+                MessageType messageType = message.getMessageType();  //reads the MessageType
+                //makes a Decision what to do with the message:
+                switch (messageType) {
+                    case KEYBOARD:
+                        helpSend(MessageType.KEYBOARD, message);
+                    case MOUSE:
+                        helpSend(MessageType.MOUSE, message);
+                }
             }
         }
-    }
+
     public void helpSend(MessageType messageType, Message m) {
         for(Communicable o : hashMap.get(messageType)) {
             o.receiveMessage(m);
