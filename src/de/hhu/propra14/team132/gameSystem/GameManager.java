@@ -5,11 +5,11 @@ import com.google.gson.GsonBuilder;
 
 import de.hhu.propra14.team132.GUI.MainFrame;
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameMechanics.rule.PassiveRule;
 import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuntimeRule;
 import de.hhu.propra14.team132.gameMechanics.rule.StartUpRule;
 import de.hhu.propra14.team132.gameObjects.GameObject;
-
 import de.hhu.propra14.team132.physics.Effect;
 
 import java.io.*;
@@ -80,6 +80,7 @@ public class GameManager {
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
         	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
+        	gB.registerTypeAdapter(PassiveRule.class, new JsonAdapter<PassiveRule>());
             Gson gson1=gB.create();
             String jsonString = gson1.toJson(this.gameMap);
             FileWriter fileWriter=new FileWriter(path);
@@ -108,12 +109,13 @@ public class GameManager {
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
         	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
+        	gB.registerTypeAdapter(PassiveRule.class, new JsonAdapter<PassiveRule>());
             Gson gson=gB.create();
 
             Map mapNew=gson.fromJson(reader,Map.class);
             mapNew.setManager(this);
             this.gameMap=mapNew;
-            this.gameMap.generateNewCollisionSystem();
+            this.gameMap.setUpAfterLoading();
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
             currentTick=this.gameMap.getCurrentTick();//@ISA: this is why you need currentTick in Map

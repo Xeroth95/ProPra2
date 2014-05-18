@@ -19,4 +19,14 @@ public abstract class Rule {
 	protected abstract MessageType[] defineMessageTypesToReactTo();
 	
 	public abstract void applyRule();
+
+	public Map getGameMap() {
+		return gameMap;
+	}
+
+	public void setGameMap(Map gameMap) {
+		this.gameMap = gameMap;
+	}
+	
+	
 }

@@ -43,6 +43,30 @@ public class RuleSet {
 		}
 	}
 
+	public ArrayList<StartUpRule> getStartUpRules() {
+		return startUpRules;
+	}
+
+	public void setStartUpRules(ArrayList<StartUpRule> startUpRules) {
+		this.startUpRules = startUpRules;
+	}
+
+	public ArrayList<RuntimeRule> getRuntimeRules() {
+		return runtimeRules;
+	}
+
+	public void setRuntimeRules(ArrayList<RuntimeRule> runtimeRules) {
+		this.runtimeRules = runtimeRules;
+	}
+
+	public ArrayList<PassiveRule> getPassiveRules() {
+		return passiveRules;
+	}
+
+	public void setPassiveRules(ArrayList<PassiveRule> passiveRules) {
+		this.passiveRules = passiveRules;
+	}
+
 	
 	
 }

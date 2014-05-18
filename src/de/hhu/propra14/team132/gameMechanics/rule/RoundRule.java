@@ -28,7 +28,9 @@ public class RoundRule extends PassiveRule{
 	@Override
 	public void applyRule() {
 //		System.out.println(gameMap.getCurrentTick()%roundLengthInTicks);
-		if(gameMap.getCurrentTick()%roundLengthInTicks==0){//time is up
+		int timeLeft=gameMap.getCurrentTick()%roundLengthInTicks;
+		gameMap.setTimeLeftInTicks(timeLeft);
+		if(timeLeft==0){//time is up
 			//TODO: send round is over message
 			currentRound++;
 			gameMap.setCurrentPlayer(gameMap.getPlayers()[(gameMap.getCurrentPlayer().getPlayerID())%gameMap.getPlayers().length]);

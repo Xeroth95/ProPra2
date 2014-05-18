@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
+
+import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
@@ -38,6 +40,9 @@ public class Map implements Serializable{
 
     @Expose
 	int round;
+    
+    @Expose
+	int timeLeftInTicks;
 
     @Expose
 	int currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static. ja ist es ;)
@@ -138,8 +143,17 @@ public class Map implements Serializable{
 		this.aviableIds.add(objectID);
 	}
 	
-	public void generateNewCollisionSystem(){
+	public void setUpAfterLoading(){
 		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
+		for(Rule r:this.ruleset.getPassiveRules()){
+			r.setGameMap(this);
+		}
+		for(Rule r:this.ruleset.getRuntimeRules()){
+			r.setGameMap(this);
+		}
+		for(Rule r:this.ruleset.getStartUpRules()){
+			r.setGameMap(this);
+		}
 	}
 	
 	
@@ -202,6 +216,12 @@ public class Map implements Serializable{
 	}
 	public void setCurrentTick(Integer currentTick) {
 		this.currentTick = currentTick;
+	}
+	public int getTimeLeftInTicks() {
+		return timeLeftInTicks;
+	}
+	public void setTimeLeftInTicks(int timeLeftInTicks) {
+		this.timeLeftInTicks = timeLeftInTicks;
 	}
 	
 	
