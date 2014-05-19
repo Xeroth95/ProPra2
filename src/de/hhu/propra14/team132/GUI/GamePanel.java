@@ -60,10 +60,16 @@ public class GamePanel extends JPanel {
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
         g2d=(Graphics2D) g;
+        g2d.scale(1,-1);
+        g2d.translate(0,-8192);
+
 
         for(int i : objectIDs) {
             gameObjects[i].draw(g2d, this);
         }
+
+        g2d.scale(1,-1);
+        g2d.translate(0,-8192);
         g2d.setColor(Color.RED);
         g2d.setFont(displayFont);
         g2d.drawString("Player "+String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()),0+hbar.getValue(),18+vbar.getValue());
@@ -77,8 +83,8 @@ public class GamePanel extends JPanel {
         mouseLocationX = MouseInfo.getPointerInfo().getLocation().getX()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getX();
         mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY()-mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getY();
 
-        if(!weaponsPanel.isVisible() && autoscrolling==false)//only scroll if WeaponsPanel is invisivle and the panel is not autoscrolling
-        {
+        if(!weaponsPanel.isVisible() && autoscrolling==false) {
+        //only scroll if WeaponsPanel is invisivle and the panel is not autoscrolling
             if (mouseLocationX >= mainGamePanel.scrollPane.getViewport().getWidth() - 50) {
                 hbar.setValue(hbar.getValue() + 1);//scroll to the right
             }
