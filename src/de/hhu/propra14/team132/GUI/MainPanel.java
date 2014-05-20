@@ -29,6 +29,7 @@ public class MainPanel extends JPanel {
     StartGamePanel startGamePanel;
     LobbyPanel lobbyPanel;
     InGameMenuPanel inGameMenuPanel;
+    BeforeGamePanel beforeGamePanel;
 
     CardLayout mainPanelLayout;
 
@@ -55,6 +56,7 @@ public class MainPanel extends JPanel {
         startGamePanel=new StartGamePanel(this, soundEngine, klickSoundFile);
         lobbyPanel=new LobbyPanel(this, soundEngine, klickSoundFile);
         inGameMenuPanel=new InGameMenuPanel(this, gameManager, soundEngine, klickSoundFile);
+        beforeGamePanel=new BeforeGamePanel(this, soundEngine, klickSoundFile);
 
         applyOptions();
 
@@ -75,6 +77,7 @@ public class MainPanel extends JPanel {
         this.add(lobbyPanel, "9");
         this.add(gameSettingsPanel, "10");
         this.add(inGameMenuPanel, "11");
+        this.add(beforeGamePanel, "12");
     }
 
     public void saveOptions() {
