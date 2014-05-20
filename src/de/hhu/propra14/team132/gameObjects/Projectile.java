@@ -27,7 +27,11 @@ public class Projectile extends GameObject{
         super(shape, teamID);
     }
 
-    //CollsionObject-Methods
+    public Projectile() {
+       super();
+    }
+
+    //CollisionObject-Methods
     @Override
     public void furtherCollisionWith(CollisionObject o) {
         //do nothing

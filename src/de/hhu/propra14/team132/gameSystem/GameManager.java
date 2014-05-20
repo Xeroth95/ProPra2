@@ -21,7 +21,6 @@ import java.util.*;
 public class GameManager implements Communicable{
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
-    private boolean waiting;
     //declares the necessary objects
     transient public Map gameMap;
 
@@ -40,7 +39,6 @@ public class GameManager implements Communicable{
     int Round;
     public GameManager() throws IOException {
         beforeStart=true;
-        waiting=true;
         stopped =false;
 
         currentTick=0;
@@ -238,14 +236,6 @@ public class GameManager implements Communicable{
     }
     //regulary getter and setter
 
-
-    public boolean isWaiting() {
-        return waiting;
-    }
-
-    public void setWaiting(boolean waiting) {
-        this.waiting = waiting;
-    }
 
     public boolean isBeforeStart() {
         return beforeStart;
