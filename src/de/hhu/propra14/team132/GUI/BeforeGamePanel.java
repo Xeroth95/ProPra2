@@ -86,8 +86,13 @@ public class BeforeGamePanel extends JPanel {
                     JOptionPane.showMessageDialog(null,"Both players must enter a name!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    BeforeGamePanel.this.mainPanel.showPanel("2");
-                    mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                    if(BeforeGamePanel.this.player1TeamNameField.getText().equals(BeforeGamePanel.this.player2TeamNameField.getText())) {
+                        JOptionPane.showMessageDialog(null,"The players must have different names!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else {
+                        BeforeGamePanel.this.mainPanel.showPanel("2");
+                        mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                    }
                 }
             }
         }
