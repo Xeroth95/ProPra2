@@ -16,18 +16,11 @@ import java.util.ArrayList;
  * Created by isabel on 02.05.14.
  */
 public class Weapon implements Drawable{
-    private Map map;
     //constructors:
     
     //TODO:actually implement the things this Class needs, like the projectile it shoots etc.
 
-    public Weapon(int teamID, Map map) {
-        this.map = map;
-    }
-
-
-    //Drawable Methods:
-    public void draw(Graphics g, Color color, int posX, int posY) {
+    public Weapon() {
 
     }
 
@@ -35,6 +28,4 @@ public class Weapon implements Drawable{
     public void draw(Graphics2D g2d, JPanel p) {
 
     }
-
-
 }
