@@ -14,9 +14,8 @@ public class KeyboardMessage extends Message {
     }
     MessageType messageType;
     Command command;
-    public KeyboardMessage(MessageType messageType, int tick, Command command) {
-        super(messageType,tick);
-        this.messageType=super.getMessageType();
+    public KeyboardMessage(int tick, Command command) {
+        super(MessageType.KEYBOARD,tick);
         this.command=command;
     }
 

@@ -7,13 +7,11 @@ public class MouseMessage extends Message {
     public enum Button {
         LEFT,
         RIGHT,
-        MIDDEL
+        MIDDLE
     }
-    MessageType messageType;
     Button button;
-    public MouseMessage(MessageType messageType, int tick, Button button) {
-        super(messageType, tick);
-        this.messageType=super.getMessageType();
+    public MouseMessage(int tick, Button button) {
+        super(MessageType.MOUSE, tick);
         this.button=button;
     }
 

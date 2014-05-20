@@ -171,7 +171,7 @@ public class GamePanel extends JPanel {
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
                 GamePanel.this.mainPanel.showPanel("11");
-                gameManager.sendMessage(new StopMessage(MessageType.STOP,gameManager.getCurrentTick()));
+                gameManager.sendMessage(new StopMessage(gameManager.getCurrentTick()));
             }
         }
 
