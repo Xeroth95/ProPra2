@@ -18,11 +18,10 @@ import java.util.*;
 /**
  * Created by isabel on 06.05.14.
  */
-public class GameManager {
+public class GameManager implements Communicable{
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
     private boolean waiting;
-    private int waitUntil; //with this yu can stop the GameManager so that it wait till a specific tic
     //declares the necessary objects
     transient public Map gameMap;
 
@@ -43,16 +42,16 @@ public class GameManager {
         beforeStart=true;
         waiting=true;
         stopped =false;
-        waitTillTick(100);
+
         currentTick=0;
         ticksPerSecond=240; //todo:where should this be declared?
         lengthOfTickInNanoSeconds= LENGTH_OF_A_SECOND_IN_NANOSECONDS /ticksPerSecond;
+
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         playerCount=2;//TODO: Was soll ich denn hier machen?
         gameMap=new Map(this,playerCount);
-        //generate the ArrayList for all the MessagesTypes:
-        //hashMap.put(MessageType.KEYBOARD,new ArrayList<Communicable>());
-        //hashMap.put(MessageType.MOUSE,new ArrayList<Communicable>());
+
+        //generates Hashmaps:
         for(MessageType t: MessageType.values()){
             hashMap.put(t, new ArrayList<Communicable>());
         }
@@ -61,15 +60,14 @@ public class GameManager {
         //create MainFrame
         mainFrame=new MainFrame(this);
 
-
-
         MessageList=new LinkedList<Message>();
     }
 
     public static void main(String[] args) throws IOException {
         System.out.println("Working Directory = "+System.getProperty("user.dir"));
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
-        //gameManager.beforeStart();
+        gameManager.register(gameManager,MessageType.STOP);
+        gameManager.register(gameManager,MessageType.GO);
         gameManager.start();  //starts the game
     }
     public void save(String path){
@@ -157,21 +155,15 @@ public class GameManager {
         try {
             while (true) {
                 if(!stopped) {
-                    if(waiting) {
-                        if(waitUntil==currentTick) {
-                            waiting = false;
-                        }
-                    } else {
-                        long t1 = System.nanoTime();
-                        //Update everything;
-                        mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-                        gameMap.nextTick();
-                        this.sendMessagesOfQueue(this.getCurrentTick());
-                        long t2 = System.nanoTime();  //time after
-                        if (t2 - t1 < lengthOfTickInNanoSeconds) {
-                            double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
-                            Thread.sleep(((int) (diff / 1000000)));   //
-                        }
+                    long t1 = System.nanoTime();
+                    //Update everything;
+                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
+                    gameMap.nextTick();
+                    this.sendMessagesOfQueue(this.getCurrentTick());
+                    long t2 = System.nanoTime();  //time after
+                    if (t2 - t1 < lengthOfTickInNanoSeconds) {
+                        double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
+                        Thread.sleep(((int) (diff / 1000000)));   //
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
                   //  System.out.println("tick "+currentTick);
@@ -188,37 +180,42 @@ public class GameManager {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
-        Message message=m;
-        MessageType messageType=message.getMessageType();  //reads the MessageType
-        //makes a Decision what to do with the message:
+        MessageType messageType=m.getMessageType();  //reads the MessageType
+        helpSend(m.getMessageType(),m);
+        /**
         switch(messageType) {
             case KEYBOARD:
                 helpSend(MessageType.KEYBOARD, m);
             case MOUSE:
                 helpSend(MessageType.MOUSE, m);
-        }
+            case STOP:
+                helpSend(MessageType.STOP, m);
+        } **/
     }
-    //this method is for the Idea, that we stop the other systems.
-    // When Network sends them a Message they are stored here. The System then proceed and get the messages at the right tick
-    public void addMessageToMessageQueue (Message m) {  //should be used by network
-        MessageList.add(m);
+    public void helpSend(MessageType messageType, Message m) {
+        for(Communicable o : hashMap.get(messageType)) {
+            o.receiveMessage(m);
+        }
     }
     public void sendMessagesOfQueue(int currentTick) {
         while ((!MessageList.isEmpty())&&MessageList.element().getSentAtTick() == currentTick) {
             this.sendMessage(MessageList.remove());
         }
     }
-
-    public void helpSend(MessageType messageType, Message m) {
-        for(Communicable o : hashMap.get(messageType)) {
-            o.receiveMessage(m);
-        }
+    //for network-messages
+    public void addMessageToMessageQueue (Message m) {  //should be used by network
+        MessageList.add(m);
     }
     public void receiveMessage(Message m) {
      //this is the receive-Method from Interface Communicable
         //Decide what to do with Message.
-        Message message=m;
-        MessageType messageType=message.getMessageType();
+        MessageType messageType=m.getMessageType();
+        if(messageType==MessageType.STOP) {
+            this.setStopped(true);
+        }
+        if(messageType==MessageType.GO) {
+            this.setStopped(false);
+        }
 
 
     }
@@ -238,9 +235,6 @@ public class GameManager {
     }
     public boolean checkIfAlreadyRegistered(Communicable o,MessageType type) {
         return (hashMap.get(type).contains(o));
-    }
-    public void waitTillTick(int x) {
-        this.waitUntil=x;
     }
     //regulary getter and setter
 

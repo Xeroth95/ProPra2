@@ -2,6 +2,8 @@ package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.MessageType;
+import de.hhu.propra14.team132.gameSystem.StopMessage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -169,7 +171,7 @@ public class GamePanel extends JPanel {
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
                 GamePanel.this.mainPanel.showPanel("11");
-                gameManager.setStopped(true);
+                gameManager.sendMessage(new StopMessage(MessageType.STOP,gameManager.getCurrentTick()));
             }
         }
 
