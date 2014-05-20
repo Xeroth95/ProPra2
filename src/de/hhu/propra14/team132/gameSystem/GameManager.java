@@ -211,7 +211,8 @@ public class GameManager implements Communicable{
         if(messageType==MessageType.STOP) {
             this.setStopped(true);
         }
-        if(messageType==MessageType.GO) {
+
+        if(messageType==MessageType.GO)  {
             this.setStopped(false);
         }
 
