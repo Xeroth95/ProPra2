@@ -18,9 +18,15 @@ public class BeforeGamePanel extends JPanel {
     PreviewPanel previewPanel;
 
     String[] colors;
-    JPanel colorPanel;
+    JPanel configPanel;
+    JPanel player1TeamNamePanel;
+    JPanel player2TeamNamePanel;
     JLabel player1Label;
     JLabel player2Label;
+    JLabel player1TeamNameLabel;
+    JLabel player2TeamNameLabel;
+    JTextField player1TeamNameField;
+    JTextField player2TeamNameField;
     JComboBox player1ColorBox;
     JComboBox player2ColorBox;
     JButton startGameButton;
@@ -33,9 +39,15 @@ public class BeforeGamePanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         colors=new String[]{"Pink", "Red", "Yellow", "Blue"};
-        colorPanel=new JPanel(new GridLayout(2,2));
+        configPanel=new JPanel(new GridLayout(3,2));
+        player1TeamNamePanel=new JPanel(new GridLayout(1,2));
+        player2TeamNamePanel=new JPanel(new GridLayout(1,2));
         player1Label=new JLabel("Player 1");
         player2Label=new JLabel("Player 2");
+        player1TeamNameLabel=new JLabel("Teamname:");
+        player2TeamNameLabel=new JLabel("Teamname:");
+        player1TeamNameField=new JTextField();
+        player2TeamNameField=new JTextField();
         player1ColorBox=new JComboBox(colors);
         player1ColorBox.addActionListener(new ColorBoxListener());
         player2ColorBox=new JComboBox(colors);
@@ -44,12 +56,20 @@ public class BeforeGamePanel extends JPanel {
         startGameButton.addActionListener(new StartGameListener());
         previewPanel=new PreviewPanel(this);
 
-        colorPanel.add(player1Label);
-        colorPanel.add(player2Label);
-        colorPanel.add(player1ColorBox);
-        colorPanel.add(player2ColorBox);
+        player1TeamNamePanel.add(player1TeamNameLabel);
+        player1TeamNamePanel.add(player1TeamNameField);
 
-        this.add(colorPanel, BorderLayout.NORTH);
+        player2TeamNamePanel.add(player2TeamNameLabel);
+        player2TeamNamePanel.add(player2TeamNameField);
+
+        configPanel.add(player1Label);
+        configPanel.add(player2Label);
+        configPanel.add(player1TeamNamePanel);
+        configPanel.add(player2TeamNamePanel);
+        configPanel.add(player1ColorBox);
+        configPanel.add(player2ColorBox);
+
+        this.add(configPanel, BorderLayout.NORTH);
         this.add(previewPanel, BorderLayout.CENTER);
         this.add(startGameButton, BorderLayout.SOUTH);
     }
@@ -62,8 +82,13 @@ public class BeforeGamePanel extends JPanel {
                 JOptionPane.showMessageDialog(null,"The players must have different colors!", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
-                BeforeGamePanel.this.mainPanel.showPanel("2");
-                mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                if(BeforeGamePanel.this.player1TeamNameField.getText().equals("") || BeforeGamePanel.this.player2TeamNameField.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null,"Both players must enter a name!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    BeforeGamePanel.this.mainPanel.showPanel("2");
+                    mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                }
             }
         }
     }
