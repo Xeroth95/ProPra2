@@ -9,7 +9,9 @@ public class Jump extends Effect{
 	
 	@Override
 	public void apply(CollisionObject o) {
-		o.speed.setY(o.speed.getY()+1);
+		o.speed.setY(o.speed.getY()+JUMP_VALUE);
+		o.removeEffect(this);
 	}
+	
 
 }

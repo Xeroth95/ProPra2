@@ -29,21 +29,32 @@ public class MovementRule extends RuntimeRule {
 	@Override
 	public void receiveMessage(Message m) {
 		MessageType mt = m.getMessageType();
-		
+		System.out.println("I get a Message!!");
 		switch(mt){
 			case KEYBOARD: {
 				KeyboardMessage k = (KeyboardMessage) m;
 				switch(k.getCommand()){
 					case MOVE_RIGHT:{
+						WormMovementOnGround.GLOBAL_MOVE_EFFECT.setLeft(false);
 						this.gameMap.getCurrentPlayer().getCurrentWorm().addEffect(WormMovementOnGround.GLOBAL_MOVE_EFFECT);
 						break;
 					}
 					case MOVE_LEFT:{
+						WormMovementOnGround.GLOBAL_MOVE_EFFECT.setLeft(true);
 						this.gameMap.getCurrentPlayer().getCurrentWorm().addEffect(WormMovementOnGround.GLOBAL_MOVE_EFFECT);
 						break;
 					}
 					case JUMP:{
 						this.gameMap.getCurrentPlayer().getCurrentWorm().addEffect(Jump.GLOBAL_JUMP_EFFECT);
+						break;
+					}
+					
+					case MOVE_RIGHT_STOP:{
+						this.gameMap.getCurrentPlayer().getCurrentWorm().removeEffect(WormMovementOnGround.GLOBAL_MOVE_EFFECT);
+						break;
+					}
+					case MOVE_LEFT_STOP:{
+						this.gameMap.getCurrentPlayer().getCurrentWorm().removeEffect(WormMovementOnGround.GLOBAL_MOVE_EFFECT);
 						break;
 					}
 					
@@ -53,6 +64,7 @@ public class MovementRule extends RuntimeRule {
 						System.err.println("EMPTY KEYBOARD MESSAGE!");
 					}
 				}
+				break;
 			}
 			default:{
 				
