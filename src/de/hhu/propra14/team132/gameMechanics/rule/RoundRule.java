@@ -5,9 +5,10 @@ import com.google.gson.annotations.Expose;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
-public class RoundRule extends PassiveRule{
+public strictfp class RoundRule extends PassiveRule{
 	@Expose private int currentRound;
 	@Expose private int currentRoundStart;
 	@Expose private int numberOfPlayers;
@@ -41,6 +42,12 @@ public class RoundRule extends PassiveRule{
 	@Override
 	protected MessageType[] defineMessageTypesToReactTo() {
 		return null;//react to predefined 
+	}
+
+	@Override
+	public void receiveMessage(Message m) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

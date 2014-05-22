@@ -212,6 +212,14 @@ public class GameManager implements Communicable{
             }
         }
     }
+    public void register(Communicable o, MessageType[] types) {
+        //add Communicable o to all the ArrayLists in type
+        for(MessageType t: types) {
+            if(!checkIfAlreadyRegistered(o,t)) {
+                hashMap.get(t).add(o);
+            }
+        }
+    }
     public void register(Communicable o, MessageType type) {
         if(!checkIfAlreadyRegistered(o,type)) {
             hashMap.get(type).add(o);

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 
 
+
 import com.google.gson.annotations.Expose;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Obstacle;
 import de.hhu.propra14.team132.gameObjects.Terrain;
+import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
@@ -105,6 +107,11 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 			
 		}
 		return newTerrain;
+	}
+	@Override
+	public void receiveMessage(Message m) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

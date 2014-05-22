@@ -17,7 +17,7 @@ public class MovementRule extends RuntimeRule {
 
 	@Override
 	protected MessageType[] defineMessageTypesToReactTo() {
-		return null;//TODO: react to the input!
+		return new MessageType[]{MessageType.KEYBOARD};
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class MovementRule extends RuntimeRule {
 						this.gameMap.getCurrentPlayer().getCurrentWorm().addEffect(Jump.GLOBAL_JUMP_EFFECT);
 						break;
 					}
-					 
+					
 					
 					
 					default:{
