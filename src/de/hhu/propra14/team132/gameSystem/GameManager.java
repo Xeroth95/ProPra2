@@ -66,11 +66,12 @@ public class GameManager implements Communicable{
         GameManager gameManager=new GameManager(); //this is the gameManager. It gives itself to all other Objects it creates
         gameManager.register(gameManager,MessageType.STOP);
         gameManager.register(gameManager,MessageType.GO);
-        gameManager.start();  //starts the game
+        gameManager.beforeStart();  //starts the game
     }
     public void save(String path){
         try {
-        	GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
+        	GsonBuilder gB=new GsonBuilder().setPrettyPrinting();
+            gB.excludeFieldsWithoutExposeAnnotation();
         	gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
@@ -88,18 +89,12 @@ public class GameManager implements Communicable{
             e.printStackTrace();
         }
     }
-    public void restart() { //is there to start a new Game
-        currentTick=0;
-        this.setBeforeStart(false);
-        this.setStopped(false);
-        this.gameMap=new Map(this,playerCount);
-        this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
-    }
     public void load(String path) {
         try {
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            GsonBuilder gB=new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation();
+            GsonBuilder gB=new GsonBuilder().setPrettyPrinting();
+            gB.excludeFieldsWithoutExposeAnnotation();
             gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
@@ -119,7 +114,14 @@ public class GameManager implements Communicable{
             e.printStackTrace();
         }
     }
-    public void start() {
+    public void restart() { //is there to start a new Game
+        currentTick=0;
+        this.setBeforeStart(false);
+        this.setStopped(false);
+        this.gameMap=new Map(this,playerCount);
+        this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
+    }
+    public void beforeStart() {
         try {
             while (beforeStart) {
                 long t1 = System.nanoTime();   //time before
@@ -138,7 +140,9 @@ public class GameManager implements Communicable{
         }
         currentTick=0;
         System.out.println("switched loops");
-        //when the game starts, the gui sets the beforeStart to false;
+        this.start();
+    }
+    public void start() {
         this.mainFrame.mainPanel.soundEngine.play(introSoundFile);
         try {
             while (true) {

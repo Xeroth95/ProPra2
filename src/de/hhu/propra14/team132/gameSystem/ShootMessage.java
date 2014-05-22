@@ -14,4 +14,12 @@ public class ShootMessage extends Message {
         this.power=power;
         this.direction=dir;
     }
+
+    public double getPower() {
+        return power;
+    }
+
+    public Vector2D getDirection() {
+        return direction;
+    }
 }
