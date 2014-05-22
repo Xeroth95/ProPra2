@@ -10,11 +10,14 @@ public class Player {
 	@Expose public static final int WORLD = 0;
 	@Expose protected static int playerCount=1;
 	@Expose public int playerID;
+	@Expose private int currentWormArrayListIndex;
+	@Expose private Worm currentWorm;
 
 	private ArrayList<Worm> worms;
 	public  Player(){
 		this.playerID=getNextPlayerInt();
 		this.worms=new ArrayList<Worm>();
+		currentWormArrayListIndex=0;
 	}
 	
 	private static int getNextPlayerInt(){
@@ -31,6 +34,22 @@ public class Player {
 	}
 	public void setWorms(ArrayList<Worm> worms) {
 		this.worms = worms;
+	}
+	public void nextWorm(){
+		if(this.worms.size()==0){
+			System.out.println("Player "+this.playerID+" has no Worm left!");
+			return;
+		}
+		currentWormArrayListIndex=(currentWormArrayListIndex+1)%this.worms.size();
+		currentWorm=worms.get(currentWormArrayListIndex);
+	}
+
+	public Worm getCurrentWorm() {
+		return currentWorm;
+	}
+
+	public void setCurrentWorm(Worm currentWorm) {
+		this.currentWorm = currentWorm;
 	}
 	
 }

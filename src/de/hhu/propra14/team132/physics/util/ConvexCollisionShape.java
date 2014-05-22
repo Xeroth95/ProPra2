@@ -317,7 +317,7 @@ public strictfp class ConvexCollisionShape {
 	public double[] getyPoints() {
 		double[] y=new double[xPoints.length];
 		for(int i=0;i<xPoints.length;i++){
-			y[i]=xPoints[i]+this.positionX;
+			y[i]=yPoints[i]+this.positionY;
 		}
 		return y;
 	}

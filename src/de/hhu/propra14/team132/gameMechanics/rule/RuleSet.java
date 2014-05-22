@@ -12,7 +12,7 @@ public class RuleSet {
 	@Expose ArrayList<StartUpRule> startUpRules;
 	@Expose ArrayList<RuntimeRule> runtimeRules;
 	@Expose ArrayList<PassiveRule> passiveRules;
-	public RuleSet(Map gameMap){
+	protected RuleSet(Map gameMap){
 		this.gameMap=gameMap;
 		startUpRules=new ArrayList<StartUpRule>();
 		runtimeRules=new ArrayList<RuntimeRule>();
@@ -21,7 +21,7 @@ public class RuleSet {
 	
 	public static RuleSet generateStandardRules(Map gameMap){
 		RuleSet r= new RuleSet(gameMap);
-		r.startUpRules.add(new SetUpTerrainRule(gameMap));
+		r.startUpRules.add(new SetUpTerrainRule(gameMap,RandomGenerateMode.RAND_V1));
 		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
 		r.passiveRules.add(new RoundRule(gameMap,5));
 		return r;

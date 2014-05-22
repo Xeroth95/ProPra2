@@ -5,6 +5,7 @@ import de.hhu.propra14.team132.gameSystem.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,5 +37,26 @@ public class MainGamePanel extends JPanel{
 
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(weaponsPanel, BorderLayout.SOUTH);
+
+        this.scrollPane.getActionMap().put("unitScrollUp", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        this.scrollPane.getActionMap().put("unitScrollDown", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        this.scrollPane.getActionMap().put("unitScrollRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        this.scrollPane.getActionMap().put("unitScrollLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
     }
 }

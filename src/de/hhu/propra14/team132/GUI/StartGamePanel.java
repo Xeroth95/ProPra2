@@ -49,8 +49,7 @@ public class StartGamePanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             StartGamePanel.this.soundEngine.play(klickSoundFile);
-            StartGamePanel.this.mainPanel.showPanel("2");
-            mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+            StartGamePanel.this.mainPanel.showPanel("12");
         }
     }
 

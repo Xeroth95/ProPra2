@@ -265,9 +265,6 @@ public abstract strictfp class CollisionObject {
 	public ArrayList<Effect> getEffects() {
 		return effects;
 	}
-	public void setEffects(ArrayList<Effect> effects) {
-		this.effects = effects;
-	}
 	public Vector2D getSpeed() {
 		return speed;
 	}
@@ -339,6 +336,11 @@ public abstract strictfp class CollisionObject {
 	public CollisionMode getCollisionMode() {
 		return collisionMode;
 	}
-	
+	public void addEffect(Effect e){
+		this.effects.add(e);
+	}
+	public void removeEffect(Effect e){
+		this.effects.remove(e);
+	}
 	
 }

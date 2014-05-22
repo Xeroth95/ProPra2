@@ -48,11 +48,15 @@ public strictfp class  SetUpTerrainRule extends StartUpRule {
 		shapeverts[3]=noshape;
 	}
 	
-	public SetUpTerrainRule(Map gameMap) {
+	@Expose private RandomGenerateMode mode;
+	
+	protected SetUpTerrainRule(Map gameMap,RandomGenerateMode mode) {
 		super(gameMap);
+		this.mode=mode;
 	}
-	public SetUpTerrainRule(Map gameMap,ArrayList<Terrain> terrainToUse) {
+	protected SetUpTerrainRule(Map gameMap,ArrayList<Terrain> terrainToUse) {
 		super(gameMap);
+		mode=RandomGenerateMode.PRE_DEFINED;
 		this.terrainToUse=terrainToUse;
 	}
 	
