@@ -12,6 +12,9 @@ public abstract class Rule {
 	public Rule(Map gameMap){
 		this.gameMap=gameMap;
 		messageTypesToReactTo=defineMessageTypesToReactTo();
+		for(MessageType m : messageTypesToReactTo){
+			//TODO: register
+		}
 	}
 	
 	@Expose MessageType[] messageTypesToReactTo;

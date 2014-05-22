@@ -1,9 +1,11 @@
 package de.hhu.propra14.team132.gameMechanics;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
 
+import de.hhu.propra14.team132.gameObjects.Weapon;
 import de.hhu.propra14.team132.gameObjects.Worm;
 
 public class Player {
@@ -12,12 +14,16 @@ public class Player {
 	@Expose public int playerID;
 	@Expose private int currentWormArrayListIndex;
 	@Expose private Worm currentWorm;
-
+	@Expose private Color color;
+	@Expose private ArrayList<Weapon> weapons;
+	
 	private ArrayList<Worm> worms;
 	public  Player(){
 		this.playerID=getNextPlayerInt();
-		this.worms=new ArrayList<Worm>();
+		this.worms=new ArrayList<>();
+		this.weapons=new ArrayList<>();
 		currentWormArrayListIndex=0;
+		this.color=Color.BLACK;
 	}
 	
 	private static int getNextPlayerInt(){

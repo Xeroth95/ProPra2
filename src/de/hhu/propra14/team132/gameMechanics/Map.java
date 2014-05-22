@@ -9,6 +9,9 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
+import de.hhu.propra14.team132.gameSystem.KeyboardMessage.Command;
+import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.BadCollisionSystem;
 import de.hhu.propra14.team132.physics.CollisionSystem;
 import de.hhu.propra14.team132.physics.WGrid;
@@ -82,6 +85,7 @@ public class Map implements Serializable{
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
 		Player.playerCount=1;
 		players = new Player[playerCount];
+		
 		
 		currentTick = 0;
 		
