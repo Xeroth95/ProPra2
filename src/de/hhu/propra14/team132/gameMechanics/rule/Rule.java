@@ -12,6 +12,7 @@ public abstract class Rule {
 	public Rule(Map gameMap){
 		this.gameMap=gameMap;
 		messageTypesToReactTo=defineMessageTypesToReactTo();
+		if(messageTypesToReactTo!=null)
 		for(MessageType m : messageTypesToReactTo){
 			//TODO: register
 		}

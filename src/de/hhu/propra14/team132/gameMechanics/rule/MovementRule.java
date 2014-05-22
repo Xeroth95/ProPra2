@@ -46,7 +46,7 @@ public class MovementRule extends RuntimeRule {
 						this.gameMap.getCurrentPlayer().getCurrentWorm().addEffect(Jump.GLOBAL_JUMP_EFFECT);
 						break;
 					}
-					
+					 
 					
 					
 					default:{
