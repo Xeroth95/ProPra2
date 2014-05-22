@@ -178,9 +178,6 @@ public class GamePanel extends JPanel {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            System.out.println(direction.getX()+" "+direction.getY());
-            System.out.println(wormPosX+" "+wormPosY);
-            System.out.println(mousePosX+" "+mousePosY);
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
