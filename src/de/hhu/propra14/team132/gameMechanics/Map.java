@@ -9,6 +9,7 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.physics.BadCollisionSystem;
 import de.hhu.propra14.team132.physics.CollisionSystem;
 import de.hhu.propra14.team132.physics.WGrid;
 
@@ -94,7 +95,7 @@ public class Map implements Serializable{
 		
 		this.ruleset.applyStartUpRules();
 		
-		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
+		this.collsys=new BadCollisionSystem(this);/*new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds)*/;
 	}
 	private int getNewMapID(){
 		if(this.aviableIds.size()!=0){	//first, try to recycle available Ids
@@ -144,7 +145,7 @@ public class Map implements Serializable{
 	}
 	
 	public void setUpAfterLoading(){
-		this.collsys=new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds);
+		this.collsys=new BadCollisionSystem(this);/*new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds)*/;
 		for(Rule r:this.ruleset.getPassiveRules()){
 			r.setGameMap(this);
 		}
