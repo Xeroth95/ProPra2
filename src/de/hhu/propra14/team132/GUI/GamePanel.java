@@ -1,9 +1,8 @@
 package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
-import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
-import de.hhu.propra14.team132.gameSystem.StopMessage;
+import de.hhu.propra14.team132.gameSystem.*;
+import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -33,13 +31,14 @@ public class GamePanel extends JPanel {
     ArrayList<Integer> objectIDs;
     Font displayFont;
     Thread mousePressedThread;
+    Vector2D direction;
     float percentage;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
     boolean alreadySent;
 
 
-    public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) throws IOException {
+    public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
         this.mainFrame = mainFrame;
         this.mainPanel = mainPanel;
         this.mainGamePanel = mainGamePanel;
@@ -152,6 +151,18 @@ public class GamePanel extends JPanel {
 
 
         public void mousePressed(MouseEvent e) {
+            double wormPosX=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX();
+            double wormPosY=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY();
+            double mousePosX=e.getX();
+            double mousePosY=8192-e.getY();
+            GamePanel.this.direction=new Vector2D(mousePosX-wormPosX, wormPosY-mousePosY);
+            try {
+                direction.makeUnitVector();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            System.out.println(wormPosX+" "+wormPosY);
+            System.out.println(mousePosX+" "+mousePosY);
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
@@ -160,25 +171,26 @@ public class GamePanel extends JPanel {
                         int ticksPerSecond = GamePanel.this.gameManager.ticksPerSecond;
                         while (!mousePressedThread.isInterrupted()) {
                             int currentTick = GamePanel.this.gameManager.getCurrentTick();
-                            percentage = (float) (currentTick - startedAtTick) / (float) 720;
-                            if (percentage > 1) {
-                                percentage = 1;
+                            GamePanel.this.percentage = (float) (currentTick - startedAtTick) / (float) 720;
+                            if (GamePanel.this.percentage > 1) {
+                                GamePanel.this.percentage = 1;
                             }
                             try {
-                                mousePressedThread.sleep((long) (1000) / (long) (ticksPerSecond));
+                                GamePanel.this.mousePressedThread.sleep((long) (1000) / (long) (ticksPerSecond));
                             } catch (InterruptedException e) {
-                                mousePressedThread.interrupt();
+                                GamePanel.this.mousePressedThread.interrupt();
                             }
                         }
                     }
                 });
-                mousePressedThread.start();
+                GamePanel.this.mousePressedThread.start();
             }
         }
 
         public void mouseReleased(MouseEvent e) {
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread.interrupt();
+                GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, GamePanel.this.direction));
             }
             percentage = 0;
         }
@@ -214,7 +226,6 @@ public class GamePanel extends JPanel {
                     case KeyEvent.VK_RIGHT:
                         GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
                         break;
-
                 }
 
             } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.WASD && alreadySent==false) {
@@ -229,7 +240,6 @@ public class GamePanel extends JPanel {
                     case KeyEvent.VK_D:
                         GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
                         break;
-
                 }
             }
         }
@@ -245,7 +255,6 @@ public class GamePanel extends JPanel {
                     case KeyEvent.VK_RIGHT:
                         GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
                         break;
-
                 }
             }
 
@@ -258,7 +267,6 @@ public class GamePanel extends JPanel {
                     case KeyEvent.VK_D:
                         GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
                         break;
-
                 }
             }
         }

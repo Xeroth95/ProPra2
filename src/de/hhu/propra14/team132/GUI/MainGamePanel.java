@@ -1,13 +1,12 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.sound.SoundEngine;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by fabian on 03.05.14.
@@ -20,7 +19,7 @@ public class MainGamePanel extends JPanel{
     SoundEngine soundEngine;
     File klickSoundFile;
 
-    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) throws IOException {
+    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) {
         //this panel contains all in-game related panels
         //for now that would be scrollPane(GamePanel) and WeaponsPanel
         this.mainPanel=mainPanel;

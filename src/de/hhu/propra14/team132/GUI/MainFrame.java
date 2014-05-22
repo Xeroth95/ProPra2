@@ -14,7 +14,7 @@ public class MainFrame extends JFrame{
 
     public MainPanel mainPanel;
 
-    public MainFrame(GameManager gameManager) throws IOException {
+    public MainFrame(GameManager gameManager) {
         mainPanel=new MainPanel(this, gameManager);
 
         this.setTitle("ProPra14 - Team 132");

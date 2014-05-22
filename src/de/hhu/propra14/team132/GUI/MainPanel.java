@@ -38,7 +38,7 @@ public class MainPanel extends JPanel {
     FileWriter optionsFileWriter;
     Gson gson;
 
-    public MainPanel(MainFrame mainFrame, GameManager gameManager) throws IOException {
+    public MainPanel(MainFrame mainFrame, GameManager gameManager) {
         loadOptions();
         soundEngine=new SoundEngine();
         klickSoundFile=new File("res/audio/klick.wav");
