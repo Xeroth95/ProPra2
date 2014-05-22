@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose;
 
 
 public class Jump extends Effect{
-	@Expose public static double JUMP_VALUE = 0.01;
-	@Expose public static Jump GLOBAL_JUMP_EFFECT = new Jump();
+	@Expose public final static double JUMP_VALUE = 0.01;
+	@Expose public final static Jump GLOBAL_JUMP_EFFECT = new Jump();
 	
 	@Override
 	public void apply(CollisionObject o) {

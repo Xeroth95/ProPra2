@@ -47,12 +47,13 @@ public class GameManager implements Communicable{
 
         hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
         playerCount=2;//TODO: Was soll ich denn hier machen?
-        gameMap=new Map(this,playerCount);
-
-        //generates Hashmaps:
         for(MessageType t: MessageType.values()){
             hashMap.put(t, new ArrayList<Communicable>());
         }
+        gameMap=new Map(this,playerCount);
+
+        //generates Hashmaps:
+        
         //create introsound
         introSoundFile=new File("res/audio/intro.wav");
         //create MainFrame
@@ -144,11 +145,14 @@ public class GameManager implements Communicable{
     }
     public void start() {
         this.mainFrame.mainPanel.soundEngine.play(introSoundFile);
+        currentTick=gameMap.getCurrentTick();
         try {
             while (true) {
                 if(!stopped) {
                     long t1 = System.nanoTime();
                     //Update everything;
+                    sendMessagesOfQueue(currentTick); 
+                        
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     gameMap.nextTick();
                     this.sendMessagesOfQueue(this.getCurrentTick());
@@ -173,17 +177,18 @@ public class GameManager implements Communicable{
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
         MessageType messageType=m.getMessageType();  //reads the MessageType
-        m.setSentAtTick(currentTick);
-        helpSend(m.getMessageType(),m);
+        m.setSentAtTick(currentTick+1);
+        addMessageToMessageQueue(m);
     }
-    public void helpSend(MessageType messageType, Message m) {
-        for(Communicable o : hashMap.get(messageType)) {
+    public void helpSend(Message m) {
+        for(Communicable o : hashMap.get(m.getMessageType())) {
             o.receiveMessage(m);
         }
     }
     public void sendMessagesOfQueue(int currentTick) {
         while ((!MessageList.isEmpty())&&MessageList.element().getSentAtTick() == currentTick) {
-            this.sendMessage(MessageList.remove());
+        	Message m = MessageList.remove();
+            this.helpSend(m);
         }
     }
     //for network-messages

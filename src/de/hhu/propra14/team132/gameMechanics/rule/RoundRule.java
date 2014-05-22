@@ -34,6 +34,7 @@ public strictfp class RoundRule extends PassiveRule{
 		if(timeLeft==roundLengthInTicks){//time is up
 			//TODO: send round is over message
 			currentRound++;
+			gameMap.getCurrentPlayer().nextWorm();
 			gameMap.setCurrentPlayer(gameMap.getPlayers()[(gameMap.getCurrentPlayer().getPlayerID())%gameMap.getPlayers().length]);
 		}
 		//do nothing if time is not up
