@@ -9,8 +9,7 @@ public abstract class Message implements Serializable {
     //with Message-Object one can exchange messages between the Objects
     MessageType messageType;
     private int sentAtTick;
-    public Message(MessageType type, int tick) {
-        this.sentAtTick=tick;
+    public Message(MessageType type) {
         this.messageType=type;
     }
 

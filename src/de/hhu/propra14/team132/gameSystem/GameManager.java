@@ -115,16 +115,6 @@ public class GameManager implements Communicable{
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
             currentTick=this.gameMap.getCurrentTick();//@ISA: this is why you need currentTick in Map
-            /** Map wird wieder in Datei geschrieben, wegen Testzwecke
-            Map map1=gson.fromJson(reader,Map.class);
-            String jsonString = gson.toJson(map1);
-            FileWriter fileWriter=new FileWriter(path+"x");
-            fileWriter.write(jsonString);
-            fileWriter.close();
-             **/
-
-               /**/
-        //this.loadWorm(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,16 +169,8 @@ public class GameManager implements Communicable{
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
         MessageType messageType=m.getMessageType();  //reads the MessageType
+        m.setSentAtTick(currentTick);
         helpSend(m.getMessageType(),m);
-        /**
-        switch(messageType) {
-            case KEYBOARD:
-                helpSend(MessageType.KEYBOARD, m);
-            case MOUSE:
-                helpSend(MessageType.MOUSE, m);
-            case STOP:
-                helpSend(MessageType.STOP, m);
-        } **/
     }
     public void helpSend(MessageType messageType, Message m) {
         for(Communicable o : hashMap.get(messageType)) {

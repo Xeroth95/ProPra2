@@ -10,8 +10,8 @@ public class MouseMessage extends Message {
         MIDDLE
     }
     Button button;
-    public MouseMessage(int tick, Button button) {
-        super(MessageType.MOUSE, tick);
+    public MouseMessage(Button button) {
+        super(MessageType.MOUSE);
         this.button=button;
     }
 
