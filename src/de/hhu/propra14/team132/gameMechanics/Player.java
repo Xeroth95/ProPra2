@@ -57,5 +57,29 @@ public class Player {
 	public void setCurrentWorm(Worm currentWorm) {
 		this.currentWorm = currentWorm;
 	}
+
+	public int getCurrentWormArrayListIndex() {
+		return currentWormArrayListIndex;
+	}
+
+	public void setCurrentWormArrayListIndex(int currentWormArrayListIndex) {
+		this.currentWormArrayListIndex = currentWormArrayListIndex;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public ArrayList<Weapon> getWeapons() {
+		return weapons;
+	}
+
+	public void setWeapons(ArrayList<Weapon> weapons) {
+		this.weapons = weapons;
+	}
 	
 }

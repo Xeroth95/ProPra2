@@ -35,13 +35,15 @@ public strictfp class  SetUpWormsRule extends StartUpRule {
     }
 	private void stupidTestPlacementOfWorms() {
 		for(int i=0;i<numberOfPlayers;i++){
+			Player p = gameMap.getPlayers()[i];
 			for(int j=0;j<wormsToStartWith[i];j++){
-				Player p = gameMap.getPlayers()[i];
 				Worm w = new Worm(p.getPlayerID(), "TestName");
 				w.setPosition(new Vector2D(10+480*i+50*j,600));
 				gameMap.addObject(w);
 				p.getWorms().add(w);
 			}
+
+			p.setCurrentWorm(p.getWorms().get(p.getCurrentWormArrayListIndex()%p.getWorms().size()));
 		}
 	}
 	@Override
