@@ -8,7 +8,9 @@ public class KeyboardMessage extends Message {
     public enum Command {
         JUMP,
         MOVE_RIGHT,
+        MOVE_RIGHT_STOP,
         MOVE_LEFT,
+        MOVE_LEFT_STOP,
         SHOOT,
     }
     MessageType messageType;

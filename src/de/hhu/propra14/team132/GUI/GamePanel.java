@@ -2,11 +2,15 @@ package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
 import de.hhu.propra14.team132.gameSystem.StopMessage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,6 +36,7 @@ public class GamePanel extends JPanel {
     float percentage;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
+    boolean alreadySent;
 
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) throws IOException {
@@ -42,7 +47,8 @@ public class GamePanel extends JPanel {
         this.gameManager = gameManager;
 
         autoscrolling = false;
-        percentage=0;
+        alreadySent=false;
+        percentage = 0;
         gameObjects = gameManager.gameMap.getMapObjects();
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
@@ -77,8 +83,8 @@ public class GamePanel extends JPanel {
         g2d.setFont(displayFont);
         g2d.drawString("Player " + String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()), 0 + hbar.getValue(), 18 + vbar.getValue());
         g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / gameManager.ticksPerSecond + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
-        if(percentage>0) {
-            g2d.drawString("Power: " + String.valueOf((int)(percentage * 100))+"%", 0 + hbar.getValue(), 54 + vbar.getValue());
+        if (percentage > 0) {
+            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 54 + vbar.getValue());
         }
 
 
@@ -146,21 +152,20 @@ public class GamePanel extends JPanel {
 
 
         public void mousePressed(MouseEvent e) {
-            if (e.getButton()==e.BUTTON1) {
-                GamePanel.this.mousePressedThread=new Thread(new Runnable() {
+            if (e.getButton() == e.BUTTON1) {
+                GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         int startedAtTick = GamePanel.this.gameManager.getCurrentTick();
                         int ticksPerSecond = GamePanel.this.gameManager.ticksPerSecond;
-                        while(!mousePressedThread.isInterrupted())
-                        {
+                        while (!mousePressedThread.isInterrupted()) {
                             int currentTick = GamePanel.this.gameManager.getCurrentTick();
-                            percentage=(float)(currentTick-startedAtTick)/(float)720;
-                            if(percentage>1) {
-                                percentage=1;
+                            percentage = (float) (currentTick - startedAtTick) / (float) 720;
+                            if (percentage > 1) {
+                                percentage = 1;
                             }
                             try {
-                                mousePressedThread.sleep((long)(1000)/(long)(ticksPerSecond));
+                                mousePressedThread.sleep((long) (1000) / (long) (ticksPerSecond));
                             } catch (InterruptedException e) {
                                 mousePressedThread.interrupt();
                             }
@@ -172,10 +177,10 @@ public class GamePanel extends JPanel {
         }
 
         public void mouseReleased(MouseEvent e) {
-            if (e.getButton()==e.BUTTON1) {
+            if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread.interrupt();
             }
-            percentage=0;
+            percentage = 0;
         }
 
         public void mouseEntered(MouseEvent e) {
@@ -190,7 +195,6 @@ public class GamePanel extends JPanel {
     class GameKeyListener implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
-
         }
 
         @Override
@@ -198,45 +202,65 @@ public class GamePanel extends JPanel {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 GamePanel.this.mainPanel.showPanel("11");
                 gameManager.sendMessage(new StopMessage());
-            } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.ARROWS) {
+            } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.ARROWS && alreadySent==false) {
+                alreadySent=true;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        System.out.println("UP");
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        System.out.println("DOWN");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP));
                         break;
                     case KeyEvent.VK_LEFT:
-                        System.out.println("LEFT");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT));
                         break;
                     case KeyEvent.VK_RIGHT:
-                        System.out.println("RIGHT");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
                         break;
 
                 }
 
-            } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.WASD) {
+            } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.WASD && alreadySent==false) {
+                alreadySent=true;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W:
-                        System.out.println("UP");
-                        break;
-                    case KeyEvent.VK_S:
-                        System.out.println("DOWN");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP));
                         break;
                     case KeyEvent.VK_A:
-                        System.out.println("LEFT");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT));
                         break;
                     case KeyEvent.VK_D:
-                        System.out.println("RIGHT");
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
                         break;
 
                 }
             }
         }
 
-            @Override
-            public void keyReleased (KeyEvent e){
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.ARROWS) {
+                alreadySent=false;
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP));
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
+                        break;
 
+                }
+            }
+
+            if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.WASD) {
+                alreadySent=false;
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_A:
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP));
+                        break;
+                    case KeyEvent.VK_D:
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
+                        break;
+
+                }
             }
         }
     }
+}
