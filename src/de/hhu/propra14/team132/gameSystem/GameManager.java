@@ -36,7 +36,6 @@ public class GameManager implements Communicable{
     Queue<Message> MessageList;
 
     public static final long LENGTH_OF_A_SECOND_IN_NANOSECONDS =1000000000L;
-    int Round;
     public GameManager() throws IOException {
         beforeStart=true;
         stopped =false;
@@ -134,7 +133,7 @@ public class GameManager implements Communicable{
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
                     Thread.sleep(((int) (diff / 1000000)));   //
                 }
-                currentTick++;
+             //   currentTick++;
             }
         } catch (Exception e) {
 
@@ -162,7 +161,7 @@ public class GameManager implements Communicable{
                         Thread.sleep(((int) (diff / 1000000)));   //
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
-                  //  System.out.println("tick "+currentTick);
+                   System.out.println("tick "+currentTick);
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
