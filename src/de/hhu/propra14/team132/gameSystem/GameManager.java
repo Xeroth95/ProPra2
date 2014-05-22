@@ -161,7 +161,7 @@ public class GameManager implements Communicable{
                         Thread.sleep(((int) (diff / 1000000)));   //
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
-                   System.out.println("tick "+currentTick);
+        //           System.out.println("tick "+currentTick);
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
