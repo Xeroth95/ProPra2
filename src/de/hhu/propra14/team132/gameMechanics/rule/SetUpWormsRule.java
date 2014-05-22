@@ -3,11 +3,12 @@ package de.hhu.propra14.team132.gameMechanics.rule;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameObjects.Worm;
+import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import com.google.gson.annotations.Expose;
 
-public class SetUpWormsRule extends StartUpRule {
+public strictfp class  SetUpWormsRule extends StartUpRule {
 	@Expose int numberOfPlayers;
 	@Expose int[] wormsToStartWith;
 	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith) {
@@ -42,5 +43,10 @@ public class SetUpWormsRule extends StartUpRule {
 				p.getWorms().add(w);
 			}
 		}
+	}
+	@Override
+	public void receiveMessage(Message m) {
+		// TODO Auto-generated method stub
+		
 	}
 }
