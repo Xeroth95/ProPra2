@@ -24,6 +24,7 @@ public class RuleSet {
 		r.startUpRules.add(new SetUpTerrainRule(gameMap,RandomGenerateMode.RAND_V1));
 		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
 		r.passiveRules.add(new RoundRule(gameMap,5));
+		r.runtimeRules.add(new MovementRule(gameMap));
 		return r;
 	}
 	
