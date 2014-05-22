@@ -75,6 +75,8 @@ public class GamePanel extends JPanel {
         for (int i : objectIDs) {
             gameObjects[i].draw(g2d, this);
         }
+        g2d.setColor(Color.RED);
+        g2d.fillOval((int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX(),(int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY(),10,10);
 
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
@@ -161,6 +163,7 @@ public class GamePanel extends JPanel {
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
+            System.out.println(direction.getX()+" "+direction.getY());
             System.out.println(wormPosX+" "+wormPosY);
             System.out.println(mousePosX+" "+mousePosY);
             if (e.getButton() == e.BUTTON1) {
