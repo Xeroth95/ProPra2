@@ -21,7 +21,6 @@ import java.util.*;
 public class GameManager implements Communicable{
     private boolean stopped; //is there to pause the thread; true, if game if paused and false, if game continues
     private boolean beforeStart;  //is for the loop before the gamestart
-    private boolean waiting;
     //declares the necessary objects
     transient public Map gameMap;
 
@@ -40,7 +39,6 @@ public class GameManager implements Communicable{
     int Round;
     public GameManager() throws IOException {
         beforeStart=true;
-        waiting=true;
         stopped =false;
 
         currentTick=0;
@@ -117,16 +115,6 @@ public class GameManager implements Communicable{
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
             currentTick=this.gameMap.getCurrentTick();//@ISA: this is why you need currentTick in Map
-            /** Map wird wieder in Datei geschrieben, wegen Testzwecke
-            Map map1=gson.fromJson(reader,Map.class);
-            String jsonString = gson.toJson(map1);
-            FileWriter fileWriter=new FileWriter(path+"x");
-            fileWriter.write(jsonString);
-            fileWriter.close();
-             **/
-
-               /**/
-        //this.loadWorm(path);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -181,16 +169,8 @@ public class GameManager implements Communicable{
         //which Objects want messages of this type
         //It then calls all the receiveMessage-Methods of the Objects
         MessageType messageType=m.getMessageType();  //reads the MessageType
+        m.setSentAtTick(currentTick);
         helpSend(m.getMessageType(),m);
-        /**
-        switch(messageType) {
-            case KEYBOARD:
-                helpSend(MessageType.KEYBOARD, m);
-            case MOUSE:
-                helpSend(MessageType.MOUSE, m);
-            case STOP:
-                helpSend(MessageType.STOP, m);
-        } **/
     }
     public void helpSend(MessageType messageType, Message m) {
         for(Communicable o : hashMap.get(messageType)) {
@@ -213,7 +193,8 @@ public class GameManager implements Communicable{
         if(messageType==MessageType.STOP) {
             this.setStopped(true);
         }
-        if(messageType==MessageType.GO) {
+
+        if(messageType==MessageType.GO)  {
             this.setStopped(false);
         }
 
@@ -238,14 +219,6 @@ public class GameManager implements Communicable{
     }
     //regulary getter and setter
 
-
-    public boolean isWaiting() {
-        return waiting;
-    }
-
-    public void setWaiting(boolean waiting) {
-        this.waiting = waiting;
-    }
 
     public boolean isBeforeStart() {
         return beforeStart;

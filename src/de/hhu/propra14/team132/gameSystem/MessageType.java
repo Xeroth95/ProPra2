@@ -15,10 +15,4 @@ public enum MessageType {
     OPTION,
     CHAT,
     NETWORK,
-
-    DRAW,
-    WHATEVER,
-    B,
-    C,
-    D
 }

@@ -16,19 +16,19 @@ import java.util.ArrayList;
  * Created by isabel on 02.05.14.
  */
 public class Weapon implements Drawable{
-    private Map map;
-    //constructors:
     
     //TODO:actually implement the things this Class needs, like the projectile it shoots etc.
+    private int maxAmmo;
+    private int currentAmmo;
+    Projectile projectile;
+    public Weapon() {
 
-    public Weapon(int teamID, Map map) {
-        this.map = map;
     }
 
-
-    //Drawable Methods:
-    public void draw(Graphics g, Color color, int posX, int posY) {
-
+    public Weapon(int maxAmmo, int currentAmmo, Projectile projectile) {
+        this.maxAmmo = maxAmmo;
+        this.currentAmmo = currentAmmo;
+        this.projectile = projectile;
     }
 
     @Override
@@ -36,5 +36,27 @@ public class Weapon implements Drawable{
 
     }
 
+    public int getMaxAmmo() {
+        return maxAmmo;
+    }
 
+    public void setMaxAmmo(int maxAmmo) {
+        this.maxAmmo = maxAmmo;
+    }
+
+    public int getCurrentAmmo() {
+        return currentAmmo;
+    }
+
+    public void setCurrentAmmo(int currentAmmo) {
+        this.currentAmmo = currentAmmo;
+    }
+
+    public Projectile getProjectile() {
+        return projectile;
+    }
+
+    public void setProjectile(Projectile projectile) {
+        this.projectile = projectile;
+    }
 }

@@ -10,12 +10,11 @@ public class KeyboardMessage extends Message {
         MOVE_RIGHT,
         MOVE_LEFT,
         SHOOT,
-        WHATEVER
     }
     MessageType messageType;
     Command command;
-    public KeyboardMessage(int tick, Command command) {
-        super(MessageType.KEYBOARD,tick);
+    public KeyboardMessage(Command command) {
+        super(MessageType.KEYBOARD);
         this.command=command;
     }
 

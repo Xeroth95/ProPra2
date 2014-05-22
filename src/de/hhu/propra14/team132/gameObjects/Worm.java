@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by isabel on 02.05.14.
  */
-public class Worm extends GameObject implements Serializable {
+public class Worm extends GameObject {
     @Expose
     private String name;
     @Expose
