@@ -1,15 +1,21 @@
 package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
-import de.hhu.propra14.team132.gameSystem.*;
+import de.hhu.propra14.team132.gameSystem.GameManager;
+import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
+import de.hhu.propra14.team132.gameSystem.ShootMessage;
+import de.hhu.propra14.team132.gameSystem.StopMessage;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -32,6 +38,7 @@ public class GamePanel extends JPanel {
     Font displayFont;
     Thread mousePressedThread;
     Vector2D direction;
+    Image arrow;
     float percentage;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
@@ -51,6 +58,13 @@ public class GamePanel extends JPanel {
         gameObjects = gameManager.gameMap.getMapObjects();
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
+        try {
+            arrow=ImageIO.read(new File("res/img/arrow.png"));
+            arrow=arrow.getScaledInstance(20,20,Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("Error loading Arrowimage!");
+            e.printStackTrace();
+        }
         this.setPreferredSize(new Dimension(8192, 8192));
         this.setFocusable(true);
         this.addKeyListener(new GameKeyListener());
@@ -76,7 +90,8 @@ public class GamePanel extends JPanel {
             gameObjects[i].draw(g2d, this);
         }
         g2d.setColor(Color.RED);
-        g2d.fillOval((int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX(),(int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY(),10,10);
+        //g2d.fillOval((int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX(),(int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY(),10,10);
+        g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+40),this);
 
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
