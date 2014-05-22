@@ -28,6 +28,8 @@ public class GamePanel extends JPanel {
     GameObject[] gameObjects;
     ArrayList<Integer> objectIDs;
     Font displayFont;
+    Thread mousePressedThread;
+    float percentage;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
 
@@ -40,6 +42,7 @@ public class GamePanel extends JPanel {
         this.gameManager = gameManager;
 
         autoscrolling = false;
+        percentage=0;
         gameObjects = gameManager.gameMap.getMapObjects();
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
@@ -74,6 +77,9 @@ public class GamePanel extends JPanel {
         g2d.setFont(displayFont);
         g2d.drawString("Player " + String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()), 0 + hbar.getValue(), 18 + vbar.getValue());
         g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / gameManager.ticksPerSecond + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
+        if(percentage>0) {
+            g2d.drawString("Power: " + String.valueOf((int)(percentage * 100))+"%", 0 + hbar.getValue(), 54 + vbar.getValue());
+        }
 
 
         //get x and y coordinates of the moues relatively to MainGamePanel
@@ -133,7 +139,6 @@ public class GamePanel extends JPanel {
     class GameMouseListener implements MouseListener {
         @Override
         public void mouseClicked(MouseEvent e) {
-            //show weaponsPanel when the right mouse button has been clicked
             if (e.getButton() == e.BUTTON3) {
                 GamePanel.this.weaponsPanel.setVisible(!weaponsPanel.isVisible());
             }
@@ -141,11 +146,36 @@ public class GamePanel extends JPanel {
 
 
         public void mousePressed(MouseEvent e) {
-
+            if (e.getButton()==e.BUTTON1) {
+                GamePanel.this.mousePressedThread=new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int startedAtTick = GamePanel.this.gameManager.getCurrentTick();
+                        int ticksPerSecond = GamePanel.this.gameManager.ticksPerSecond;
+                        while(!mousePressedThread.isInterrupted())
+                        {
+                            int currentTick = GamePanel.this.gameManager.getCurrentTick();
+                            percentage=(float)(currentTick-startedAtTick)/(float)720;
+                            if(percentage>1) {
+                                percentage=1;
+                            }
+                            try {
+                                mousePressedThread.sleep((long)(1000)/(long)(ticksPerSecond));
+                            } catch (InterruptedException e) {
+                                mousePressedThread.interrupt();
+                            }
+                        }
+                    }
+                });
+                mousePressedThread.start();
+            }
         }
 
         public void mouseReleased(MouseEvent e) {
-
+            if (e.getButton()==e.BUTTON1) {
+                GamePanel.this.mousePressedThread.interrupt();
+            }
+            percentage=0;
         }
 
         public void mouseEntered(MouseEvent e) {
