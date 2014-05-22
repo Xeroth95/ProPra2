@@ -9,7 +9,6 @@ package de.hhu.propra14.team132.gameSystem;
  * Constructor with GameManager
  */
 public interface Communicable {
-
     public void receiveMessage(Message m);  //with this Method the Objects can receive Messages. It should contain
                                             //something to intepret the Message, that means it should get the type,
                                             //cast it to the right Object and get the things it needs to do what it should to

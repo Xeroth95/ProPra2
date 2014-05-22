@@ -11,6 +11,7 @@ public enum MessageType {
     MOUSE,
     STOP,
     GO,
+    SHOOT,
     //not added at the Moment:
     OPTION,
     CHAT,
