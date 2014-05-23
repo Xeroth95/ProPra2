@@ -39,6 +39,7 @@ public class GamePanel extends JPanel {
     Thread mousePressedThread;
     Vector2D direction;
     Image arrow;
+    Image background;
     float percentage;
     double mouseLocationX, mouseLocationY;
     boolean autoscrolling;
@@ -59,10 +60,11 @@ public class GamePanel extends JPanel {
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
         try {
-            arrow=ImageIO.read(new File("res/img/arrow.png"));
+            arrow=ImageIO.read(new File("res/img/textures/arrow.png"));
             arrow=arrow.getScaledInstance(20,20,Image.SCALE_SMOOTH);
+            background=ImageIO.read(new File("res/img/textures/heaven.png"));
         } catch (IOException e) {
-            System.err.println("Error loading Arrowimage!");
+            System.err.println("Error loading Images in GamePanel!");
             e.printStackTrace();
         }
         this.setPreferredSize(new Dimension(8192, 8192));
@@ -82,6 +84,11 @@ public class GamePanel extends JPanel {
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
         g2d = (Graphics2D) g;
+        for (int x = 0; x < 8192; x += background.getWidth(this)) {
+            for (int y = 0; y < 8192; y += background.getHeight(this)) {
+                g.drawImage(background, x, y, this);
+            }
+        }
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
 
