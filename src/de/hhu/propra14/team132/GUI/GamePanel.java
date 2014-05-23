@@ -42,6 +42,8 @@ public class GamePanel extends JPanel {
     Image background;
     float percentage;
     double mouseLocationX, mouseLocationY;
+    double bouncingValue;
+    boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
 
@@ -56,6 +58,7 @@ public class GamePanel extends JPanel {
         autoscrolling = false;
         alreadySent=false;
         percentage = 0;
+        bouncingValue=0;
         gameObjects = gameManager.gameMap.getMapObjects();
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
@@ -96,10 +99,19 @@ public class GamePanel extends JPanel {
         for (int i : objectIDs) {
             gameObjects[i].draw(g2d, this);
         }
-        g2d.setColor(Color.RED);
-        //g2d.fillOval((int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX(),(int)gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY(),10,10);
-        g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+40),this);
-
+        g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+50-bouncingValue),this);
+        if (bouncingValue>=0 && bounce10==false) {
+            bouncingValue+=0.1;
+            if ((int)bouncingValue==10) {
+                bounce10=true;
+            }
+        }
+        else if(bounce10==true){
+            bouncingValue-=0.1;
+            if((int)bouncingValue==0) {
+                bounce10=false;
+            }
+        }
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
         g2d.setColor(Color.RED);
