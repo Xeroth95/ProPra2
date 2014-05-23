@@ -19,8 +19,8 @@ public class WormMovementOnGround extends Effect {
 		double x = collisionObject.getSpeed().getX();
 		double help=0;
 		if(left){
-			if(x<=DESIRED_VELOCITY) return;
-			else help=-DESIRED_VELOCITY-x;
+			if(x<=-DESIRED_VELOCITY) return;
+			else help=-DESIRED_VELOCITY+x;
 		}
 		else{
 			if(x>=DESIRED_VELOCITY) return;
