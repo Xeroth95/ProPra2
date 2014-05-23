@@ -127,13 +127,13 @@ public class GameManager implements Communicable{
                 long t1 = System.nanoTime();   //time before
                 //Update everything;
                 mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
-                //System.out.println("erste Schleife, Tick: "+currentTick);
+          //      System.out.println("erste Schleife, Tick: "+currentTick);
                 long t2 = System.nanoTime();  //time after
                 if (t2 - t1 < lengthOfTickInNanoSeconds) {
                     double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
                     Thread.sleep(((int) (diff / 1000000)));   //
                 }
-             //   currentTick++;
+               currentTick++;
             }
         } catch (Exception e) {
 
@@ -161,7 +161,7 @@ public class GameManager implements Communicable{
                         Thread.sleep(((int) (diff / 1000000)));   //
                     }
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
-        //           System.out.println("tick "+currentTick);
+            //      System.out.println("tick "+currentTick);
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds/1000000);
                 }
