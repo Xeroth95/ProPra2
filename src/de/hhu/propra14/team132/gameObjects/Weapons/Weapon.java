@@ -1,7 +1,8 @@
-package de.hhu.propra14.team132.gameObjects;
+package de.hhu.propra14.team132.gameObjects.Weapons;
 
 import de.hhu.propra14.team132.GUI.Drawable;
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Projectile;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.CollisionObject;
@@ -21,14 +22,15 @@ public class Weapon implements Drawable{
     private int maxAmmo;
     private int currentAmmo;
     Projectile projectile;
+    private static final int INFINITE_AMMO=-1;
     public Weapon() {
 
     }
 
-    public Weapon(int maxAmmo, int currentAmmo, Projectile projectile) {
+    public Weapon(int maxAmmo, int currentAmmo) {
         this.maxAmmo = maxAmmo;
         this.currentAmmo = currentAmmo;
-        this.projectile = projectile;
+        this.projectile=new Projectile();
     }
 
     @Override
