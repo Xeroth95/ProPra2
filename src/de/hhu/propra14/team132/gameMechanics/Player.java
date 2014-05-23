@@ -15,6 +15,7 @@ public class Player {
 	@Expose private int currentWormArrayListIndex;
 	@Expose private Worm currentWorm;
 	@Expose private Color color;
+	@Expose private Weapon currentWeapon;
 	@Expose private ArrayList<Weapon> weapons;
 	
 	private ArrayList<Worm> worms;
@@ -80,6 +81,14 @@ public class Player {
 
 	public void setWeapons(ArrayList<Weapon> weapons) {
 		this.weapons = weapons;
+	}
+
+	public Weapon getCurrentWeapon() {
+		return currentWeapon;
+	}
+
+	public void setCurrentWeapon(Weapon currentWeapon) {
+		this.currentWeapon = currentWeapon;
 	}
 	
 }

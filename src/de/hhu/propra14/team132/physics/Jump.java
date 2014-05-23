@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 
 public class Jump extends Effect{
-	@Expose public final static double JUMP_VALUE = 0.01;
+	@Expose public final static double JUMP_VALUE = 0.1;
 	@Expose public final static Jump GLOBAL_JUMP_EFFECT = new Jump();
 	
 	@Override

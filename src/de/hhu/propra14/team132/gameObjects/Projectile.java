@@ -14,17 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by isabel on 06.05.14.
  */
-public class Projectile extends GameObject{
-    public Projectile(ConvexCollisionShape[] shapes, int teamID) {
-        super(shapes, teamID);
-    }
-
-    public Projectile(int teamID, GameManager gameManager) {
+public abstract class Projectile extends GameObject{
+    public Projectile(int teamID) {
         super(teamID);
-    }
-
-    public Projectile(ConvexCollisionShape shape, int teamID) {
-        super(shape, teamID);
     }
 
     public Projectile() {

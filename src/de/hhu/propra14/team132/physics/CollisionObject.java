@@ -191,10 +191,10 @@ public abstract strictfp class CollisionObject {
 			
 		}
 			else{
-//				mtv.multiplyWith(-1.01);
+				mtv.multiplyWith(-1.01);
 				this.getPosition().addVector(mtv);// get out of the collision completely on your own.
 				this.recalcPosition();
-				mtv.multiplyWith(-1.01);
+//				mtv.multiplyWith(-1.01);
 				try {
 					mtv.makeUnitVector();
 				} catch (Exception e) {
@@ -229,7 +229,8 @@ public abstract strictfp class CollisionObject {
 		}
 	}
 	public void move(){
-		for(Effect e:this.effects){
+		for(int i = 0; i<this.effects.size();i++){
+			Effect e = this.effects.get(i);
 			e.apply(this);
 		}
 		this.speed.addVector(this.acceleration);

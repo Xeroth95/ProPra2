@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameObjects.Weapons;
 
+import de.hhu.propra14.team132.gameObjects.BazookaProjectile;
 import de.hhu.propra14.team132.gameObjects.Projectile;
 
 /**
@@ -10,6 +11,12 @@ public class Bazooka extends Weapon {
         super(maxAmmo, currentAmmo);
     }
 
-    public Bazooka() {
+    public Bazooka(){ // actually implement a proper constuctor instead of just doing nothing!
+    	super();
     }
+
+	@Override
+	public Projectile createNewProjectile() {
+		return new BazookaProjectile();
+	}
 }

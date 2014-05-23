@@ -16,21 +16,20 @@ import java.util.ArrayList;
 /**
  * Created by isabel on 02.05.14.
  */
-public class Weapon implements Drawable{
+public abstract class Weapon implements Drawable{
     
     //TODO:actually implement the things this Class needs, like the projectile it shoots etc.
-    private int maxAmmo;
+    private int maxAmmo;	// there is a cap??
     private int currentAmmo;
-    Projectile projectile;
     private static final int INFINITE_AMMO=-1;
     public Weapon() {
-
+    	this(0,INFINITE_AMMO);
     }
 
     public Weapon(int maxAmmo, int currentAmmo) {
         this.maxAmmo = maxAmmo;
         this.currentAmmo = currentAmmo;
-        this.projectile=new Projectile();
+        //what?? how is projectile not an abstract class? Why would you want to create an instance of Projectile? this should not be allowed!!
     }
 
     @Override
@@ -53,12 +52,6 @@ public class Weapon implements Drawable{
     public void setCurrentAmmo(int currentAmmo) {
         this.currentAmmo = currentAmmo;
     }
+    public abstract Projectile createNewProjectile(/*I have no Idea!*/); //TODO: this is very questionable. The responsibility should lie with the implementing classes. I just don't know what parameters to put there.
 
-    public Projectile getProjectile() {
-        return projectile;
-    }
-
-    public void setProjectile(Projectile projectile) {
-        this.projectile = projectile;
-    }
 }
