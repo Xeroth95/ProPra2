@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
 
-import de.hhu.propra14.team132.gameObjects.Weapon;
+import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 import de.hhu.propra14.team132.gameObjects.Worm;
 
 public class Player {
