@@ -34,7 +34,7 @@ public abstract class Weapon implements Drawable{
         this.currentAmmo = maxAmmo; //At the beginning the currentAmmo is the maxAmmo
     }
 
-        @Override
+    @Override
     public void draw(Graphics2D g2d, JPanel p) {
 
     }

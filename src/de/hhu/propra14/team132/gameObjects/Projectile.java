@@ -22,38 +22,4 @@ public abstract class Projectile extends GameObject{
     public Projectile() {
        super();
     }
-
-    //CollisionObject-Methods
-    @Override
-    public void furtherCollisionWith(CollisionObject o) {
-        //do nothing
-    }
-
-    @Override
-    public double getInitialBounciness() {
-        return 0;
-    }
-
-    @Override
-    public double getInitialFriction() {
-        return 0;
-    }
-
-    //Drawable Methods:
-    @Override
-    public void draw(Graphics2D g2d, JPanel p) {
-
-    }
-
-	@Override
-	public ArrayList<Effect> getInitalEffects() {
-		ArrayList<Effect> effects = new ArrayList<>();
-		effects.add(Gravity.GLOBAL_GRAVITY);
-		return null;
-	}
-
-	@Override
-	public CollisionMode getInitialCollisionMode() {
-		return CollisionMode.NOT_EXPLOADING;
-	}
 }

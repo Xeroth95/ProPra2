@@ -9,6 +9,8 @@ import de.hhu.propra14.team132.gameObjects.Weapons.Bazooka;
 import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
+import de.hhu.propra14.team132.gameSystem.ShootMessage;
+import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public strictfp class SetUpPlayersRule extends StartUpRule{
 	@Expose ArrayList<ArrayList<Weapon>> weaponsPerPlayer;
@@ -40,16 +42,6 @@ public strictfp class SetUpPlayersRule extends StartUpRule{
 
 	@Override
 	public void receiveMessage(Message m) {
-		MessageType mt = m.getMessageType();
-		switch(mt){
-			case SHOOT: {
-				
-				break;
-			}
-			default:{
-				break;
-			}
-		}
 	}
 	
 }
