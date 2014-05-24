@@ -76,11 +76,6 @@ public class GamePanel extends JPanel {
         this.addMouseListener(new GameMouseListener());
     }
 
-    public void refresh() {
-        this.gameObjects = gameManager.gameMap.getMapObjects();
-        this.objectIDs = gameManager.gameMap.getObjectIds();
-    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.requestFocus();
@@ -148,8 +143,15 @@ public class GamePanel extends JPanel {
         }
     }
 
+
+    public void refresh() {
+        this.gameObjects = gameManager.gameMap.getMapObjects();
+        this.objectIDs = gameManager.gameMap.getObjectIds();
+    }
+
     public void nextTick() {
         //this method is called by the GameManager, so that the panel is repainted every tick
+        this.refresh();
         this.repaint();
     }
 
@@ -186,7 +188,7 @@ public class GamePanel extends JPanel {
         }
 
 
-        public void mousePressed(MouseEvent e) {
+        public strictfp void mousePressed(MouseEvent e) {
             double wormPosX=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX();
             double wormPosY=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY();
             double mousePosX=e.getX();
