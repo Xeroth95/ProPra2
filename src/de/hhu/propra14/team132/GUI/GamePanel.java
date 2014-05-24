@@ -186,7 +186,7 @@ public class GamePanel extends JPanel {
         }
 
 
-        public void mousePressed(MouseEvent e) {
+        public strictfp void mousePressed(MouseEvent e) {
             double wormPosX=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX();
             double wormPosY=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY();
             double mousePosX=e.getX();
