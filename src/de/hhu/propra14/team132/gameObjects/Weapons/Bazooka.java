@@ -10,8 +10,9 @@ public class Bazooka extends Weapon {
 	
     @Override
     public void shoot() {
+	
+	}
 
-    }
 
     @Override
 	public Projectile createNewProjectile() {

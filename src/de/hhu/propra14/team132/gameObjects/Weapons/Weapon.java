@@ -26,12 +26,14 @@ public abstract class Weapon implements Drawable{
     	this.currentAmmo=ammo;
     }
 
+
     @Override
     public void draw(Graphics2D g2d, JPanel p) {
 
     }
-    
+
     public abstract void shoot();  //todo: ist this a good idea? this method should shoot the Pojectile and then creates a new one
+
 
     public int getCurrentAmmo() {
         return currentAmmo;
