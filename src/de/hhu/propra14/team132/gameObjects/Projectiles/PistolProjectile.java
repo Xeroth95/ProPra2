@@ -46,7 +46,6 @@ public class PistolProjectile extends Projectile {
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
 		ArrayList<Effect> e =new ArrayList<Effect>();
-		e.add(Gravity.GLOBAL_GRAVITY);
 		return e;
 	}
 

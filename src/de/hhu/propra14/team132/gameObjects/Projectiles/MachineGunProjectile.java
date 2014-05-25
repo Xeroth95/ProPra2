@@ -34,6 +34,7 @@ public class MachineGunProjectile extends Projectile {
 	}
 
 	@Override
+
 	public double getInitialBounciness() {
 		return 0;
 	}
@@ -46,7 +47,6 @@ public class MachineGunProjectile extends Projectile {
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
 		ArrayList<Effect> e =new ArrayList<Effect>();
-		e.add(Gravity.GLOBAL_GRAVITY);
 		return e;
 	}
 
