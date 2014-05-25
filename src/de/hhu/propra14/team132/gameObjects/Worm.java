@@ -41,11 +41,11 @@ public class Worm extends GameObject {
     transient Image textureImage;
     String pathToTexture;
     //constructors:
-    public Worm(int teamID, String name){
+    public Worm(int teamID, String name, String pathToTexture){
         super(new ConvexCollisionShape(vertices), teamID);
         shape=this.collisionShapes[0];
         this.name = name;
-
+        this.pathToTexture = pathToTexture;
         try{
 	        textureImage=ImageIO.read(new File(pathToTexture));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
