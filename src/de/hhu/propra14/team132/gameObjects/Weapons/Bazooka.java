@@ -17,18 +17,7 @@ public class Bazooka extends Weapon {
         Vector2D ProjectileAcc=new Vector2D();
         ProjectileSpeed.setX((MousePosition.getX()-StartPosition.getX())*power);
         ProjectileSpeed.setY((MousePosition.getY()-StartPosition.getY())*power);
-        //todo: how toe react when ammo is empty? --> returns null, maybe this can cause problems
-        if(this.getCurrentAmmo()!=-1) {
-            if(this.getCurrentAmmo()>0) {
-                this.setCurrentAmmo(this.getCurrentAmmo() - 1); //decreases the currentAmmo;
-                return this.createNewProjectile(ProjectileSpeed,ProjectileAcc);
-            } else {
-                System.out.println("Ammo is empty, reload");
-                return null;
-            }
-        } else {
-            return this.createNewProjectile(ProjectileSpeed,ProjectileAcc);
-        }
+        return this.createNewProjectile();
     }
 
     @Override
