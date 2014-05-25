@@ -1,5 +1,7 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
+import javax.swing.JOptionPane;
+
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameObjects.Worm;
@@ -34,6 +36,8 @@ public class WinRule extends PassiveRule{
 			}
 			if(lost){
 				System.out.format("Player %s lost the game! Everyone else is a winner!\nHave a nice day ;);););)",p.playerID);
+				JOptionPane.showMessageDialog(null, "Player "+p.playerID+"lost the game! Everyone else is a winner!Have a nice day ;);););)");
+				gameMap.getManager().restart();
 				gameMap.getManager().sendMessage(new StopMessage());
 				gameMap.getManager().mainFrame.mainPanel.showPanel("1");
 			}
