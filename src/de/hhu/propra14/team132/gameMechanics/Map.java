@@ -60,16 +60,13 @@ public class Map implements Serializable{
     @Expose
 	Player currentPlayer;
 	
-	public Map(GameManager manager,int playerCount) {
-		this.initializeBasics(manager, playerCount);
+	public Map(GameManager manager) {
+		this.initializeBasics(manager);
 		sizeX=0;
 		sizeY=0;
 	}
-	public Map(GameManager manager,int playerCount,RuleSet ruleSet){
-		this(manager,playerCount);
-		this.ruleset=ruleSet;
-	}
-	public void initializeBasics(GameManager manager, int playerCount){
+
+	public void initializeBasics(GameManager manager){
 		
 		this.manager=manager;
 
@@ -82,22 +79,9 @@ public class Map implements Serializable{
 		
 		IdCounter=1; // zero is reserved!
 
-		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);
-		Player.playerCount=1;
-		players = new Player[playerCount];
-		
+		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);		
 		
 		currentTick = 0;
-		
-		for(int i = 0; i<playerCount; i++){
-			players[i]=new Player();
-		}
-		
-		this.currentPlayer=players[0];
-		
-		this.ruleset=RuleSet.generateStandardRules(this);
-		
-		this.ruleset.applyStartUpRules();
 		
 		this.collsys=new BadCollisionSystem(this);/*new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds)*/;
 	}
@@ -176,6 +160,7 @@ public class Map implements Serializable{
 	}
 	public void setRuleset(RuleSet ruleset) {
 		this.ruleset = ruleset;
+		ruleset.applyStartUpRules();
 	}
 	public Player[] getPlayers() {
 		return players;

@@ -49,7 +49,7 @@ public class GameManager implements Communicable{
         for(MessageType t: MessageType.values()){
             hashMap.put(t, new ArrayList<Communicable>());
         }
-        gameMap=new Map(this,playerCount);
+        gameMap=new Map(this);
 
         //generates Hashmaps:
         
@@ -118,7 +118,7 @@ public class GameManager implements Communicable{
         currentTick=0;
         this.setBeforeStart(false);
         this.setStopped(false);
-        this.gameMap=new Map(this,playerCount);
+        this.gameMap=new Map(this);
         this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
     }
     public void beforeStart() {

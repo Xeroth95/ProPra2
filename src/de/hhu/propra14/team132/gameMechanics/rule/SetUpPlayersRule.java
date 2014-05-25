@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.gameObjects.Weapons.Bazooka;
 import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 import de.hhu.propra14.team132.gameSystem.Message;
@@ -13,19 +14,26 @@ import de.hhu.propra14.team132.gameSystem.ShootMessage;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 public strictfp class SetUpPlayersRule extends StartUpRule{
+	
 	@Expose ArrayList<ArrayList<Weapon>> weaponsPerPlayer;
-	public SetUpPlayersRule(Map gameMap,ArrayList<ArrayList<Weapon>> weaponsToSet) {
+	@Expose int playerCount;
+	
+	public SetUpPlayersRule(Map gameMap,ArrayList<ArrayList<Weapon>> weaponsToSet,int playerCount) {
 		super(gameMap);
 		this.weaponsPerPlayer=weaponsToSet;
+		this.playerCount=playerCount;
 	}
-	public SetUpPlayersRule(Map gameMap) {
+	public SetUpPlayersRule(Map gameMap,int playerCount) {
 		super(gameMap);
 		this.weaponsPerPlayer=standardWeaponsSet(gameMap.getPlayers().length);
+		this.playerCount=playerCount;
 	}
 
 	@Override
 	public void applyRule() {
+		gameMap.setPlayers(new Player[playerCount]);
 		for(int i=0;i<gameMap.getPlayers().length;i++){
+			gameMap.getPlayers()[i]=new Player();
 			gameMap.getPlayers()[i].setWeapons(weaponsPerPlayer.get(i));
 		}
 	}
