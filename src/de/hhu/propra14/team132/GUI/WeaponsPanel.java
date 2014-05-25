@@ -53,6 +53,7 @@ public class WeaponsPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             WeaponsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             String pressed=((JButton)e.getSource()).getText();
+            //message senden
         }
     }
 }

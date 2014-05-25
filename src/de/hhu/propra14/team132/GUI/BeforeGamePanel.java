@@ -147,7 +147,6 @@ public class BeforeGamePanel extends JPanel {
                             JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else {
-                            //RuleSet.generateCustomRuleSet()
                             BeforeGamePanel.this.mainPanel.showPanel("2");
                             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
                         }
