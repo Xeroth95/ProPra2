@@ -102,5 +102,14 @@ public class Worm extends GameObject {
 	public CollisionMode getInitialCollisionMode() {
 		return CollisionMode.NOT_EXPLOADING;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
    
 }
