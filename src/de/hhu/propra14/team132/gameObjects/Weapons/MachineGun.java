@@ -31,7 +31,7 @@ public class MachineGun extends Weapon {
     @Override
     public Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power) {
         Projectile projectile=new MachineGunProjectile();
-        projectile.setPosition(new Vector2D(startPosition.getX()+30*dir.getX(),startPosition.getY()+30*dir.getY()));
+        projectile.setPosition(new Vector2D(startPosition.getX()+45*dir.getX(),startPosition.getY()+45*dir.getY()));
         projectile.setSpeed(new Vector2D(dir.getX()*power*10,dir.getY()*power*10));
         return projectile;
     }
