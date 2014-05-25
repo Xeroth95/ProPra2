@@ -66,7 +66,7 @@ public class LobbyPanel extends JPanel {
 
     class SendListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile);
+            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             if(LobbyPanel.this.msgField.getText().equals("clear")) {
                 chatArea.setText(null);//clear chatArea on 'clear'-command
                 LobbyPanel.this.msgField.setText(null);
@@ -81,14 +81,14 @@ public class LobbyPanel extends JPanel {
 
     class StartGameListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile);
+            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             LobbyPanel.this.mainPanel.showPanel("2");
         }
     }
 
     class GoBackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile);
+            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             LobbyPanel.this.mainPanel.showPanel("1");
         }
     }

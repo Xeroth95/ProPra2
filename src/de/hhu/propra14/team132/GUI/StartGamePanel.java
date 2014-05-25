@@ -48,7 +48,7 @@ public class StartGamePanel extends JPanel {
     class LocalGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile);
+            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("12");
         }
     }
@@ -56,7 +56,7 @@ public class StartGamePanel extends JPanel {
     class NetworkGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile);
+            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("9");
         }
     }
@@ -64,7 +64,7 @@ public class StartGamePanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile);
+            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("1");
         }
     }

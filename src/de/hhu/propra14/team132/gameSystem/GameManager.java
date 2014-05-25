@@ -143,7 +143,7 @@ public class GameManager implements Communicable{
         this.start();
     }
     public void start() {
-        this.mainFrame.mainPanel.soundEngine.play(introSoundFile);
+        this.mainFrame.mainPanel.soundEngine.play(introSoundFile, mainFrame.mainPanel.options.getFxVolume());
         currentTick=gameMap.getCurrentTick();
         try {
             while (true) {

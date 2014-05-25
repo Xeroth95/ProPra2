@@ -51,7 +51,7 @@ public class WeaponsPanel extends JPanel {
     class WeaponsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            WeaponsPanel.this.soundEngine.play(klickSoundFile);
+            WeaponsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             String pressed=((JButton)e.getSource()).getText();
         }
     }

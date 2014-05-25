@@ -38,7 +38,7 @@ public class VideoSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            VideoSettingsPanel.this.soundEngine.play(klickSoundFile);
+            VideoSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             VideoSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

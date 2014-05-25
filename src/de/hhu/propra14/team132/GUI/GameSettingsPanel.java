@@ -92,7 +92,7 @@ public class GameSettingsPanel extends JPanel {
     class TimePlusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time>=99999) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(99999));
@@ -106,7 +106,7 @@ public class GameSettingsPanel extends JPanel {
     class TimeMinusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(0));
@@ -120,7 +120,7 @@ public class GameSettingsPanel extends JPanel {
     class TimePlus10Listener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time>=99999) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(99999));
@@ -134,7 +134,7 @@ public class GameSettingsPanel extends JPanel {
     class TimeMinus10Listener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.timeTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.timeTextField.setText(String.valueOf(0));
@@ -148,7 +148,7 @@ public class GameSettingsPanel extends JPanel {
     class WormNumberPlus implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.wormNumberTextField.getText());
             if(time>=9) {
                 GameSettingsPanel.this.wormNumberTextField.setText(String.valueOf(9));
@@ -162,7 +162,7 @@ public class GameSettingsPanel extends JPanel {
     class WormNumberMinus implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             int time=Integer.parseInt(GameSettingsPanel.this.wormNumberTextField.getText());
             if(time<=0) {
                 GameSettingsPanel.this.wormNumberTextField.setText(String.valueOf(0));
@@ -176,7 +176,7 @@ public class GameSettingsPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameSettingsPanel.this.soundEngine.play(klickSoundFile);
+            GameSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             GameSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

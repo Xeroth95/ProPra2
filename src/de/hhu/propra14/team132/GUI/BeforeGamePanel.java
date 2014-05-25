@@ -125,7 +125,7 @@ public class BeforeGamePanel extends JPanel {
     class StartGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            BeforeGamePanel.this.soundEngine.play(klickSoundFile);
+            BeforeGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             if(BeforeGamePanel.this.player1ColorBox.getSelectedIndex()==BeforeGamePanel.this.player2ColorBox.getSelectedIndex()) {
                 JOptionPane.showMessageDialog(null,"The players must have different colors!", "Error", JOptionPane.ERROR_MESSAGE);
             }
