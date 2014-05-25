@@ -1,5 +1,8 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameMechanics.rule.RandomGenerateMode;
+import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
+import de.hhu.propra14.team132.gameObjects.Weapons.*;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
@@ -38,6 +41,8 @@ public class BeforeGamePanel extends JPanel {
     JComboBox player1ColorBox;
     JComboBox player2ColorBox;
     JButton startGameButton;
+
+    ArrayList <ArrayList <Weapon>> playerWeapons;
 
     public BeforeGamePanel(MainPanel mainPanel, GameManager gameManager, Options options, SoundEngine soundEngine, File klickSoundFile) {
         this.gameManager=gameManager;
@@ -147,6 +152,8 @@ public class BeforeGamePanel extends JPanel {
                             JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else {
+                            generateWeaponsLists();
+                            RuleSet.generateCustomRuleSet(gameManager.gameMap, RandomGenerateMode.TEST, gameManager.getPlayerCount(), new int[]{options.getWormsPerTeam(), options.getWormsPerTeam()}, new String[]{"res/img/preview/" + (String) BeforeGamePanel.this. player1ColorBox.getSelectedItem() + "Worm.png", "res/img/preview/" + (String) BeforeGamePanel.this. player2ColorBox.getSelectedItem() + "Worm.png"}, new String[]{BeforeGamePanel.this.player1TeamNameField.getText(), BeforeGamePanel.this.player2TeamNameField.getText()}, options.getRoundLength(), playerWeapons);
                             BeforeGamePanel.this.mainPanel.showPanel("2");
                             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
                         }
@@ -154,6 +161,40 @@ public class BeforeGamePanel extends JPanel {
                 }
             }
         }
+    }
+
+    public void generateWeaponsLists() {
+        ArrayList <Weapon> player1Weapons=new ArrayList<Weapon>();
+        ArrayList <Weapon> player2Weapons=new ArrayList<Weapon>();
+        if(player1WeaponsList.get(0).isSelected()) {
+            player1Weapons.add(new Bazooka());
+        }
+        if(player1WeaponsList.get(1).isSelected()) {
+            player1Weapons.add(new Pistol());
+        }
+        if(player1WeaponsList.get(2).isSelected()) {
+            player1Weapons.add(new MachineGun());
+        }
+        if(player1WeaponsList.get(3).isSelected()) {
+            player1Weapons.add(new Skip());
+        }
+
+        if(player2WeaponsList.get(0).isSelected()) {
+            player2Weapons.add(new Bazooka());
+        }
+        if(player1WeaponsList.get(1).isSelected()) {
+            player2Weapons.add(new Pistol());
+        }
+        if(player1WeaponsList.get(2).isSelected()) {
+            player2Weapons.add(new MachineGun());
+        }
+        if(player1WeaponsList.get(3).isSelected()) {
+            player2Weapons.add(new Skip());
+        }
+
+        playerWeapons=new ArrayList <ArrayList<Weapon>>();
+        playerWeapons.add(player1Weapons);
+        playerWeapons.add(player2Weapons);
     }
 
     class ColorBoxListener implements ActionListener {
