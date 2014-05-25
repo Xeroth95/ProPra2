@@ -17,6 +17,7 @@ public class Player {
 	@Expose private Color color;
 	@Expose private Weapon currentWeapon;
 	@Expose private ArrayList<Weapon> weapons;
+	@Expose private String name;
 	
 	private ArrayList<Worm> worms;
 	public  Player(){
@@ -89,6 +90,14 @@ public class Player {
 
 	public void setCurrentWeapon(Weapon currentWeapon) {
 		this.currentWeapon = currentWeapon;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

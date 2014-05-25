@@ -32,18 +32,9 @@ public strictfp class SetUpPlayersRule extends StartUpRule{
 		gameMap.setPlayers(new Player[playerCount]);
 		for(int i=0;i<gameMap.getPlayers().length;i++){
 			gameMap.getPlayers()[i]=new Player();
+			gameMap.getPlayers()[i].setName(names[i]);
 			gameMap.getPlayers()[i].setWeapons(weaponsPerPlayer.get(i));
 		}
-	}
-	public static ArrayList<ArrayList<Weapon>> standardWeaponsSet(int players){
-		ArrayList<ArrayList<Weapon>> weapons = new ArrayList<>();
-		for(int i=0;i<players;i++){
-			ArrayList<Weapon> weaponsForPlayer = new ArrayList<Weapon>();
-			weaponsForPlayer.add(new Bazooka());
-			
-			weapons.add(weaponsForPlayer);
-		}
-		return weapons;
 	}
 
 	@Override
