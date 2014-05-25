@@ -102,6 +102,14 @@ public class Map implements Serializable{
 		this.ruleset.applyPassiveRules();
 		moveAllObjects();
 		this.collsys.calcCollision();
+		killDeadObjects();
+	}
+	private void killDeadObjects(){
+		for(int id:this.objectIds){
+			if(this.mapObjects[id].isMarkedForDeletion()){
+				this.removeObject(id);
+			}
+		}
 	}
 	private strictfp void moveAllObjects() {
 		for(int i:this.objectIds){

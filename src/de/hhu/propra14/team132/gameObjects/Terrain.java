@@ -54,7 +54,7 @@ public class Terrain extends GameObject {
     }
     @Override
     public void furtherCollisionWith(CollisionObject o) {
-        //do nothing
+        this.setLife(Integer.MAX_VALUE);
     }
 
     @Override

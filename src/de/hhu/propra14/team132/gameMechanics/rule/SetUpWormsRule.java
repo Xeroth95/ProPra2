@@ -14,7 +14,7 @@ public strictfp class  SetUpWormsRule extends StartUpRule {
 	String[] pathsToTextures;
 	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith, int playerCount,String[] pathsToTextures) {
 		super(gameMap);
-		this.numberOfPlayers=gameMap.getPlayers().length;
+		this.numberOfPlayers=playerCount;
 		this.pathsToTextures=pathsToTextures;
 		if(wormsToStartWith.length!=numberOfPlayers){
 			System.err.println("Unexpected array size!");
