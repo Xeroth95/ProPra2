@@ -42,6 +42,7 @@ public class GamePanel extends JPanel {
     Image background;
     float percentage;
     double mouseLocationX, mouseLocationY;
+    double mouseClickX, mouseClickY;
     double bouncingValue;
     boolean bounce10;
     boolean autoscrolling;
@@ -195,16 +196,8 @@ public class GamePanel extends JPanel {
 
 
         public strictfp void mousePressed(MouseEvent e) {
-            double wormPosX=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX();
-            double wormPosY=GamePanel.this.gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY();
-            double mousePosX=e.getX();
-            double mousePosY=8192-e.getY();
-            GamePanel.this.direction=new Vector2D(mousePosX-wormPosX, wormPosY-mousePosY);
-            try {
-                direction.makeUnitVector();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            mouseClickX=e.getX();
+            mouseClickY=8192-e.getY();
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
@@ -232,7 +225,7 @@ public class GamePanel extends JPanel {
         public void mouseReleased(MouseEvent e) {
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread.interrupt();
-                GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, GamePanel.this.direction));
+                GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, new Vector2D(mouseClickX, mouseClickY)));
             }
             percentage = 0;
         }
