@@ -9,55 +9,43 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
-import de.hhu.propra14.team132.gameSystem.KeyboardMessage.Command;
-import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.BadCollisionSystem;
 import de.hhu.propra14.team132.physics.CollisionSystem;
-import de.hhu.propra14.team132.physics.WGrid;
 
 
 public class Map implements Serializable{ 
 	
 	transient CollisionSystem collsys;
-    @Expose
 	ArrayList<Integer> objectIds;
 
-    @Expose
 	int IdCounter;
-    @Expose ArrayList<Integer> aviableIds;
+    ArrayList<Integer> aviableIds;
 
-    @Expose
+
 	private  GameObject[] mapObjects;
 
-    @Expose double sizeX;
-    @Expose double sizeY;
+    double sizeX;
+    double sizeY;
 
-    @Expose
+
 	boolean isActive;
     boolean dead;
 
-    @Expose
+
 	static int MAX_OBJECT_COUNT=21000; // arbitrary value. Has direct influence on a few very important array sizes.
 	
 	transient GameManager manager;
 
-    @Expose
 	int round;
-    
-    @Expose
+
 	int timeLeftInTicks;
 
-    @Expose
 	int currentTick;  //todo: Chris, ist das notwending? currentTick ist doch static. ja ist es ;)
 
-    @Expose
 	RuleSet ruleset;
 
-    @Expose
 	Player[] players;
 
-    @Expose
 	Player currentPlayer;
 	
 	public Map(GameManager manager) {
@@ -65,7 +53,6 @@ public class Map implements Serializable{
 		sizeX=0;
 		sizeY=0;
 	}
-
 	public void initializeBasics(GameManager manager){
 		
 		this.manager=manager;

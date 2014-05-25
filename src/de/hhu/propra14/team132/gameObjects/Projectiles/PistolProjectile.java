@@ -1,4 +1,4 @@
-package de.hhu.propra14.team132.gameObjects;
+package de.hhu.propra14.team132.gameObjects.Projectiles;
 
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PistolProjectile extends Projectile{
+public class PistolProjectile extends Projectile {
     public PistolProjectile() {
     }
 

@@ -3,7 +3,7 @@ package de.hhu.propra14.team132.gameMechanics.rule;
 import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
-import de.hhu.propra14.team132.gameSystem.WeaponSelectMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.WeaponSelectMessage;
 
 public class WeaponSelectRule extends RuntimeRule {
 

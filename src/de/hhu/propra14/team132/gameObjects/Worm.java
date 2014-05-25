@@ -19,12 +19,11 @@ import java.util.ArrayList;
  * Created by isabel on 02.05.14.
  */
 public class Worm extends GameObject {
-    @Expose
     private String name;
-    @Expose
+
     private static final Vector2D[] vertices;
 
-    @Expose private final ConvexCollisionShape shape; //TODO: weird behaviour after loading!!
+    private final ConvexCollisionShape shape; //TODO: weird behaviour after loading!!
     static{
     	Vector2D[] vert=new Vector2D[8];
     	vert[0]=new Vector2D(10,0);

@@ -1,6 +1,7 @@
-package de.hhu.propra14.team132.gameObjects;
+package de.hhu.propra14.team132.gameObjects.Projectiles;
 
 import de.hhu.propra14.team132.GUI.Drawable;
+import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;

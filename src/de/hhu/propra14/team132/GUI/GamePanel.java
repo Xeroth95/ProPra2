@@ -2,9 +2,9 @@ package de.hhu.propra14.team132.GUI;
 
 import de.hhu.propra14.team132.gameObjects.GameObject;
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.KeyboardMessage;
-import de.hhu.propra14.team132.gameSystem.ShootMessage;
-import de.hhu.propra14.team132.gameSystem.StopMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.KeyboardMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.ShootMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.StopMessage;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
