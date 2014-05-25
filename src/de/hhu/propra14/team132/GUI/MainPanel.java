@@ -33,7 +33,7 @@ public class MainPanel extends JPanel {
 
     CardLayout mainPanelLayout;
 
-    Options options;
+    public Options options;
     File optionsFile;
     FileWriter optionsFileWriter;
     Gson gson;

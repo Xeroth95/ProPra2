@@ -66,7 +66,7 @@ public class AudioSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioSettingsPanel.this.soundEngine.play(klickSoundFile);
+            AudioSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             AudioSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

@@ -52,7 +52,7 @@ public class InGameMenuPanel extends JPanel {
     class NewGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile);
+            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             InGameMenuPanel.this.gameManager.restart();
             InGameMenuPanel.this.gameManager.setStopped(false);
             InGameMenuPanel.this.mainPanel.showPanel("2");
@@ -71,7 +71,7 @@ public class InGameMenuPanel extends JPanel {
     class LoadGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile);
+            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             try {
                 chooser=new JFileChooser("res/savegames");
                 chooser.showOpenDialog(null);
@@ -94,7 +94,7 @@ public class InGameMenuPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile);
+            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             InGameMenuPanel.this.mainPanel.showPanel("2");
             gameManager.setStopped(false);
         }

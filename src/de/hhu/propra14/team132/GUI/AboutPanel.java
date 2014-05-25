@@ -48,7 +48,7 @@ public class AboutPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AboutPanel.this.soundEngine.play(klickSoundFile);
+            AboutPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             AboutPanel.this.mainPanel.showPanel("1");//switch back to main menu
         }
     }

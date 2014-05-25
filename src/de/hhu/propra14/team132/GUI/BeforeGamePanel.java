@@ -113,10 +113,19 @@ public class BeforeGamePanel extends JPanel {
         this.add(startGameButton, BorderLayout.SOUTH);
     }
 
+    public boolean noneSelected(ArrayList<JCheckBox> list) {
+        for (int i=0; i<list.size(); i++) {
+            if(list.get(i).isSelected()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     class StartGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            BeforeGamePanel.this.soundEngine.play(klickSoundFile);
+            BeforeGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             if(BeforeGamePanel.this.player1ColorBox.getSelectedIndex()==BeforeGamePanel.this.player2ColorBox.getSelectedIndex()) {
                 JOptionPane.showMessageDialog(null,"The players must have different colors!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -126,11 +135,16 @@ public class BeforeGamePanel extends JPanel {
                 }
                 else {
                     if(BeforeGamePanel.this.player1TeamNameField.getText().equals(BeforeGamePanel.this.player2TeamNameField.getText())) {
-                        JOptionPane.showMessageDialog(null,"The players must have different names!", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "The players must have different names!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else {
-                        BeforeGamePanel.this.mainPanel.showPanel("2");
-                        mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                        if(BeforeGamePanel.this.noneSelected(player1WeaponsList) || BeforeGamePanel.this.noneSelected(player2WeaponsList)) {
+                            JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        else {
+                            BeforeGamePanel.this.mainPanel.showPanel("2");
+                            mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
+                        }
                     }
                 }
             }

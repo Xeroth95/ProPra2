@@ -59,7 +59,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             SettingsPanel.this.mainPanel.showPanel("5");//switch to VideoSettingsPanel
         }
     }
@@ -68,7 +68,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             SettingsPanel.this.mainPanel.showPanel("6");//switch to AudioSettingsPanel
         }
     }
@@ -77,7 +77,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             SettingsPanel.this.mainPanel.showPanel("7");//switch to ControlSettingsPanel
         }
     }
@@ -86,7 +86,7 @@ public class SettingsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             SettingsPanel.this.mainPanel.showPanel("10");//switch to GameSettingsPanel
         }
     }
@@ -94,7 +94,7 @@ public class SettingsPanel extends JPanel {
     class SetStandardListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             options.setStandard();
             SettingsPanel.this.mainPanel.audioSettingsPanel.bgVolumeSlider.setValue(options.getBgVolume());
             SettingsPanel.this.mainPanel.audioSettingsPanel.fxVolumeSlider.setValue(options.getFxVolume());
@@ -114,7 +114,7 @@ public class SettingsPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            SettingsPanel.this.soundEngine.play(klickSoundFile);
+            SettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             //set and save options
             options.setBgVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getBgVolume());
             options.setFxVolume(SettingsPanel.this.mainPanel.audioSettingsPanel.getFxVolume());
