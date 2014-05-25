@@ -8,7 +8,7 @@ import de.hhu.propra14.team132.physics.util.Vector2D;
  * Created by isabel on 23.05.14.
  */
 public class Bazooka extends Weapon {
-    @Override
+
     public Projectile shoot(Vector2D mousePosition, Vector2D startPosition, double power) {
     	Vector2D dir = Weapon.getDirectionVector(mousePosition, startPosition);
     	return null;
