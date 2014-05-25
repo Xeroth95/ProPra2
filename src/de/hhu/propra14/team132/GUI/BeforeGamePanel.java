@@ -155,6 +155,7 @@ public class BeforeGamePanel extends JPanel {
                             generateWeaponsLists();
                             gameManager.gameMap.setRuleset(RuleSet.generateCustomRuleSet(gameManager.gameMap, RandomGenerateMode.TEST, gameManager.getPlayerCount(), new int[]{options.getWormsPerTeam(), options.getWormsPerTeam()}, new String[]{"res/img/textures/" + (String) BeforeGamePanel.this. player1ColorBox.getSelectedItem() + "Worm.png", "res/img/textures/" + (String) BeforeGamePanel.this. player2ColorBox.getSelectedItem() + "Worm.png"}, new String[]{BeforeGamePanel.this.player1TeamNameField.getText(), BeforeGamePanel.this.player2TeamNameField.getText()}, options.getRoundLength(), playerWeapons));
                             BeforeGamePanel.this.mainPanel.showPanel("2");
+                            mainPanel.mainGamePanel.gamePanel.gameManager.setStopped(false);
                             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
                         }
                     }
