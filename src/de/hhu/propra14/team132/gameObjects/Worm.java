@@ -37,6 +37,7 @@ public class Worm extends GameObject {
     	vertices = vert;
     }
 
+
     transient Image textureImage;
     String pathToTexture;
     //constructors:

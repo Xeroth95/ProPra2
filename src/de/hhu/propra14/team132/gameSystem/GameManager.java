@@ -10,6 +10,7 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuntimeRule;
 import de.hhu.propra14.team132.gameMechanics.rule.StartUpRule;
 import de.hhu.propra14.team132.gameObjects.GameObject;
+import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 import de.hhu.propra14.team132.physics.Effect;
 
 import java.io.*;
@@ -78,6 +79,7 @@ public class GameManager implements Communicable{
         	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
         	gB.registerTypeAdapter(PassiveRule.class, new JsonAdapter<PassiveRule>());
+            gB.registerTypeAdapter(Weapon.class,new JsonAdapter<Weapon>());
             Gson gson1=gB.create();
             String jsonString = gson1.toJson(this.gameMap);
             FileWriter fileWriter=new FileWriter(path);
@@ -101,6 +103,7 @@ public class GameManager implements Communicable{
         	gB.registerTypeAdapter(StartUpRule.class, new JsonAdapter<StartUpRule>());
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
         	gB.registerTypeAdapter(PassiveRule.class, new JsonAdapter<PassiveRule>());
+            gB.registerTypeAdapter(Weapon.class,new JsonAdapter<Weapon>());
             Gson gson=gB.create();
 
             Map mapNew=gson.fromJson(reader,Map.class);
