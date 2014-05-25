@@ -32,7 +32,7 @@ public abstract class Weapon implements Drawable{
     public void draw(Graphics2D g2d, JPanel p) {
 
     }
-    public abstract void shoot(Vector2D MousePosition, Vector2D StartPosition, double power);
+    public abstract Projectile shoot(Vector2D MousePosition, Vector2D StartPosition, double power);
 
     public int getCurrentAmmo() {
         return currentAmmo;
@@ -41,6 +41,6 @@ public abstract class Weapon implements Drawable{
     public void setCurrentAmmo(int currentAmmo) {
         this.currentAmmo = currentAmmo;
     }
-    public abstract Projectile createNewProjectile(/*I have no Idea!*/); //TODO: this is very questionable. The responsibility should lie with the implementing classes. I just don't know what parameters to put there.
-
+    public abstract Projectile createNewProjectile(Vector2D speed, Vector2D acceleartion); //TODO: this is very questionable. The responsibility should lie with the implementing classes. I just don't know what parameters to put there.
+    public abstract Projectile createNewProjectile();
 }
