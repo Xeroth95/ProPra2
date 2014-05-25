@@ -56,7 +56,7 @@ public class MainPanel extends JPanel {
         startGamePanel=new StartGamePanel(this, soundEngine, klickSoundFile);
         lobbyPanel=new LobbyPanel(this, soundEngine, klickSoundFile);
         inGameMenuPanel=new InGameMenuPanel(this, gameManager, soundEngine, klickSoundFile);
-        beforeGamePanel=new BeforeGamePanel(this, soundEngine, klickSoundFile);
+        beforeGamePanel=new BeforeGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
 
         applyOptions();
 
