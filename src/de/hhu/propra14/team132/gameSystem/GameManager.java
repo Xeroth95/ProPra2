@@ -258,6 +258,10 @@ public class GameManager implements Communicable{
     public void setStopped(boolean stopped) {
         this.stopped = stopped;
     }
+
+    public int getPlayerCount() {
+        return  playerCount;
+    }
 }
 
 
