@@ -8,13 +8,6 @@ import de.hhu.propra14.team132.gameObjects.Projectile;
  */
 public class Pistol extends Weapon {
 
-    public Pistol(){ // actually implement a proper constructor instead of just doing nothing!
-    	super(); //Constructor for INFINITE_AMMO
-    }
-
-    public Pistol(int currentAmmo) { //Constructor for not infiniteAmmo
-        super(currentAmmo);
-    }
 
     @Override
     public void shoot() {

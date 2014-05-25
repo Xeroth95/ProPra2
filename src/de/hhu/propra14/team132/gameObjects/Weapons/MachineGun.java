@@ -8,14 +8,6 @@ import de.hhu.propra14.team132.gameObjects.Projectile;
  */
 public class MachineGun extends Weapon {
 
-    public MachineGun(){ // actually implement a proper constructor instead of just doing nothing!
-    	super(); //Constructor for INFINITE_AMMO
-    }
-
-    public MachineGun(int currentAmmo) { //Constructor for not infiniteAmmo
-        super(currentAmmo);
-    }
-
     @Override
     public void shoot() {
         //do something with the Projetile; todo: I do not know how to "shoot"
