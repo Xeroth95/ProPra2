@@ -46,9 +46,9 @@ public class RuleSet {
 		return r;
 	}
 	public static RuleSet generateCustomRuleSet(Map gameMap,
-		RandomGenerateMode terrainGenerateMode,
-		int[] wormsToStartWith,
-		double roundLengthInSeconds){
+												RandomGenerateMode terrainGenerateMode,
+												int[] wormsToStartWith,
+												double roundLengthInSeconds){
 
 		RuleSet r= new RuleSet(gameMap);
 		
