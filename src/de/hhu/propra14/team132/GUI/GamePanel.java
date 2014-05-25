@@ -120,7 +120,7 @@ public class GamePanel extends JPanel {
         g2d.translate(0, -8192);
         g2d.setColor(Color.RED);
         g2d.setFont(displayFont);
-        g2d.drawString("Player " + String.valueOf(gameManager.gameMap.getCurrentPlayer().getPlayerID()), 0 + hbar.getValue(), 18 + vbar.getValue());
+        g2d.drawString(String.valueOf(gameManager.gameMap.getCurrentPlayer().getName()), 0 + hbar.getValue(), 18 + vbar.getValue());
         g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / gameManager.ticksPerSecond + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
         if (percentage > 0) {
             g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 54 + vbar.getValue());

@@ -54,8 +54,10 @@ public class InGameMenuPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
             InGameMenuPanel.this.gameManager.restart();
-            InGameMenuPanel.this.gameManager.setStopped(false);
-            InGameMenuPanel.this.mainPanel.showPanel("2");
+            InGameMenuPanel.this.gameManager.restart();
+            InGameMenuPanel.this.gameManager.setBeforeStart(true);
+            InGameMenuPanel.this.gameManager.setStopped(true);
+            InGameMenuPanel.this.gameManager.mainFrame.mainPanel.showPanel("12");
 
         }
     }
