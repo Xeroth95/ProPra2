@@ -129,6 +129,7 @@ public abstract strictfp class CollisionObject {
 							this.setLastCollidedWith(o.getPhysicsID());
 							o.setLastCollidedWith(this.physicsID);
 							furtherCollisionWith(o);
+							o.furtherCollisionWith(this);
 							return;
 						}
 					}

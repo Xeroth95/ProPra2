@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
+import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 public class BazookaProjectile extends Projectile{
@@ -29,30 +30,30 @@ public class BazookaProjectile extends Projectile{
 
 	@Override
 	public void furtherCollisionWith(CollisionObject o) {
-		//TODO: how about reducing the life of the object?
+		//TODO: how about creating an explosionObject and deleting itself? the bazooka should do something like that.
+		
+		this.setMarkedForDeletion(true);
 	}
 
 	@Override
 	public double getInitialBounciness() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public double getInitialFriction() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public ArrayList<Effect> getInitalEffects() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Effect> e =new ArrayList<Effect>();
+		e.add(Gravity.GLOBAL_GRAVITY);
+		return e;
 	}
 
 	@Override
 	public CollisionMode getInitialCollisionMode() {
-		// TODO Auto-generated method stub
-		return null;
+		return CollisionMode.EXPLOADING;
 	}
 }
