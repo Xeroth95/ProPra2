@@ -5,7 +5,7 @@
 out/
 doc/
 # Java
-res/savegames/*
+*.json
 *.class
 hs_err_pid*
 # Eclipse
