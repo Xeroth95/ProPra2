@@ -13,8 +13,9 @@ import java.awt.*;
  */
 public class Pistol extends Weapon {
     @Override
-    public Projectile shoot(Vector2D MousePosition, Vector2D StartPosition, double power) {
-        return null;
+    public Projectile shoot(Vector2D mousePosition, Vector2D startPosition, double power) {
+        Vector2D dir = Weapon.getDirectionVector(mousePosition, startPosition);
+        return this.createNewProjectile(dir,startPosition,power);
     }
 
 
