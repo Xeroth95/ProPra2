@@ -21,10 +21,8 @@ public class ShootRule extends PassiveRule {
 		switch(mt){
 			case SHOOT: {
 				ShootMessage sm = (ShootMessage) m;
-				Vector2D dir = sm.getDirection();
-				dir.multiplyWith(sm.getPower());
-				dir.addVector(gameMap.getCurrentPlayer().getCurrentWorm().getPosition());
-				Projectile p=gameMap.getCurrentPlayer().getCurrentWeapon().createNewProjectile();
+				Projectile p=gameMap.getCurrentPlayer().getCurrentWeapon().shoot(sm.getMousePosition(), gameMap.getCurrentPlayer().getCurrentWorm().getPosition(), sm.getPower());
+				gameMap.addObject(p);
 				break;
 			}
 			default:{
