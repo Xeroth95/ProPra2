@@ -36,8 +36,9 @@ public class WinRule extends PassiveRule{
 			}
 			if(lost){
 				JOptionPane.showMessageDialog(null, "Player "+p.playerID+" lost the game! Everyone else is a winner!Have a nice day ;);););)");
+				gameMap.getManager().restart();
 				gameMap.getManager().setBeforeStart(true);
-				gameMap.getManager().sendMessage(new StopMessage());
+				gameMap.getManager().setStopped(true);
 				gameMap.getManager().mainFrame.mainPanel.showPanel("1");
 			}
 		}
