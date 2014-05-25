@@ -98,7 +98,7 @@ public class GamePanel extends JPanel {
         g2d.translate(0, -8192);
 
 
-        for (int i=0; i<objectIDs.size()-1; i++) {
+        for (int i=0; i<objectIDs.size(); i++) {
             gameObjects[objectIDs.get(i)].draw(g2d, this);
         }
         g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+50-bouncingValue),this);
