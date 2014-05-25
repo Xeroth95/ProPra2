@@ -42,7 +42,7 @@ public class WeaponsPanel extends JPanel {
         this.setVisible(false);
     }
 
-    public void setButtonsVisibality(ArrayList<JCheckBox> weaponsList) {
+    public void setButtonsVisibility(ArrayList<JCheckBox> weaponsList) {
         for(int i=0; i<=weapons.size()-1; i++) {
             weapons.get(i).setVisible(weaponsList.get(i).isSelected());
         }
