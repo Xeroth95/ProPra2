@@ -23,9 +23,7 @@ public class BazookaProjectile extends Projectile {
 	@Override
 	public void draw(Graphics2D g2d, JPanel p) {//TODO: make a real draw out of this stub
 		g2d.setColor(Color.BLACK);
-		for(ConvexCollisionShape s: this.getCollisionShapes()){
-			g2d.fillPolygon(s.getPolygonToDraw());
-		}
+		g2d.fillOval((int)this.getPosition().getX(), (int)this.getPosition().getY(), 10, 10);
 	}
 
 	@Override

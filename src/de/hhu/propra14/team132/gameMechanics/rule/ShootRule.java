@@ -6,7 +6,7 @@ import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 import de.hhu.propra14.team132.gameSystem.Messages.ShootMessage;
 
-public class ShootRule extends PassiveRule {
+public class ShootRule extends RuntimeRule {
 
 	public ShootRule(Map gameMap) {
 		super(gameMap);
@@ -15,19 +15,10 @@ public class ShootRule extends PassiveRule {
 
 	@Override
 	public void receiveMessage(Message m) {
+		ShootMessage sm = (ShootMessage) m;
+		Projectile p=gameMap.getCurrentPlayer().getCurrentWeapon().shoot(sm.getMousePosition(), gameMap.getCurrentPlayer().getCurrentWorm().getPosition(), sm.getPower());
+		gameMap.addObject(p);
 
-		MessageType mt = m.getMessageType();
-		switch(mt){
-			case SHOOT: {
-				ShootMessage sm = (ShootMessage) m;
-				Projectile p=gameMap.getCurrentPlayer().getCurrentWeapon().shoot(sm.getMousePosition(), gameMap.getCurrentPlayer().getCurrentWorm().getPosition(), sm.getPower());
-				gameMap.addObject(p);
-				break;
-			}
-			default:{
-				break;
-			}
-		}
 	}
 
 	@Override
