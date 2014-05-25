@@ -1,11 +1,10 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameObjects.Projectile;
+import de.hhu.propra14.team132.gameObjects.Projectiles.Projectile;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
-import de.hhu.propra14.team132.gameSystem.ShootMessage;
-import de.hhu.propra14.team132.physics.util.Vector2D;
+import de.hhu.propra14.team132.gameSystem.Messages.ShootMessage;
 
 public class ShootRule extends PassiveRule {
 

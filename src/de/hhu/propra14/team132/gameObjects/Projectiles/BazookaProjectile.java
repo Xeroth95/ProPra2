@@ -1,4 +1,4 @@
-package de.hhu.propra14.team132.gameObjects;
+package de.hhu.propra14.team132.gameObjects.Projectiles;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -12,7 +12,7 @@ import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
-public class BazookaProjectile extends Projectile{
+public class BazookaProjectile extends Projectile {
     public BazookaProjectile() {
     }
 
