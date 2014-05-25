@@ -8,18 +8,18 @@ import de.hhu.propra14.team132.physics.util.Vector2D;
  */
 public class ShootMessage extends Message {
     double power;
-    Vector2D direction;
-    public ShootMessage(double power, Vector2D dir) {
+    Vector2D mousePosition;
+    public ShootMessage(double power, Vector2D mousePosition) {
         super(MessageType.SHOOT);
         this.power=power;
-        this.direction=dir;
+        this.mousePosition=mousePosition;
     }
 
     public double getPower() {
         return power;
     }
 
-    public Vector2D getDirection() {
-        return direction;
+    public Vector2D getMousePosition() {
+        return mousePosition;
     }
 }

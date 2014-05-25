@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
@@ -13,7 +14,9 @@ import java.util.ArrayList;
  * Created by fabian on 20.05.14.
  */
 public class BeforeGamePanel extends JPanel {
+    GameManager gameManager;
     MainPanel mainPanel;
+    Options options;
     SoundEngine soundEngine;
     File klickSoundFile;
     PreviewPanel previewPanel;
@@ -36,8 +39,10 @@ public class BeforeGamePanel extends JPanel {
     JComboBox player2ColorBox;
     JButton startGameButton;
 
-    public BeforeGamePanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public BeforeGamePanel(MainPanel mainPanel, GameManager gameManager, Options options, SoundEngine soundEngine, File klickSoundFile) {
+        this.gameManager=gameManager;
         this.mainPanel=mainPanel;
+        this.options=options;
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;
 
@@ -142,6 +147,7 @@ public class BeforeGamePanel extends JPanel {
                             JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else {
+                            //RuleSet.generateCustomRuleSet()
                             BeforeGamePanel.this.mainPanel.showPanel("2");
                             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
                         }
