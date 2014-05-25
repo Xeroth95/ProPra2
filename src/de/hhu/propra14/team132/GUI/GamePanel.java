@@ -79,6 +79,12 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.requestFocus();
+        if(gameManager.gameMap.getCurrentPlayer().getPlayerID()==1) {
+            this.weaponsPanel.setButtonsVisibality(this.mainPanel.beforeGamePanel.player1WeaponsList);
+        }
+        else if(gameManager.gameMap.getCurrentPlayer().getPlayerID()==2) {
+            this.weaponsPanel.setButtonsVisibality(this.mainPanel.beforeGamePanel.player2WeaponsList);
+        }
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
         g2d = (Graphics2D) g;

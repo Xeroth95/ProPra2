@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by fabian on 20.05.14.
@@ -23,14 +24,8 @@ public class BeforeGamePanel extends JPanel {
     JPanel player2TeamNamePanel;
     JPanel player1WeaponsPanel;
     JPanel player2WeaponsPanel;
-    JCheckBox player1BazookaBox;
-    JCheckBox player1PistolBox;
-    JCheckBox player1MachineGunBox;
-    JCheckBox player1SkipBox;
-    JCheckBox player2BazookaBox;
-    JCheckBox player2PistolBox;
-    JCheckBox player2MachineGunBox;
-    JCheckBox player2SkipBox;
+    ArrayList<JCheckBox> player1WeaponsList;
+    ArrayList<JCheckBox> player2WeaponsList;
     JLabel player1Label;
     JLabel player2Label;
     JLabel player1TeamNameLabel;
@@ -54,22 +49,24 @@ public class BeforeGamePanel extends JPanel {
         player2TeamNamePanel=new JPanel(new GridLayout(1,2));
         player1WeaponsPanel=new JPanel(new FlowLayout());
         player2WeaponsPanel=new JPanel(new FlowLayout());
-        player1BazookaBox=new JCheckBox("Bazooka");
-        player1BazookaBox.setSelected(true);
-        player1PistolBox=new JCheckBox("Pistol");
-        player1PistolBox.setSelected(true);
-        player1MachineGunBox=new JCheckBox("Machine Gun");
-        player1MachineGunBox.setSelected(true);
-        player1SkipBox=new JCheckBox("Skip");
-        player1SkipBox.setSelected(true);
-        player2BazookaBox=new JCheckBox("Bazooka");
-        player2BazookaBox.setSelected(true);
-        player2PistolBox=new JCheckBox("Pistol");
-        player2PistolBox.setSelected(true);
-        player2MachineGunBox=new JCheckBox("Machine Gun");
-        player2MachineGunBox.setSelected(true);
-        player2SkipBox=new JCheckBox("Skip");
-        player2SkipBox.setSelected(true);
+        player1WeaponsList=new ArrayList<JCheckBox>();
+        player2WeaponsList=new ArrayList<JCheckBox>();
+        player1WeaponsList.add(new JCheckBox("Bazooka"));
+        player1WeaponsList.get(0).setSelected(true);
+        player1WeaponsList.add(new JCheckBox("Pistol"));
+        player1WeaponsList.get(1).setSelected(true);
+        player1WeaponsList.add(new JCheckBox("Machine Gun"));
+        player1WeaponsList.get(2).setSelected(true);
+        player1WeaponsList.add(new JCheckBox("Skip"));
+        player1WeaponsList.get(3).setSelected(true);
+        player2WeaponsList.add(new JCheckBox("Bazooka"));
+        player2WeaponsList.get(0).setSelected(true);
+        player2WeaponsList.add(new JCheckBox("Pistol"));
+        player2WeaponsList.get(1).setSelected(true);
+        player2WeaponsList.add(new JCheckBox("Machine Gun"));
+        player2WeaponsList.get(2).setSelected(true);
+        player2WeaponsList.add(new JCheckBox("Skip"));
+        player2WeaponsList.get(3).setSelected(true);
         player1Label=new JLabel("<HTML><U>Player 1</U></HTML>");
         player2Label=new JLabel("<HTML><U>Player 2</U></HTML>");
         player1TeamNameLabel=new JLabel("Teamname:");
@@ -92,15 +89,15 @@ public class BeforeGamePanel extends JPanel {
         player2TeamNamePanel.add(player2TeamNameLabel);
         player2TeamNamePanel.add(player2TeamNameField);
 
-        player1WeaponsPanel.add(player1BazookaBox);
-        player1WeaponsPanel.add(player1PistolBox);
-        player1WeaponsPanel.add(player1MachineGunBox);
-        player1WeaponsPanel.add(player1SkipBox);
+        player1WeaponsPanel.add(player1WeaponsList.get(0));
+        player1WeaponsPanel.add(player1WeaponsList.get(1));
+        player1WeaponsPanel.add(player1WeaponsList.get(2));
+        player1WeaponsPanel.add(player1WeaponsList.get(3));
 
-        player2WeaponsPanel.add(player2BazookaBox);
-        player2WeaponsPanel.add(player2PistolBox);
-        player2WeaponsPanel.add(player2MachineGunBox);
-        player2WeaponsPanel.add(player2SkipBox);
+        player2WeaponsPanel.add(player2WeaponsList.get(0));
+        player2WeaponsPanel.add(player2WeaponsList.get(1));
+        player2WeaponsPanel.add(player2WeaponsList.get(2));
+        player2WeaponsPanel.add(player2WeaponsList.get(3));
 
         configPanel.add(player1Label);
         configPanel.add(player2Label);

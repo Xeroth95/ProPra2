@@ -27,22 +27,25 @@ public class WeaponsPanel extends JPanel {
 
         weapons.add(new JButton("Bazooka"));
         weapons.get(0).addActionListener(new WeaponsListener());
-        weapons.add(new JButton("Grenade"));
+        weapons.add(new JButton("Pistol"));
         weapons.get(1).addActionListener(new WeaponsListener());
-        weapons.add(new JButton("Mine"));
+        weapons.add(new JButton("Machine Gun"));
         weapons.get(2).addActionListener(new WeaponsListener());
-        weapons.add(new JButton("Super sheep"));
+        weapons.add(new JButton("Skip"));
         weapons.get(3).addActionListener(new WeaponsListener());
-        weapons.add(new JButton("Punch"));
-        weapons.get(4).addActionListener(new WeaponsListener());
 
         this.add(weapons.get(0));
         this.add(weapons.get(1));
         this.add(weapons.get(2));
         this.add(weapons.get(3));
-        this.add(weapons.get(4));
 
         this.setVisible(false);
+    }
+
+    public void setButtonsVisibality(ArrayList<JCheckBox> weaponsList) {
+        for(int i=0; i<=weapons.size()-1; i++) {
+            weapons.get(i).setVisible(weaponsList.get(i).isSelected());
+        }
     }
 
     class WeaponsListener implements ActionListener {
