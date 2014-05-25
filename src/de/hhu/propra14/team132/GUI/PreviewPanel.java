@@ -30,9 +30,9 @@ public class PreviewPanel extends JPanel {
 
     public void refreshPreview() {
         try {
-            imagePlayer1=ImageIO.read(new File("res/img/textures/" + (String) beforeGamePanel.player1ColorBox.getSelectedItem() + "Worm.png"));
+            imagePlayer1=ImageIO.read(new File("res/img/preview/" + (String) beforeGamePanel.player1ColorBox.getSelectedItem() + "Worm.png"));
             imagePlayer1=imagePlayer1.getScaledInstance(200,200, Image.SCALE_SMOOTH);
-            imagePlayer2=ImageIO.read(new File("res/img/textures/" + (String) beforeGamePanel.player2ColorBox.getSelectedItem() + "Worm.png"));
+            imagePlayer2=ImageIO.read(new File("res/img/preview/" + (String) beforeGamePanel.player2ColorBox.getSelectedItem() + "Worm.png"));
             imagePlayer2=imagePlayer2.getScaledInstance(200,200, Image.SCALE_SMOOTH);
             labelPlayer1.setIcon(new ImageIcon(imagePlayer1));
             labelPlayer2.setIcon(new ImageIcon(imagePlayer2));

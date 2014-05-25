@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -50,7 +49,7 @@ public class Worm extends GameObject {
         this.name = name;
 
         try{
-	        textureImage=ImageIO.read(new File("res/img/textures/nic.png"));
+	        textureImage=ImageIO.read(new File("res/img/textures/NicWorm.png"));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms!");
@@ -66,7 +65,7 @@ public class Worm extends GameObject {
         this.name = "TestName";
 
         try{
-            textureImage=ImageIO.read(new File("res/img/textures/nic.png"));
+            textureImage=ImageIO.read(new File("res/img/textures/NicWorm.png"));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
             System.err.println("Unable to load Texture for the Worms!");
