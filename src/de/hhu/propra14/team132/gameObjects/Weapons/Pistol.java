@@ -5,6 +5,9 @@ import de.hhu.propra14.team132.gameObjects.PistolProjectile;
 import de.hhu.propra14.team132.gameObjects.Projectile;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Created by isabel on 23.05.14.
  */
@@ -29,5 +32,9 @@ public class Pistol extends Weapon {
     @Override
     public Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power) {
         return null;
+    }
+    @Override
+    public void draw(Graphics2D g2d, JPanel p) {
+
     }
 }

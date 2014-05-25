@@ -4,6 +4,9 @@ import de.hhu.propra14.team132.gameObjects.BazookaProjectile;
 import de.hhu.propra14.team132.gameObjects.Projectile;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Created by isabel on 23.05.14.
  */
@@ -21,6 +24,11 @@ public class Bazooka extends Weapon {
         projectile.setSpeed(speed);
         projectile.setAcceleration(acceleration);
         return projectile;
+    }
+
+    @Override
+    public void draw(Graphics2D g2d, JPanel p) {
+
     }
 
     @Override

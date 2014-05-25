@@ -28,11 +28,6 @@ public abstract class Weapon implements Drawable{
     	this.currentAmmo=ammo;
     }
 
-
-    @Override
-    public void draw(Graphics2D g2d, JPanel p) {
-
-    }
     public abstract Projectile shoot(Vector2D MousePosition, Vector2D StartPosition, double power);
 
     public int getCurrentAmmo() {
