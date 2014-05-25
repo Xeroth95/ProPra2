@@ -39,7 +39,7 @@ public class Worm extends GameObject {
     }
 
     transient Image textureImage;
-    
+    String pathToTexture;
     //constructors:
     public Worm(int teamID, String name){
         super(new ConvexCollisionShape(vertices), teamID);
@@ -47,7 +47,7 @@ public class Worm extends GameObject {
         this.name = name;
 
         try{
-	        textureImage=ImageIO.read(new File("res/img/textures/NicWorm.png"));
+	        textureImage=ImageIO.read(new File(pathToTexture));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
         	System.err.println("Unable to load Texture for the Worms!");
@@ -63,7 +63,7 @@ public class Worm extends GameObject {
         this.name = "TestName";
 
         try{
-            textureImage=ImageIO.read(new File("res/img/textures/NicWorm.png"));
+            textureImage=ImageIO.read(new File(pathToTexture));
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
             System.err.println("Unable to load Texture for the Worms!");
@@ -109,6 +109,14 @@ public class Worm extends GameObject {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getPathToTexture() {
+		return pathToTexture;
+	}
+
+	public void setPathToTexture(String pathToTexture) {
+		this.pathToTexture = pathToTexture;
 	}
 	
    
