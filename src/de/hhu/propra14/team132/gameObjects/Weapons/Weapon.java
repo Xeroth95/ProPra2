@@ -32,7 +32,7 @@ public abstract class Weapon implements Drawable{
     public abstract Projectile createNewProjectile();
     
     public static Vector2D getDirectionVector(Vector2D mousePosition, Vector2D startPosition){
-    	Vector2D dir = new Vector2D(mousePosition.getX()-startPosition.getX(),mousePosition.getX()-startPosition.getY());
+    	Vector2D dir = new Vector2D(mousePosition.getX()-startPosition.getX(),mousePosition.getY()-startPosition.getY());
     	try {
 			dir.makeUnitVector();
 		} catch (Exception e) {
