@@ -8,6 +8,7 @@ import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
+import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +32,7 @@ public abstract class Weapon implements Drawable{
     public void draw(Graphics2D g2d, JPanel p) {
 
     }
-
-    public abstract void shoot();  //todo: ist this a good idea? this method should shoot the Pojectile and then creates a new one
-
+    public abstract void shoot(Vector2D MousePosition, Vector2D StartPosition, double power);
 
     public int getCurrentAmmo() {
         return currentAmmo;
