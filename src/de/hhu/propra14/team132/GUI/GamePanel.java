@@ -97,11 +97,9 @@ public class GamePanel extends JPanel {
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
 
-
-        for (int i=0; i<objectIDs.size(); i++) {
-            gameObjects[objectIDs.get(i)].draw(g2d, this);
-        }
         g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+50-bouncingValue),this);
+
+
         if (bouncingValue>=0 && bounce10==false) {
             bouncingValue+=0.1;
             if ((int)bouncingValue==10) {
@@ -113,6 +111,10 @@ public class GamePanel extends JPanel {
             if((int)bouncingValue==0) {
                 bounce10=false;
             }
+        }
+
+        for (int i=0; i<objectIDs.size(); i++) {
+            gameObjects[objectIDs.get(i)].draw(g2d, this);
         }
         g2d.scale(1, -1);
         g2d.translate(0, -8192);
