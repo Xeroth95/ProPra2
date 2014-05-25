@@ -92,11 +92,7 @@ public class Worm extends GameObject {
 
     @Override
     public void draw(Graphics2D g2d, JPanel p) {
-        g2d.scale(1, -1);
-        g2d.translate(0, -8192);
         g2d.setColor(Color.BLUE);
-        g2d.scale(1, -1);
-        g2d.translate(0, -8192);
         g2d.drawString(String.valueOf(this.getLife()),(int)(this.getPosition().getX()+6),(int)(this.getPosition().getY()+50));
         g2d.drawImage(textureImage, (int)this.collisionShapes[0].getPositionX(), (int)this.collisionShapes[0].getPositionY(), p); //TODO: using shape results in the worm being painted at 0,0 when being deserialized!
     }
