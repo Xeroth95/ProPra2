@@ -28,6 +28,7 @@ public strictfp class  SetUpWormsRule extends StartUpRule {
 		stupidTestPlacementOfWorms();
     }
 	private void stupidTestPlacementOfWorms() {
+		
 		for(int i=0;i<numberOfPlayers;i++){
 			Player p = gameMap.getPlayers()[i];
 			for(int j=0;j<wormsToStartWith[i];j++){

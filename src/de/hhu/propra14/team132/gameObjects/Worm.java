@@ -54,6 +54,8 @@ public class Worm extends GameObject {
         	e.printStackTrace();
         	System.exit(-1);
         }
+
+    	this.setLife(100);
     }
 
     public Worm() {
@@ -70,6 +72,8 @@ public class Worm extends GameObject {
             e.printStackTrace();
             System.exit(-1);
         }
+
+    	this.setLife(100);
     }
 
     @Override

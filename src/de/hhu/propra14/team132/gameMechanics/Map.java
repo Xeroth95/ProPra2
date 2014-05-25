@@ -122,7 +122,7 @@ public class Map implements Serializable{
 	}
 	
 	public void removeObject(int objectID){
-		this.objectIds.remove(objectID);
+		this.objectIds.remove((Integer)objectID);
 		this.mapObjects[objectID]=null;
 		this.aviableIds.add(objectID);
 	}
