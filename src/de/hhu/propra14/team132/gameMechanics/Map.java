@@ -64,6 +64,8 @@ public class Map implements Serializable{
 		
 		aviableIds=new ArrayList<Integer>();
 		
+		Player.playerCount=1;
+		
 		IdCounter=1; // zero is reserved!
 
 		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);		
