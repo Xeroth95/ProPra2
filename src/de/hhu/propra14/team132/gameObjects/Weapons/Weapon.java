@@ -1,18 +1,8 @@
 package de.hhu.propra14.team132.gameObjects.Weapons;
 
 import de.hhu.propra14.team132.GUI.Drawable;
-import de.hhu.propra14.team132.gameMechanics.Map;
-import de.hhu.propra14.team132.gameObjects.Projectile;
-import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.Message;
-import de.hhu.propra14.team132.physics.CollisionObject;
-import de.hhu.propra14.team132.physics.Effect;
-import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
+import de.hhu.propra14.team132.gameObjects.Projectiles.Projectile;
 import de.hhu.propra14.team132.physics.util.Vector2D;
-
-import javax.swing.*;
-
-import java.awt.*;
 
 /**
  * Created by isabel on 02.05.14.

@@ -1,8 +1,8 @@
 package de.hhu.propra14.team132.gameObjects.Weapons;
 
-import de.hhu.propra14.team132.gameObjects.BazookaProjectile;
-import de.hhu.propra14.team132.gameObjects.PistolProjectile;
-import de.hhu.propra14.team132.gameObjects.Projectile;
+import de.hhu.propra14.team132.gameObjects.Projectiles.BazookaProjectile;
+import de.hhu.propra14.team132.gameObjects.Projectiles.PistolProjectile;
+import de.hhu.propra14.team132.gameObjects.Projectiles.Projectile;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.swing.*;
