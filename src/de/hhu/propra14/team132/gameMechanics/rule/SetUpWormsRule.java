@@ -31,7 +31,7 @@ public strictfp class  SetUpWormsRule extends StartUpRule {
 		for(int i=0;i<numberOfPlayers;i++){
 			Player p = gameMap.getPlayers()[i];
 			for(int j=0;j<wormsToStartWith[i];j++){
-				Worm w = new Worm(p.getPlayerID(), "TestName");
+				Worm w = new Worm(p.getPlayerID(), "TestName", pathsToTextures[i]);
 				w.setPosition(new Vector2D(10+480*i+50*j,600));
 				gameMap.addObject(w);
 				p.getWorms().add(w);
