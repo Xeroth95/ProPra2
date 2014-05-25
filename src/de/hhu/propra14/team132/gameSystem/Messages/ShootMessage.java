@@ -1,5 +1,7 @@
-package de.hhu.propra14.team132.gameSystem;
+package de.hhu.propra14.team132.gameSystem.Messages;
 
+import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.gameSystem.MessageType;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 

@@ -4,7 +4,7 @@ import de.hhu.propra14.team132.gameMechanics.Map;
 import de.hhu.propra14.team132.gameObjects.Projectiles.Projectile;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
-import de.hhu.propra14.team132.gameSystem.ShootMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.ShootMessage;
 
 public class ShootRule extends PassiveRule {
 

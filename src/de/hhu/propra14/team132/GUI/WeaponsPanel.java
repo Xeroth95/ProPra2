@@ -5,7 +5,7 @@ import de.hhu.propra14.team132.gameObjects.Weapons.MachineGun;
 import de.hhu.propra14.team132.gameObjects.Weapons.Pistol;
 import de.hhu.propra14.team132.gameObjects.Weapons.Skip;
 import de.hhu.propra14.team132.gameSystem.GameManager;
-import de.hhu.propra14.team132.gameSystem.WeaponSelectMessage;
+import de.hhu.propra14.team132.gameSystem.Messages.WeaponSelectMessage;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
