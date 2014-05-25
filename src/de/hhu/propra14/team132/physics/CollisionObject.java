@@ -21,6 +21,9 @@ public abstract strictfp class CollisionObject {
 	Vector2D position;
     @Expose
 	Vector2D acceleration;
+    
+    @Expose
+    int life;
 
     @Expose
 	double bounciness;
@@ -343,6 +346,12 @@ public abstract strictfp class CollisionObject {
 	}
 	public void removeEffect(Effect e){
 		this.effects.remove(e);
+	}
+	public int getLife() {
+		return life;
+	}
+	public void setLife(int life) {
+		this.life = life;
 	}
 	
 }

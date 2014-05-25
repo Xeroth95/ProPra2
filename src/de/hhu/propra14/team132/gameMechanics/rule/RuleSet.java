@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 
 import de.hhu.propra14.team132.gameMechanics.Map;
+import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 
 public class RuleSet {
 	transient Map gameMap;
@@ -25,6 +26,38 @@ public class RuleSet {
 		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
 		r.passiveRules.add(new RoundRule(gameMap,5));
 		r.runtimeRules.add(new MovementRule(gameMap));
+		return r;
+	}
+	
+	public static RuleSet generateCustomRuleSet(Map gameMap,
+												RandomGenerateMode terrainGenerateMode,
+												int[] wormsToStartWith,
+												double roundLengthInSeconds,
+												ArrayList<ArrayList<Weapon>> weaponsPerPlayer){
+		
+		RuleSet r= new RuleSet(gameMap);
+		
+		r.startUpRules.add(new SetUpTerrainRule(gameMap,terrainGenerateMode));
+		r.startUpRules.add(new SetUpWormsRule(gameMap,wormsToStartWith));
+		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds));
+		
+		r.runtimeRules.add(new MovementRule(gameMap));
+		
+		return r;
+	}
+	public static RuleSet generateCustomRuleSet(Map gameMap,
+		RandomGenerateMode terrainGenerateMode,
+		int[] wormsToStartWith,
+		double roundLengthInSeconds){
+
+		RuleSet r= new RuleSet(gameMap);
+		
+		r.startUpRules.add(new SetUpTerrainRule(gameMap,terrainGenerateMode));
+		r.startUpRules.add(new SetUpWormsRule(gameMap,wormsToStartWith));
+		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds));
+		
+		r.runtimeRules.add(new MovementRule(gameMap));
+		
 		return r;
 	}
 	

@@ -22,8 +22,6 @@ public class Worm extends GameObject {
     @Expose
     private String name;
     @Expose
-    private int life;
-    @Expose
     private static final Vector2D[] vertices;
 
     @Expose private final ConvexCollisionShape shape; //TODO: weird behaviour after loading!!

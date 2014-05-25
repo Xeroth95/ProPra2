@@ -9,26 +9,9 @@ import de.hhu.propra14.team132.physics.util.Vector2D;
  */
 public class Bazooka extends Weapon {
     @Override
-    public Projectile shoot(Vector2D MousePosition, Vector2D StartPosition, double power) {
-        //I really have no Idea how the Vectors work!
-        Vector2D ProjectileSpeed=new Vector2D();
-        ProjectileSpeed.setX(MousePosition.getX()-StartPosition.getX());
-        ProjectileSpeed.setY(MousePosition.getY()-StartPosition.getY());
-        Vector2D ProjectileAcc=new Vector2D();
-        ProjectileSpeed.setX((MousePosition.getX()-StartPosition.getX())*power);
-        ProjectileSpeed.setY((MousePosition.getY()-StartPosition.getY())*power);
-        //todo: how toe react when ammo is empty? --> returns null, maybe this can cause problems
-        if(this.getCurrentAmmo()!=-1) {
-            if(this.getCurrentAmmo()>0) {
-                this.setCurrentAmmo(this.getCurrentAmmo() - 1); //decreases the currentAmmo;
-                return this.createNewProjectile(ProjectileSpeed,ProjectileAcc);
-            } else {
-                System.out.println("Ammo is empty, reload");
-                return null;
-            }
-        } else {
-            return this.createNewProjectile(ProjectileSpeed,ProjectileAcc);
-        }
+    public Projectile shoot(Vector2D mousePosition, Vector2D startPosition, double power) {
+    	Vector2D dir = Weapon.getDirectionVector(mousePosition, startPosition);
+    	return null;
     }
 
     @Override
