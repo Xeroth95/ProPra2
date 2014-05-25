@@ -11,23 +11,17 @@ import com.google.gson.annotations.Expose;
 public strictfp class  SetUpWormsRule extends StartUpRule {
 	@Expose int numberOfPlayers;
 	@Expose int[] wormsToStartWith;
-	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith) {
+	String[] pathsToTextures;
+	public SetUpWormsRule(Map gameMap,int[] wormsToStartWith, int playerCount,String[] pathsToTextures) {
 		super(gameMap);
 		this.numberOfPlayers=gameMap.getPlayers().length;
+		this.pathsToTextures=pathsToTextures;
 		if(wormsToStartWith.length!=numberOfPlayers){
 			System.err.println("Unexpected array size!");
 			System.exit(-1);
 		}
 		this.wormsToStartWith = wormsToStartWith;
 		
-	}
-	public SetUpWormsRule(Map gameMap,int wormsToStartWith) {
-		super(gameMap);
-		this.numberOfPlayers=gameMap.getPlayers().length;
-		this.wormsToStartWith = new int[numberOfPlayers];
-		for(int i=0;i<this.wormsToStartWith.length;i++){
-			this.wormsToStartWith[i]=wormsToStartWith;
-		}
 	}
 	@Override
 	public void applyRule() {

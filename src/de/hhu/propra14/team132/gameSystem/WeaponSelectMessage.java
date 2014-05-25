@@ -8,7 +8,6 @@ import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 public class WeaponSelectMessage extends Message{
 	Class<?> weaponClass;
     
-    
     public WeaponSelectMessage(MessageType type,Class<?> weaponClass) {
         super(MessageType.WEAPONSELECT);
         this.weaponClass=weaponClass;

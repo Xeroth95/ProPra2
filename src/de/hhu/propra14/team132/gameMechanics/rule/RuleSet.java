@@ -20,27 +20,19 @@ public class RuleSet {
 		passiveRules=new ArrayList<PassiveRule>();
 	}
 	
-	public static RuleSet generateStandardRules(Map gameMap){
-		RuleSet r= new RuleSet(gameMap);
-		r.startUpRules.add(new SetUpPlayersRule(gameMap,new ArrayList<ArrayList<Weapon>>(),2));
-		r.startUpRules.add(new SetUpTerrainRule(gameMap,RandomGenerateMode.RAND_V1));
-		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
-		r.passiveRules.add(new RoundRule(gameMap,5));
-		r.runtimeRules.add(new MovementRule(gameMap));
-		r.runtimeRules.add(new WeaponSelectRule(gameMap));
-		return r;
-	}
-	
 	public static RuleSet generateCustomRuleSet(Map gameMap,
 												RandomGenerateMode terrainGenerateMode,
+												int playerCount,
 												int[] wormsToStartWith,
+												String[] pathsToTextures,
+												String[] teamNames,
 												double roundLengthInSeconds,
 												ArrayList<ArrayList<Weapon>> weaponsPerPlayer){
 		
 		RuleSet r= new RuleSet(gameMap);
-		r.startUpRules.add(new SetUpPlayersRule(gameMap,weaponsPerPlayer,2));
+		r.startUpRules.add(new SetUpPlayersRule(gameMap,weaponsPerPlayer,playerCount,teamNames));
 		r.startUpRules.add(new SetUpTerrainRule(gameMap,terrainGenerateMode));
-		r.startUpRules.add(new SetUpWormsRule(gameMap,wormsToStartWith));
+		r.startUpRules.add(new SetUpWormsRule(gameMap,wormsToStartWith,playerCount,pathsToTextures));
 		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds));
 		
 		r.runtimeRules.add(new MovementRule(gameMap));

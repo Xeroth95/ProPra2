@@ -17,17 +17,15 @@ public strictfp class SetUpPlayersRule extends StartUpRule{
 	
 	@Expose ArrayList<ArrayList<Weapon>> weaponsPerPlayer;
 	@Expose int playerCount;
+	String[] names;
 	
-	public SetUpPlayersRule(Map gameMap,ArrayList<ArrayList<Weapon>> weaponsToSet,int playerCount) {
+	public SetUpPlayersRule(Map gameMap,ArrayList<ArrayList<Weapon>> weaponsToSet,int playerCount,String[] names) {
 		super(gameMap);
 		this.weaponsPerPlayer=weaponsToSet;
 		this.playerCount=playerCount;
+		this.names=names;
 	}
-	public SetUpPlayersRule(Map gameMap,int playerCount) {
-		super(gameMap);
-		this.weaponsPerPlayer=standardWeaponsSet(gameMap.getPlayers().length);
-		this.playerCount=playerCount;
-	}
+
 
 	@Override
 	public void applyRule() {
