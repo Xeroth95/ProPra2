@@ -61,10 +61,10 @@ public abstract strictfp class CollisionObject {
 		this.initializeBasics(teamID);
 		this.collisionShapes=new ConvexCollisionShape[1];
 		double[] x ={
-			0,20,20,0	
+			0,10,10,0	
 		};
 		double[] y={
-			0,0,20,20
+			0,0,10,10
 		};
 		this.collisionShapes[0]=new ConvexCollisionShape(x,y);
 	}	
