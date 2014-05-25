@@ -25,4 +25,9 @@ public class Pistol extends Weapon {
     public Projectile createNewProjectile() {
         return new PistolProjectile();
     }
+
+    @Override
+    public Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power) {
+        return null;
+    }
 }

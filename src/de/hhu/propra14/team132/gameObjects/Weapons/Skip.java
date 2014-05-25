@@ -24,4 +24,8 @@ public class Skip extends Weapon {
     public Projectile createNewProjectile() {
         return null;
     }
+    @Override
+    public Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power) {
+        return null;
+    }
 }

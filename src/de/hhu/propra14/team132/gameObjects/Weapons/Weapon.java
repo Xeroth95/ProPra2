@@ -43,6 +43,7 @@ public abstract class Weapon implements Drawable{
         this.currentAmmo = currentAmmo;
     }
     public abstract Projectile createNewProjectile(Vector2D speed, Vector2D acceleartion); //TODO: this is very questionable. The responsibility should lie with the implementing classes. I just don't know what parameters to put there.
+    public abstract Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power);
     public abstract Projectile createNewProjectile();
     
     public static Vector2D getDirectionVector(Vector2D mousePosition, Vector2D startPosition){

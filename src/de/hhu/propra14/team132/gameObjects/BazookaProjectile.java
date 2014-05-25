@@ -31,7 +31,7 @@ public class BazookaProjectile extends Projectile{
 	@Override
 	public void furtherCollisionWith(CollisionObject o) {
 		//TODO: how about creating an explosionObject and deleting itself? the bazooka should do something like that.
-		
+		o.setLife(o.getLife()-1);
 		this.setMarkedForDeletion(true);
 	}
 
