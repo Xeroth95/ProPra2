@@ -11,6 +11,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 /**
@@ -43,4 +44,14 @@ public abstract class Weapon implements Drawable{
     }
     public abstract Projectile createNewProjectile(Vector2D speed, Vector2D acceleartion); //TODO: this is very questionable. The responsibility should lie with the implementing classes. I just don't know what parameters to put there.
     public abstract Projectile createNewProjectile();
+    
+    public static Vector2D getDirectionVector(Vector2D mousePosition, Vector2D startPosition){
+    	Vector2D dir = new Vector2D(mousePosition.getX()-startPosition.getX(),mousePosition.getX()-startPosition.getY());
+    	try {
+			dir.makeUnitVector();
+		} catch (Exception e) {
+			//yes this is intended!
+		}
+		return dir;
+    }
 }
