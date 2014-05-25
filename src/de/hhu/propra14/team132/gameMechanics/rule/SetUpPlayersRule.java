@@ -31,6 +31,7 @@ public strictfp class SetUpPlayersRule extends StartUpRule{
 			gameMap.getPlayers()[i].setName(names[i]);
 			gameMap.getPlayers()[i].setWeapons(weaponsPerPlayer.get(i));
 		}
+		gameMap.setCurrentPlayer(gameMap.getPlayers()[0]);
 	}
 
 	@Override

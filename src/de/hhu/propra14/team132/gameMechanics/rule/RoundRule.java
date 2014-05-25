@@ -12,17 +12,15 @@ public strictfp class RoundRule extends PassiveRule{
 	@Expose private int currentRound;
 	@Expose private int currentRoundStart;
 	@Expose private int numberOfPlayers;
-	@Expose private Player currentPlayer;
 	@Expose private double roundLengthInSeconds;
 	@Expose private int roundLengthInTicks;
 	
-	public RoundRule(Map gameMap, double roundLengthInSeconds) {
+	public RoundRule(Map gameMap, double roundLengthInSeconds, int playerCount) {
 		super(gameMap);
 		currentRound = 1;
 		currentRoundStart=0;
-		numberOfPlayers=gameMap.getPlayers().length;
+		numberOfPlayers=playerCount;
 		this.roundLengthInSeconds = roundLengthInSeconds;
-		this.currentPlayer=gameMap.getPlayers()[0];
 		roundLengthInTicks=(int)Math.round(GameManager.ticksPerSecond*roundLengthInSeconds);
 	}
 
