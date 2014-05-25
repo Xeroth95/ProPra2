@@ -21,9 +21,8 @@ public abstract strictfp class CollisionObject {
 	Vector2D position;
 
 	Vector2D acceleration;
-    
 
-    int life;
+    private int life;
 
 
 	double bounciness;
@@ -107,12 +106,15 @@ public abstract strictfp class CollisionObject {
 							this.setLastCollidedWith(o.getPhysicsID());
 							o.setLastCollidedWith(this.physicsID);
 							mtvCalculationsWith(mtv, o);
-							/*includes further collisions. No call of furtherCollisionWith()!
-							this is because the object might want to use the mtv in further CollisionWith..
-							Maybe I still should get that out of there and let furtherCollisionWith take the mtv as a Vector2D.
-							Or split it into 2 methods. furtherCollisionWithMtv() that takes the mtv and then calls furtherCollisionWith after it is done
-							using the mtv as furtherCollisionWith is abstract and MUST be implemented.
-							This is ugly. Maybe I have a better idea later.*/
+
+							this.furtherCollisionWith(o);
+							o.furtherCollisionWith(o);
+							if(this.life<=0){
+								this.setMarkedForDeletion(true);
+							}
+							if(o.getLife()<=0){
+								o.setMarkedForDeletion(true);
+							}
 							return;
 						}
 						
@@ -128,6 +130,13 @@ public abstract strictfp class CollisionObject {
 							o.setLastCollidedWith(this.physicsID);
 							furtherCollisionWith(o);
 							o.furtherCollisionWith(this);
+							
+							if(this.life<=0){
+								this.setMarkedForDeletion(true);
+							}
+							if(o.getLife()<=0){
+								o.setMarkedForDeletion(true);
+							}
 							return;
 						}
 					}
@@ -209,7 +218,6 @@ public abstract strictfp class CollisionObject {
 				
 			}
 		}
-		this.furtherCollisionWith(o);
 	}
 	public abstract void furtherCollisionWith(CollisionObject o);
 	
