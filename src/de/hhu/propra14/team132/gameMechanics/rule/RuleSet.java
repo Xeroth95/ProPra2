@@ -33,7 +33,9 @@ public class RuleSet {
 		r.startUpRules.add(new SetUpPlayersRule(gameMap,weaponsPerPlayer,playerCount,teamNames));
 		r.startUpRules.add(new SetUpTerrainRule(gameMap,terrainGenerateMode));
 		r.startUpRules.add(new SetUpWormsRule(gameMap,wormsToStartWith,playerCount,pathsToTextures));
+		
 		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds,playerCount));
+		r.passiveRules.add(new WinRule(gameMap));
 		
 		r.runtimeRules.add(new MovementRule(gameMap));
 		r.runtimeRules.add(new WeaponSelectRule(gameMap));

@@ -17,6 +17,7 @@ public class ShootRule extends RuntimeRule {
 	public void receiveMessage(Message m) {
 		ShootMessage sm = (ShootMessage) m;
 		Projectile p=gameMap.getCurrentPlayer().getCurrentWeapon().shoot(sm.getMousePosition(), gameMap.getCurrentPlayer().getCurrentWorm().getPosition(), sm.getPower());
+		
 		gameMap.addObject(p);
 
 	}
