@@ -21,6 +21,12 @@ public class BadCollisionSystem extends CollisionSystem{
 				if(i==j)continue;
 				objects[i].collideWithCheckTeam(objects[j]);
 			}
+			if(objects[i].getPosition().getX()<0||objects[i].getPosition().getX()>8192){
+				objects[i].getPosition().setX(-1.01*objects[i].getPosition().getX());
+			}
+			if(objects[i].getPosition().getY()<0||objects[i].getPosition().getY()>8192){
+				objects[i].getPosition().setY(-1.01*objects[i].getPosition().getY());
+			}
 		}
 	}
 }
