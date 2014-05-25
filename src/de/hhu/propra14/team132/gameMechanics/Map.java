@@ -92,9 +92,9 @@ public class Map implements Serializable{
 		killDeadObjects();
 	}
 	private void killDeadObjects(){
-		for(int id:this.objectIds){
-			if(this.mapObjects[id].isMarkedForDeletion()){
-				this.removeObject(id);
+		for(int i=0; i<this.objectIds.size();i++){
+			if(this.mapObjects[this.objectIds.get(i)].isMarkedForDeletion()){
+				this.removeObject(this.objectIds.get(i));
 			}
 		}
 	}
