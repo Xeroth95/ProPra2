@@ -26,6 +26,7 @@ public class RuleSet {
 		r.startUpRules.add(new SetUpWormsRule(gameMap,5));
 		r.passiveRules.add(new RoundRule(gameMap,5));
 		r.runtimeRules.add(new MovementRule(gameMap));
+		r.runtimeRules.add(new WeaponSelectRule(gameMap));
 		return r;
 	}
 	
@@ -42,6 +43,7 @@ public class RuleSet {
 		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds));
 		
 		r.runtimeRules.add(new MovementRule(gameMap));
+		r.runtimeRules.add(new WeaponSelectRule(gameMap));
 		
 		return r;
 	}
@@ -57,6 +59,7 @@ public class RuleSet {
 		r.passiveRules.add(new RoundRule(gameMap,roundLengthInSeconds));
 		
 		r.runtimeRules.add(new MovementRule(gameMap));
+		r.runtimeRules.add(new WeaponSelectRule(gameMap));
 		
 		return r;
 	}

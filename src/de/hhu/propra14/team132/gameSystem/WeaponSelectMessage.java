@@ -6,11 +6,15 @@ import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
  * Created by fabian on 25.05.14.
  */
 public class WeaponSelectMessage extends Message{
-    Weapon weapon;
-    public WeaponSelectMessage(MessageType type) {
+	Class<?> weaponClass;
+    
+    
+    public WeaponSelectMessage(MessageType type,Class<?> weaponClass) {
         super(MessageType.WEAPONSELECT);
+        this.weaponClass=weaponClass;
+    }
 
-        public Weapon getWeapon() {
-        return weapon;
+        public Class<?> getWeaponClass() {
+        return weaponClass;
     }
 }
