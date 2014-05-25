@@ -15,8 +15,8 @@ public class Bazooka extends Weapon {
     	super(); //Constructor for INFINITE_AMMO
     }
 
-    public Bazooka(int maxAmmo) { //Constructor for not infiniteAmmo
-        super(maxAmmo);
+    public Bazooka(int currentAmmo) { //Constructor for not infiniteAmmo
+        super(currentAmmo);
     }
 
     @Override

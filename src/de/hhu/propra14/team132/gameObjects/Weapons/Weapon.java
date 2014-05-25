@@ -21,7 +21,7 @@ public abstract class Weapon implements Drawable{
     private int currentAmmo;
     private static final int INFINITE_AMMO=-1;
     public Weapon() {
-    	this(0,INFINITE_AMMO);
+    	this(INFINITE_AMMO);
     }
 
     public Weapon(int maxAmmo, int currentAmmo) { //todo: I would like to delete this constructor and replace it with the constructor below
@@ -29,9 +29,8 @@ public abstract class Weapon implements Drawable{
         this.currentAmmo = currentAmmo;
         //what?? how is projectile not an abstract class? Why would you want to create an instance of Projectile? this should not be allowed!!
     }
-    public Weapon(int maxAmmo) {
-        this.maxAmmo = maxAmmo;
-        this.currentAmmo = maxAmmo; //At the beginning the currentAmmo is the maxAmmo
+    public Weapon(int currentAmmo) {
+        this.currentAmmo = currentAmmo; //At the beginning the currentAmmo is the maxAmmo
     }
 
     @Override
