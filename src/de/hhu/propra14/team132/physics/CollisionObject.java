@@ -15,38 +15,32 @@ public abstract strictfp class CollisionObject {
 	public static final int TRANSLATION_BEHAVIOUR_YIELDING=2;
 	
 	//instance variables
-    @Expose
+
 	Vector2D speed;
-    @Expose
+
 	Vector2D position;
-    @Expose
+
 	Vector2D acceleration;
-    
-    @Expose
+
     private int life;
 
-    @Expose
+
 	double bounciness;
-    @Expose
 	double friction;
 	
-	@Expose public ConvexCollisionShape[] collisionShapes;
+	public ConvexCollisionShape[] collisionShapes;
 	
-    @Expose
+
 	int playerID;
-    @Expose
 	int physicsID;
-    @Expose
 	int lastCollidedWith;
-    @Expose
+
 	private CollisionMode collisionMode;
-    @Expose
 	public int collisionTranslationBehaviour;
 
 
-	@Expose ArrayList<Effect> effects;
+	ArrayList<Effect> effects;
 
-    @Expose
 	private boolean markedForDeletion;
 	
 	
