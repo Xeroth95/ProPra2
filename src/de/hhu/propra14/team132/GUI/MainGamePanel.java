@@ -26,7 +26,7 @@ public class MainGamePanel extends JPanel{
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;
 
-        weaponsPanel=new WeaponsPanel(mainPanel, soundEngine, klickSoundFile);
+        weaponsPanel=new WeaponsPanel(mainPanel, gameManager, soundEngine, klickSoundFile);
         gamePanel=new GamePanel(mainFrame, mainPanel, this, weaponsPanel, gameManager);
         scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());
