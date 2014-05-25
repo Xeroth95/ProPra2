@@ -37,6 +37,7 @@ public class RuleSet {
 		
 		r.runtimeRules.add(new MovementRule(gameMap));
 		r.runtimeRules.add(new WeaponSelectRule(gameMap));
+		r.runtimeRules.add(new ShootRule(gameMap));
 		
 		return r;
 	}

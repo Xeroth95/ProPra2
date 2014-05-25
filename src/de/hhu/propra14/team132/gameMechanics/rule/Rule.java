@@ -16,7 +16,10 @@ public abstract class Rule implements Communicable {
 		messageTypesToReactTo=defineMessageTypesToReactTo();
 		if(messageTypesToReactTo!=null){
 
-            System.out.println("this happens");
+            System.out.println("register for: ");
+            for(MessageType m:messageTypesToReactTo){
+            	System.out.println(m);
+            }
 			gameMap.getManager().register(this, messageTypesToReactTo);
 		}
 	}
