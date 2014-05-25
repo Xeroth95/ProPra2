@@ -1,6 +1,5 @@
 package de.hhu.propra14.team132.GUI;
 
-import de.hhu.propra14.team132.gameMechanics.rule.RuleSet;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
@@ -148,7 +147,6 @@ public class BeforeGamePanel extends JPanel {
                             JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else {
-                            RuleSet.generateCustomRuleSet(gameManager.gameMap, new int[]{options.getWormsPerTeam(), options.getWormsPerTeam()}, options.getRoundLength(),)
                             BeforeGamePanel.this.mainPanel.showPanel("2");
                             mainPanel.mainGamePanel.gamePanel.gameManager.setBeforeStart(false);
                         }

@@ -12,6 +12,7 @@ public enum MessageType {
     STOP,
     GO,
     SHOOT,
+    WEAPONSELECT,
     //not added at the Moment:
     OPTION,
     CHAT,
