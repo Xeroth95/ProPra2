@@ -12,6 +12,16 @@ import java.awt.*;
  * Created by isabel on 23.05.14.
  */
 public class Pistol extends Weapon {
+    double speed;
+    public Pistol() {
+        this.speed=0.6;
+    }
+
+    public Pistol(int ammo) {
+        super(ammo);
+        this.speed=0.6;
+    }
+
     @Override
     public Projectile shoot(Vector2D mousePosition, Vector2D startPosition, double power) {
         Vector2D dir = Weapon.getDirectionVector(mousePosition, startPosition);
@@ -34,7 +44,7 @@ public class Pistol extends Weapon {
     public Projectile createNewProjectile(Vector2D dir, Vector2D startPosition, double power) {
         Projectile projectile=new PistolProjectile();
         projectile.setPosition(new Vector2D(startPosition.getX()+45*dir.getX(),startPosition.getY()+45*dir.getY()));
-        projectile.setSpeed(new Vector2D(dir.getX()*power*10,dir.getY()*power*10));
+        projectile.setSpeed(new Vector2D(dir.getX()*speed,dir.getY()*speed));
         return projectile;
 
     }
