@@ -48,6 +48,7 @@ public class GamePanel extends JPanel {
     boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
+    boolean firstRun;
 
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
@@ -62,6 +63,7 @@ public class GamePanel extends JPanel {
 
         autoscrolling = false;
         alreadySent=false;
+        firstRun=true;
         percentage = 0;
         bouncingValue=0;
         actualTicksPerSecond=0;
@@ -92,8 +94,12 @@ public class GamePanel extends JPanel {
         else if(gameManager.gameMap.getCurrentPlayer().getPlayerID()==2) {
             this.weaponsPanel.setButtonsVisibility(this.mainPanel.beforeGamePanel.player2WeaponsList);
         }
-        hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
-        vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
+
+        if(firstRun) {
+            hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
+            vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
+            firstRun=false;
+        }
         g2d = (Graphics2D) g;
         for (int x = 0; x < width; x += background.getWidth(this)) {
             for (int y = 0; y < height; y += background.getHeight(this)) {
