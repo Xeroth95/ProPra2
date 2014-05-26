@@ -219,7 +219,7 @@ public class GamePanel extends JPanel {
                         int ticksPerSecond = GamePanel.this.gameManager.ticksPerSecond;
                         while (!mousePressedThread.isInterrupted()) {
                             int currentTick = GamePanel.this.gameManager.getCurrentTick();
-                            GamePanel.this.percentage = (float) (currentTick - startedAtTick) / (float) 720;
+                            GamePanel.this.percentage = (float) (currentTick - startedAtTick) / (float) (gameManager.ticksPerSecond*3);
                             if (GamePanel.this.percentage > 1) {
                                 GamePanel.this.percentage = 1;
                             }
