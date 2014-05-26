@@ -25,6 +25,8 @@ public class GameManager implements Communicable{
     //declares the necessary objects
     transient public Map gameMap;
 
+    double actualTicksPerSecond;
+    double possibleTicksPerSecond;
 
     transient public MainFrame mainFrame;
     transient public File introSoundFile;
@@ -150,24 +152,32 @@ public class GameManager implements Communicable{
         currentTick=gameMap.getCurrentTick();
         try {
             while (true) {
-                if(!stopped) {
+                if (!stopped) {
                     long t1 = System.nanoTime();
                     //Update everything;
-                    sendMessagesOfQueue(currentTick); 
-                        
+                    sendMessagesOfQueue(currentTick);
+
                     mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     gameMap.nextTick();
                     this.sendMessagesOfQueue(this.getCurrentTick());
                     long t2 = System.nanoTime();  //time after
+                    double deltaT=(double)(t2-t1);
+                    possibleTicksPerSecond = (LENGTH_OF_A_SECOND_IN_NANOSECONDS / deltaT);
                     if (t2 - t1 < lengthOfTickInNanoSeconds) {
                         double diff = lengthOfTickInNanoSeconds - (t2 - t1); //diff from how long the updates take to length of tick
-                        Thread.sleep(((int) (diff / 1000000)));   //
+                        Thread.sleep(((int) (diff / 1000000)));
                     }
+                    t2 = System.nanoTime();
+                    deltaT=(double)(t2-t1);
+                    actualTicksPerSecond = (LENGTH_OF_A_SECOND_IN_NANOSECONDS / deltaT);
                     currentTick++;  //is increased when GameManager is waiting, but not if it is stopped;
-            //      System.out.println("tick "+currentTick);
+                    //      System.out.println("tick "+currentTick);
                 } else {
-                    Thread.sleep(lengthOfTickInNanoSeconds/1000000);
+                    Thread.sleep(lengthOfTickInNanoSeconds / 1000000);
                 }
+                mainFrame.mainPanel.mainGamePanel.gamePanel.setTickCounts(actualTicksPerSecond, possibleTicksPerSecond);
+                //System.out.println("Ticks per Second: "+Math.round(actualTicksPerSecond));
+                //System.out.println("Possible ticks per Second: "+Math.round(possibleTicksPerSecond));
             }
          } catch (Exception e) {
                    e.printStackTrace();

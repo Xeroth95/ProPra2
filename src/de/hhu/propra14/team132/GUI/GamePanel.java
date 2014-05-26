@@ -44,6 +44,7 @@ public class GamePanel extends JPanel {
     double mouseLocationX, mouseLocationY;
     double mouseClickX, mouseClickY;
     double bouncingValue;
+    double actualTicksPerSecond, possibleTicksPerSecond;
     boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
@@ -60,6 +61,8 @@ public class GamePanel extends JPanel {
         alreadySent=false;
         percentage = 0;
         bouncingValue=0;
+        actualTicksPerSecond=0;
+        possibleTicksPerSecond=0;
         gameObjects = gameManager.gameMap.getMapObjects();
         objectIDs = gameManager.gameMap.getObjectIds();
         displayFont = new Font("Arial", Font.BOLD, 20);
@@ -122,8 +125,10 @@ public class GamePanel extends JPanel {
         g2d.setFont(displayFont);
         g2d.drawString(String.valueOf(gameManager.gameMap.getCurrentPlayer().getName()), 0 + hbar.getValue(), 18 + vbar.getValue());
         g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / gameManager.ticksPerSecond + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
+        g2d.drawString("Ticks per Second: "+Math.round(actualTicksPerSecond), 0 + hbar.getValue(), 54+vbar.getValue());
+        g2d.drawString("Possible ticks per Second: "+Math.round(possibleTicksPerSecond), 0 + hbar.getValue(), 72+vbar.getValue());
         if (percentage > 0) {
-            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 54 + vbar.getValue());
+            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 90 + vbar.getValue());
         }
 
 
@@ -152,6 +157,10 @@ public class GamePanel extends JPanel {
         }
     }
 
+    public void setTickCounts(double actualTicksPerSecond, double possibleTicksPerSecond) {
+        this.actualTicksPerSecond=actualTicksPerSecond;
+        this.possibleTicksPerSecond=possibleTicksPerSecond;
+    }
 
     public void refresh() {
         this.gameObjects = gameManager.gameMap.getMapObjects();
