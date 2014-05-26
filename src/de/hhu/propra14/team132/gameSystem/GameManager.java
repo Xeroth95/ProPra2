@@ -176,8 +176,6 @@ public class GameManager implements Communicable{
                     Thread.sleep(lengthOfTickInNanoSeconds / 1000000);
                 }
                 mainFrame.mainPanel.mainGamePanel.gamePanel.setTickCounts(actualTicksPerSecond, possibleTicksPerSecond);
-                //System.out.println("Ticks per Second: "+Math.round(actualTicksPerSecond));
-                //System.out.println("Possible ticks per Second: "+Math.round(possibleTicksPerSecond));
             }
          } catch (Exception e) {
                    e.printStackTrace();
