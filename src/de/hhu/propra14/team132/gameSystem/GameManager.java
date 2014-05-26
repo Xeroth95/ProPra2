@@ -157,8 +157,8 @@ public class GameManager implements Communicable{
                     //Update everything;
                     sendMessagesOfQueue(currentTick);
 
-                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     gameMap.nextTick();
+                    mainFrame.mainPanel.mainGamePanel.gamePanel.nextTick();
                     this.sendMessagesOfQueue(this.getCurrentTick());
                     long t2 = System.nanoTime();  //time after
                     double deltaT=(double)(t2-t1);

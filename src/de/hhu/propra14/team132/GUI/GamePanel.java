@@ -37,9 +37,9 @@ public class GamePanel extends JPanel {
     ArrayList<Integer> objectIDs;
     Font displayFont;
     Thread mousePressedThread;
-    Vector2D direction;
     Image arrow;
     Image background;
+    int width, height;
     float percentage;
     double mouseLocationX, mouseLocationY;
     double mouseClickX, mouseClickY;
@@ -56,6 +56,9 @@ public class GamePanel extends JPanel {
         this.mainGamePanel = mainGamePanel;
         this.weaponsPanel = weaponsPanel;
         this.gameManager = gameManager;
+
+        width=2048;
+        height=2048;
 
         autoscrolling = false;
         alreadySent=false;
@@ -74,7 +77,7 @@ public class GamePanel extends JPanel {
             System.err.println("Error loading Images in GamePanel!");
             e.printStackTrace();
         }
-        this.setPreferredSize(new Dimension(8192, 8192));
+        this.setPreferredSize(new Dimension(width, height));
         this.setFocusable(true);
         this.addKeyListener(new GameKeyListener());
         this.addMouseListener(new GameMouseListener());
@@ -92,13 +95,13 @@ public class GamePanel extends JPanel {
         hbar = mainGamePanel.scrollPane.getHorizontalScrollBar();
         vbar = mainGamePanel.scrollPane.getVerticalScrollBar();
         g2d = (Graphics2D) g;
-        for (int x = 0; x < 8192; x += background.getWidth(this)) {
-            for (int y = 0; y < 8192; y += background.getHeight(this)) {
+        for (int x = 0; x < width; x += background.getWidth(this)) {
+            for (int y = 0; y < height; y += background.getHeight(this)) {
                 g.drawImage(background, x, y, this);
             }
         }
         g2d.scale(1, -1);
-        g2d.translate(0, -8192);
+        g2d.translate(0, -height);
 
         g2d.drawImage(arrow,(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getX()+5),(int)(gameManager.gameMap.getCurrentPlayer().getCurrentWorm().getPosition().getY()+50-bouncingValue),this);
 
@@ -120,7 +123,7 @@ public class GamePanel extends JPanel {
             gameObjects[objectIDs.get(i)].draw(g2d, this);
         }
         g2d.scale(1, -1);
-        g2d.translate(0, -8192);
+        g2d.translate(0, -height);
         g2d.setColor(Color.RED);
         g2d.setFont(displayFont);
         g2d.drawString(String.valueOf(gameManager.gameMap.getCurrentPlayer().getName()), 0 + hbar.getValue(), 18 + vbar.getValue());
@@ -140,7 +143,7 @@ public class GamePanel extends JPanel {
         mouseLocationY = MouseInfo.getPointerInfo().getLocation().getY() - mainGamePanel.scrollPane.getViewport().getLocationOnScreen().getY();
 
         if (!weaponsPanel.isVisible() && autoscrolling == false) {
-            //only scroll if WeaponsPanel is invisivle and the panel is not autoscrolling
+            //only scroll if WeaponsPanel is invisible and the panel is not autoscrolling
             if (mouseLocationX >= mainGamePanel.scrollPane.getViewport().getWidth() - 50) {
                 hbar.setValue(hbar.getValue() + 1);//scroll to the right
             }
@@ -208,7 +211,7 @@ public class GamePanel extends JPanel {
 
         public strictfp void mousePressed(MouseEvent e) {
             mouseClickX=e.getX();
-            mouseClickY=8192-e.getY();
+            mouseClickY=height-e.getY();
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
