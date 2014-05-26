@@ -175,7 +175,9 @@ public class GameManager implements Communicable{
                 } else {
                     Thread.sleep(lengthOfTickInNanoSeconds / 1000000);
                 }
-                mainFrame.mainPanel.mainGamePanel.gamePanel.setTickCounts(actualTicksPerSecond, possibleTicksPerSecond);
+                if((currentTick%(ticksPerSecond/2))==0) {
+                    mainFrame.mainPanel.mainGamePanel.gamePanel.setTickCounts(actualTicksPerSecond, possibleTicksPerSecond);
+                }
             }
          } catch (Exception e) {
                    e.printStackTrace();
