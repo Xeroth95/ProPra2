@@ -210,8 +210,6 @@ public class GamePanel extends JPanel {
 
 
         public strictfp void mousePressed(MouseEvent e) {
-            mouseClickX=e.getX();
-            mouseClickY=height-e.getY();
             if (e.getButton() == e.BUTTON1) {
                 GamePanel.this.mousePressedThread = new Thread(new Runnable() {
                     @Override
@@ -238,6 +236,8 @@ public class GamePanel extends JPanel {
 
         public void mouseReleased(MouseEvent e) {
             if (e.getButton() == e.BUTTON1) {
+                mouseClickX=e.getX();
+                mouseClickY=height-e.getY();
                 GamePanel.this.mousePressedThread.interrupt();
                 GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, new Vector2D(mouseClickX, mouseClickY)));
             }
