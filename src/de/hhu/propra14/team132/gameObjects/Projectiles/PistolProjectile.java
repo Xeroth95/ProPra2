@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameObjects.Projectiles;
 
+import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
@@ -7,11 +8,13 @@ import de.hhu.propra14.team132.physics.Gravity;
 import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PistolProjectile extends Projectile {
     public PistolProjectile() {
+    	this(Player.WORLD);
     }
 
     public PistolProjectile(int teamID) {

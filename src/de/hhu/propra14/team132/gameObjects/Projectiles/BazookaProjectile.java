@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import de.hhu.propra14.team132.gameMechanics.Player;
 import de.hhu.propra14.team132.physics.CollisionMode;
 import de.hhu.propra14.team132.physics.CollisionObject;
 import de.hhu.propra14.team132.physics.Effect;
@@ -14,6 +15,7 @@ import de.hhu.propra14.team132.physics.util.ConvexCollisionShape;
 
 public class BazookaProjectile extends Projectile {
     public BazookaProjectile() {
+    	this(Player.WORLD);
     }
 
     public BazookaProjectile(int teamID) {
