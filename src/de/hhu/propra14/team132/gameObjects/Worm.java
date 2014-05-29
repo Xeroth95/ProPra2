@@ -80,6 +80,7 @@ public class Worm extends GameObject {
     public void reloadTexture(){
     	try {
 			this.textureImage=ImageIO.read(new File(pathToTexture));
+			this.textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
 		} catch (IOException e) {
         	System.err.println("Unable to reload Texture for the Worms!");
         	e.printStackTrace();

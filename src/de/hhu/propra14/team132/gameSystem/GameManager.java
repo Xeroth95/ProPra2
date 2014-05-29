@@ -75,7 +75,6 @@ public class GameManager implements Communicable{
     public void save(String path){
         try {
         	GsonBuilder gB=new GsonBuilder().setPrettyPrinting();
-           // gB.excludeFieldsWithoutExposeAnnotation();
         	gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
@@ -99,7 +98,6 @@ public class GameManager implements Communicable{
             FileInputStream input = new FileInputStream(path);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             GsonBuilder gB=new GsonBuilder().setPrettyPrinting();
-            //gB.excludeFieldsWithoutExposeAnnotation();
             gB.registerTypeAdapter(GameObject.class, new JsonAdapter<GameObject>());
         	gB.registerTypeAdapter(Effect.class, new JsonAdapter<Effect>());
         	gB.registerTypeAdapter(Rule.class, new JsonAdapter<Rule>());
