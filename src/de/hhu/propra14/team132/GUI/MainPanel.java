@@ -30,6 +30,8 @@ public class MainPanel extends JPanel {
     LobbyPanel lobbyPanel;
     InGameMenuPanel inGameMenuPanel;
     BeforeGamePanel beforeGamePanel;
+    BeforeNetworkHostGamePanel beforeNetworkHostGamePanel;
+    BeforeNetworkClientGamePanel beforeNetworkClientGamePanel;
 
     CardLayout mainPanelLayout;
 
@@ -57,6 +59,8 @@ public class MainPanel extends JPanel {
         lobbyPanel=new LobbyPanel(this, soundEngine, klickSoundFile);
         inGameMenuPanel=new InGameMenuPanel(this, gameManager, soundEngine, klickSoundFile);
         beforeGamePanel=new BeforeGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
+        beforeNetworkHostGamePanel=new BeforeNetworkHostGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
+        beforeNetworkClientGamePanel=new BeforeNetworkClientGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
 
         applyOptions();
 
@@ -78,6 +82,8 @@ public class MainPanel extends JPanel {
         this.add(gameSettingsPanel, "10");
         this.add(inGameMenuPanel, "11");
         this.add(beforeGamePanel, "12");
+        this.add(beforeNetworkHostGamePanel, "13");
+        this.add(beforeNetworkClientGamePanel, "14");
     }
 
     public void saveOptions() {

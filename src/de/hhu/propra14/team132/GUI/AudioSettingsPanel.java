@@ -27,8 +27,7 @@ public class AudioSettingsPanel extends JPanel{
     JSlider fxVolumeSlider;
     JButton GoBackButton;
 
-    public AudioSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile)
-    {
+    public AudioSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
         this.soundEngine=soundEngine;
         this.klickSoundFile=klickSoundFile;

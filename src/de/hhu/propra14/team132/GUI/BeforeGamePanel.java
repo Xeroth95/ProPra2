@@ -123,6 +123,40 @@ public class BeforeGamePanel extends JPanel {
         this.add(startGameButton, BorderLayout.SOUTH);
     }
 
+    public void generateWeaponsLists() {
+        ArrayList <Weapon> player1Weapons=new ArrayList<Weapon>();
+        ArrayList <Weapon> player2Weapons=new ArrayList<Weapon>();
+        if(player1WeaponsList.get(0).isSelected()) {
+            player1Weapons.add(new Bazooka());
+        }
+        if(player1WeaponsList.get(1).isSelected()) {
+            player1Weapons.add(new Pistol());
+        }
+        if(player1WeaponsList.get(2).isSelected()) {
+            player1Weapons.add(new MachineGun());
+        }
+        if(player1WeaponsList.get(3).isSelected()) {
+            player1Weapons.add(new Skip());
+        }
+
+        if(player2WeaponsList.get(0).isSelected()) {
+            player2Weapons.add(new Bazooka());
+        }
+        if(player2WeaponsList.get(1).isSelected()) {
+            player2Weapons.add(new Pistol());
+        }
+        if(player2WeaponsList.get(2).isSelected()) {
+            player2Weapons.add(new MachineGun());
+        }
+        if(player2WeaponsList.get(3).isSelected()) {
+            player2Weapons.add(new Skip());
+        }
+
+        playerWeapons=new ArrayList <ArrayList<Weapon>>();
+        playerWeapons.add(player1Weapons);
+        playerWeapons.add(player2Weapons);
+    }
+
     public boolean noneSelected(ArrayList<JCheckBox> list) {
         for (int i=0; i<list.size(); i++) {
             if(list.get(i).isSelected()){
@@ -149,7 +183,7 @@ public class BeforeGamePanel extends JPanel {
                     }
                     else {
                         if(BeforeGamePanel.this.noneSelected(player1WeaponsList) || BeforeGamePanel.this.noneSelected(player2WeaponsList)) {
-                            JOptionPane.showMessageDialog(null,"Both players must have at least one happen!", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null,"Both players must have at least one weapon!", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         else {
                             generateWeaponsLists();
@@ -162,40 +196,6 @@ public class BeforeGamePanel extends JPanel {
                 }
             }
         }
-    }
-
-    public void generateWeaponsLists() {
-        ArrayList <Weapon> player1Weapons=new ArrayList<Weapon>();
-        ArrayList <Weapon> player2Weapons=new ArrayList<Weapon>();
-        if(player1WeaponsList.get(0).isSelected()) {
-            player1Weapons.add(new Bazooka());
-        }
-        if(player1WeaponsList.get(1).isSelected()) {
-            player1Weapons.add(new Pistol());
-        }
-        if(player1WeaponsList.get(2).isSelected()) {
-            player1Weapons.add(new MachineGun());
-        }
-        if(player1WeaponsList.get(3).isSelected()) {
-            player1Weapons.add(new Skip());
-        }
-
-        if(player2WeaponsList.get(0).isSelected()) {
-            player2Weapons.add(new Bazooka());
-        }
-        if(player1WeaponsList.get(1).isSelected()) {
-            player2Weapons.add(new Pistol());
-        }
-        if(player1WeaponsList.get(2).isSelected()) {
-            player2Weapons.add(new MachineGun());
-        }
-        if(player1WeaponsList.get(3).isSelected()) {
-            player2Weapons.add(new Skip());
-        }
-
-        playerWeapons=new ArrayList <ArrayList<Weapon>>();
-        playerWeapons.add(player1Weapons);
-        playerWeapons.add(player2Weapons);
     }
 
     class ColorBoxListener implements ActionListener {
