@@ -43,7 +43,7 @@ public class LobbyPanel extends JPanel {
         panel1=new JPanel(new BorderLayout());
         panel2=new JPanel(new GridLayout(1,2));
         chatArea=new JTextArea();
-        chatArea.setEditable(true);
+        chatArea.setEditable(false);
         chatAreaCaret=(DefaultCaret) chatArea.getCaret();
         chatAreaCaret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         msgField=new JTextField();
