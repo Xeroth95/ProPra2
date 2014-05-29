@@ -111,7 +111,18 @@ public class GameManager implements Communicable{
             Map mapNew=gson.fromJson(reader,Map.class);
             mapNew.setManager(this);
             this.gameMap=mapNew;
+            
+            
+            this.hashMap =new HashMap<MessageType, ArrayList<Communicable>>();
+            for(MessageType t: MessageType.values()){
+                hashMap.put(t, new ArrayList<Communicable>());
+            }
+            
+            
             this.gameMap.setUpAfterLoading();
+            
+            
+            
             this.mainFrame.mainPanel.mainGamePanel.gamePanel.refresh();
             this.setBeforeStart(false);
             currentTick=this.gameMap.getCurrentTick();//@ISA: this is why you need currentTick in Map
@@ -183,6 +194,7 @@ public class GameManager implements Communicable{
                    e.printStackTrace();
          }
      }
+    
 
     public void sendMessage(Message m) {
         //this Methode gets all the Messages other Objects send. It Interprets the MessageType and reads out in an ArrayList

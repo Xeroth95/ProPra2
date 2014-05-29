@@ -1,6 +1,5 @@
 package de.hhu.propra14.team132.gameMechanics.rule;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.annotations.Expose;
@@ -83,6 +82,14 @@ public class RuleSet {
 
 	public void setPassiveRules(ArrayList<PassiveRule> passiveRules) {
 		this.passiveRules = passiveRules;
+	}
+
+	public Map getGameMap() {
+		return gameMap;
+	}
+
+	public void setGameMap(Map gameMap) {
+		this.gameMap = gameMap;
 	}
 
 	

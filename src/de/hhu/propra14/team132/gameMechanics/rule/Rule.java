@@ -11,20 +11,17 @@ import com.google.gson.annotations.Expose;
 
 public abstract class Rule implements Communicable {
 	transient Map gameMap;
+	
+	@Expose MessageType[] messageTypesToReactTo;
+	
 	public Rule(Map gameMap){
 		this.gameMap=gameMap;
-		messageTypesToReactTo=defineMessageTypesToReactTo();
+		this.messageTypesToReactTo=defineMessageTypesToReactTo();
 		if(messageTypesToReactTo!=null){
-
-            System.out.println("register for: ");
-            for(MessageType m:messageTypesToReactTo){
-            	System.out.println(m);
-            }
 			gameMap.getManager().register(this, messageTypesToReactTo);
 		}
 	}
 	
-	@Expose MessageType[] messageTypesToReactTo;
 	
 	protected abstract MessageType[] defineMessageTypesToReactTo();
 	
@@ -37,6 +34,10 @@ public abstract class Rule implements Communicable {
 	public void setGameMap(Map gameMap) {
 		this.gameMap = gameMap;
 	}
-	
+
+
+	public MessageType[] getMessageTypesToReactTo() {
+		return messageTypesToReactTo;
+	}
 	
 }

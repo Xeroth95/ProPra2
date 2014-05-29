@@ -178,7 +178,6 @@ public class GamePanel extends JPanel {
 
     public void nextTick() {
         //this method is called by the GameManager, so that the panel is repainted every tick
-        this.refresh();
         //this.repaint();
         this.mainGamePanel.scrollPane.repaint();
     }
