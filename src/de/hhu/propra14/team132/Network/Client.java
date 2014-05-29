@@ -1,20 +1,28 @@
 package de.hhu.propra14.team132.Network;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
 
 /**
+ * This class is used to communicate with the {@link Sever} class.
  * 
- * @author <a email-to="Sebastian.Sura@uni-duesseldorf.de">Sebastian Sura</a>
+ * @author Sebastian Sura - link Sebastian.Sura@uni-duesseldorf.de
  *
+ * @see Server
  */
 public class Client implements Communicable {
 	/*
@@ -27,14 +35,40 @@ public class Client implements Communicable {
 	 public static void main(String[] args) {	
 		try {
 			Client client = new Client(null, args[0], 3141);
+			final Queue<String> list = new LinkedList<String>();
+			Client.checkForHosts(args[0].substring(0, args[0].lastIndexOf('.')), list);
+			Thread thread = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					while (true) {
+						synchronized(list) {
+							try {
+								list.wait();
+								String s = list.poll();
+								if (s.equals("")) break;
+								System.out.println(s);
+							} catch (InterruptedException e) {
+								break;
+							}
+						}
+					}
+				}
+				
+			});
+			thread.start();
+			
 			String in = null;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			do {
 				in = reader.readLine();
+				if (in == "exit") {
+					break;
+				}
 				client.receiveMessage(new ExampleNetworkMessage(in));
 			} while (!in.equals("exit"));
 			client.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -61,9 +95,9 @@ public class Client implements Communicable {
 	 public Client(GameManager g, String serverIP, int port) throws IOException {
 		this.messageInBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
 		this.messageOutBuffer		= new ConcurrentLinkedQueue<NetworkMessage>();
-		this.server 			= new Socket(serverIP, port);
-		this.sendThread 		= new Thread(new Sender(server, messageOutBuffer));
-		this.receiveThread 		= new Thread(new Receiver(server, messageInBuffer));
+		this.server 				= new Socket(serverIP, port);
+		this.sendThread 			= new Thread(new Sender(server, messageOutBuffer));
+		this.receiveThread 			= new Thread(new Receiver(server, messageInBuffer));
 		try {
 			this.clientID		= getClientID();
 			System.out.println("My ID : " + this.clientID);
@@ -85,15 +119,68 @@ public class Client implements Communicable {
 	  * @throws IOException
 	  */
 	 public void close() throws IOException {
+		 this.sendCloseMessage();
+		 
+		 if (sendThread != null && this.sendThread.isAlive()) {
+			 sendThread.interrupt();
+		 }
+		 
+		 if (receiveThread != null && this.receiveThread.isAlive()) {
+			 receiveThread.interrupt();
+		 }
+		 
 		 if (server != null) {
 			 server.close();
 		 }
-		 if (sendThread != null) {
-			 sendThread.interrupt();
-		 }
-		 if (receiveThread != null) {
-			 receiveThread.interrupt();
-		 }
+	 }
+	 
+	 /**
+	  * Searches for hosts in the subnet and stores found hosts into list.
+	  * On inserting elements into list, it notifies all listener and after
+	  * searching through the whole subnet it offers the empty String ("")
+	  * and notifies all the listener for the last time.
+	  * 
+	  * @param subnet - {@link String} The Subnet it searches through
+	  * @param queue  - {@link Queue} The Queue, where the found hosts are stored
+	  * 
+	  * @see Queue
+	  */
+	 public static void checkForHosts(final String subnet, final Queue<String> queue) {
+		 Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				for (int i = 0; i < 256; ++i) {
+					String connect = subnet + "." + i;
+					System.out.println("Trying to connect to: " + connect);
+					Socket possibleServer = new Socket();
+					try {
+						possibleServer.connect(new InetSocketAddress(connect, 3141), 200);
+						if (possibleServer.isConnected()) {
+							// tell the server we do not want to connect
+							BufferedOutputStream out = new BufferedOutputStream(possibleServer.getOutputStream());
+							out.write(1);
+							out.flush();
+							out.close();
+							synchronized(queue) {
+								queue.offer(connect);
+								queue.notifyAll();
+							}
+							possibleServer.close();
+						}
+					} catch (IOException e) {
+						System.out.println("Could not connect to: " + connect);
+					}
+				}
+				// tell the listener that the last adress is checked
+				synchronized(queue) {
+					queue.add(new String(""));
+					queue.notifyAll();
+				}
+			}
+			 
+		 });
+		 thread.start();
 	 }
 	 
 	 /**
@@ -110,11 +197,36 @@ public class Client implements Communicable {
 		 }
 	 }
 	 
+	 private void sendCloseMessage() {
+		 synchronized (this.messageOutBuffer) {
+			 if (this.messageOutBuffer.offer(NetworkMessage.CLOSE_MESSAGE)) {
+				 this.messageOutBuffer.notifyAll();
+			 }
+		 }
+		 synchronized (this.messageInBuffer) {
+			 NetworkMessage mes;
+			 try {
+				this.messageInBuffer.wait();
+				
+				 while ((mes = this.messageInBuffer.poll()) != NetworkMessage.CLOSE_MESSAGE) {
+					 // discard them and wait for the next
+					 this.messageInBuffer.wait();
+				 }
+			 } catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		 }
+	 }
+	 
 	public void register() {
 		// TODO Auto-generated method stub
 	}
 	 
 	 private int getClientID() throws IOException {
+		 // tell the server we want to connect
+		 BufferedOutputStream out = new BufferedOutputStream(this.server.getOutputStream());
+		 out.write(0);
+		 out.flush();
 		ObjectInputStream in = new ObjectInputStream(this.server.getInputStream());
 		Integer clientID = in.readInt();
 		System.out.println("Got ClientID : " + clientID);
@@ -133,22 +245,26 @@ public class Client implements Communicable {
 		 public void run() {
 			 try {
 				ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(server.getOutputStream()));
-				while (true) {
-					 synchronized(outBuffer) {
-						 while (!outBuffer.isEmpty()) {
-							 NetworkMessage message = outBuffer.poll();
+				mainloop: while (true) {
+					 synchronized(this.outBuffer) {
+						 while (!this.outBuffer.isEmpty()) {
+							 NetworkMessage message = this.outBuffer.poll();
 							 if ( message == null ) continue;
 							 oos.writeObject(message);
+							 if (message == NetworkMessage.CLOSE_MESSAGE) {
+								 break mainloop;
+							 }
 							 System.out.println("Message sent!");
 						 }
 						 oos.flush();
 						 try {
-							outBuffer.wait();
+							 this.outBuffer.wait();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					 }
 				 }
+				oos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -169,14 +285,17 @@ public class Client implements Communicable {
 			try {
 				this.in = new ObjectInputStream(new BufferedInputStream(server.getInputStream()));
 				while (true) {
-					synchronized (inBuffer) {
+					synchronized (this.inBuffer) {
 						NetworkMessage message = (NetworkMessage) in.readObject();
-						if (inBuffer.offer(message)) {
-							inBuffer.notifyAll();
+						if (this.inBuffer.offer(message)) {
+							this.inBuffer.notifyAll();
 						}
-						System.out.println(((ExampleNetworkMessage) message.getMessage()).getData());
+						if (message == NetworkMessage.CLOSE_MESSAGE) {
+							break;
+						}
 					}
 				}
+				this.in.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {

@@ -7,6 +7,7 @@ import de.hhu.propra14.team132.gameSystem.Message;
 class NetworkMessage implements Serializable {
 	
 	public final static int requestingConnectionStopID = -1;
+	public final static NetworkMessage CLOSE_MESSAGE = new NetworkMessage(null, -1);
 	
 	final int sentFrom;
 	final Message content;

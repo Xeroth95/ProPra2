@@ -3,7 +3,7 @@ package de.hhu.propra14.team132.Network;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
-public class ExampleNetworkMessage extends Message implements NetworkableMessage {
+public class ExampleNetworkMessage extends Message {
 
 	private final char[] message;
 	
@@ -19,7 +19,6 @@ public class ExampleNetworkMessage extends Message implements NetworkableMessage
 		throw new RuntimeException();
 	}
 
-	@Override
 	public char[] getData() {
 		return message;
 	}
