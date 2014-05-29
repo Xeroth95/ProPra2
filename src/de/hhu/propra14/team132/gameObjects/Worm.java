@@ -19,6 +19,8 @@ import java.util.ArrayList;
  */
 public class Worm extends GameObject {
     private String name;
+    
+    private static final String PATH_TO_DEFAULT_TEXTURE="res/img/textures/NicWorm.png";
 
     private static final Vector2D[] vertices;
 
@@ -64,7 +66,7 @@ public class Worm extends GameObject {
         this.name = "TestName";
 
         try{
-            textureImage=ImageIO.read(new File(pathToTexture));
+            textureImage=ImageIO.read(new File(PATH_TO_DEFAULT_TEXTURE));	//defaultPicture. this makes sense since this is the default constructor!
             textureImage=textureImage.getScaledInstance(30,30,Image.SCALE_SMOOTH);
         }catch(IOException e){
             System.err.println("Unable to load Texture for the Worms!");
@@ -73,6 +75,16 @@ public class Worm extends GameObject {
         }
 
     	this.setLife(100);
+    }
+    
+    public void reloadTexture(){
+    	try {
+			this.textureImage=ImageIO.read(new File(pathToTexture));
+		} catch (IOException e) {
+        	System.err.println("Unable to reload Texture for the Worms!");
+        	e.printStackTrace();
+        	System.exit(-1);
+		}
     }
 
     @Override

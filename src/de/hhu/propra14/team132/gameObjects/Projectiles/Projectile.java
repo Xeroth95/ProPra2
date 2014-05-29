@@ -19,7 +19,4 @@ public abstract class Projectile extends GameObject implements Drawable{
         super(teamID);
     }
 
-    public Projectile() {
-       super();
-    }
 }

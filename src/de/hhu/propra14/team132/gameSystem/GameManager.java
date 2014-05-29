@@ -10,6 +10,7 @@ import de.hhu.propra14.team132.gameMechanics.rule.Rule;
 import de.hhu.propra14.team132.gameMechanics.rule.RuntimeRule;
 import de.hhu.propra14.team132.gameMechanics.rule.StartUpRule;
 import de.hhu.propra14.team132.gameObjects.GameObject;
+import de.hhu.propra14.team132.gameObjects.Worm;
 import de.hhu.propra14.team132.gameObjects.Weapons.Weapon;
 import de.hhu.propra14.team132.physics.Effect;
 
@@ -106,6 +107,7 @@ public class GameManager implements Communicable{
         	gB.registerTypeAdapter(RuntimeRule.class, new JsonAdapter<RuntimeRule>());
         	gB.registerTypeAdapter(PassiveRule.class, new JsonAdapter<PassiveRule>());
             gB.registerTypeAdapter(Weapon.class,new JsonAdapter<Weapon>());
+            gB.registerTypeAdapter(Worm.class, new WormDeserializer());
             Gson gson=gB.create();
 
             Map mapNew=gson.fromJson(reader,Map.class);
