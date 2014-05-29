@@ -16,9 +16,11 @@ import java.net.*;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 
 /**
+ * This class is used to communicate with the {@link Client} class.
+ * 
+ * @author Sebastian Sura - link Sebastian.Sura@uni-duesseldorf.de
  *
- * @author <a email-to="Sebastian.Sura@uni-duesseldorf.de">Sebastian Sura</a>
- *
+ * @see Client
  */
 public class Server {
 	/* static variables */
@@ -52,7 +54,7 @@ public class Server {
 	 * @see Client
 	 */
 	public Server(GameManager g, int port) throws IOException {
-		this.port		= port;
+		this.port			= port;
 		this.connectionPool	= Executors.newCachedThreadPool();
 		this.serverSocket	= new ServerSocket(port);
 		FileHandler fileHandler	= new FileHandler("log.txt");
@@ -109,12 +111,12 @@ public class Server {
 		private int curID;
 		
 		public NetworkService(ExecutorService pool, ServerSocket socket) {
-			this.pool		= pool;
+			this.pool			= pool;
 			this.serverSocket	= socket;
 			this.handlerList	= new ArrayList<Handler>();
-			this.curID		= 0;
+			this.curID			= 0;
 		}
-		
+
 		public void sendMessage(NetworkMessage mes) {
 			for (Handler h : handlerList) {
 				h.sendMessage(mes);
@@ -174,7 +176,7 @@ public class Server {
 				} 
 			 }
 		}
-		
+
 		private int getNextID() {
 			return curID++;
 		}
@@ -188,14 +190,19 @@ public class Server {
 		private final Queue<NetworkMessage> outMessages;
 		private final NetworkService manager;
 		private final int assoziatedID;
-		
+		private final String ipAdress;
 		public Handler(NetworkService manager, Socket client, ExecutorService pool, int assoziatedID) {
-			this.client		= client;
-			this.pool		= pool;
+			this.client			= client;
+			this.pool			= pool;
 			this.inMessages 	= new ConcurrentLinkedQueue<NetworkMessage>();
 			this.outMessages	= new ConcurrentLinkedQueue<NetworkMessage>();
 			this.manager		= manager;
 			this.assoziatedID	= assoziatedID;
+			this.ipAdress		= this.client.getRemoteSocketAddress().toString();
+		}
+		
+		public String toString() {
+			return this.ipAdress;
 		}
 		
 		public void sendMessage(NetworkMessage mes) {
@@ -213,18 +220,27 @@ public class Server {
 		public void run() {
 			
 			try {
+				//check wether he wanted to check or connect
+				if (!checkForValidity()) {
+					return;
+				}
+				// then send the id to the client
 				sentIDToClient();
 			} catch (IOException e) {
 				// this should never happen
-				e.printStackTrace();
-				//TODO: close client
+				Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not forward ClientID closing client.\n" + e.getMessage());
+				try {
+					this.client.close();
+				} catch (IOException e1) {
+					Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close Client.\n" + e.getMessage());
+				}
 				return;
 			}
 			
 			this.pool.execute(new InputHandler(client, inMessages));
 			this.pool.execute(new OutputHandler(client, outMessages));
 			
-			while (true) {
+			mainloop: while (true) {
 				synchronized(this.inMessages) {
 					try {
 						this.inMessages.wait();
@@ -233,14 +249,44 @@ public class Server {
 						e.printStackTrace();
 					}
 					while (!inMessages.isEmpty()) {
-						this.manager.sendMessage(inMessages.poll());
+						NetworkMessage mes = inMessages.poll();
+						if (mes == NetworkMessage.CLOSE_MESSAGE) {
+							synchronized(this.outMessages) {
+								this.outMessages.offer(NetworkMessage.CLOSE_MESSAGE);
+								this.outMessages.notifyAll();
+								try {
+									this.outMessages.wait();
+								} catch (InterruptedException e) {
+									Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not forward close Message.\n" + e.getMessage());
+								}
+								break mainloop;
+							}
+						} else {
+							this.manager.sendMessage(mes);
+						}
 					}
 				}
 			}
 			
-			
+			try {
+				this.client.close();
+			} catch (IOException e) {
+				Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close client.\n" + e.getMessage());
+			}
 		}
 		
+		private boolean checkForValidity() throws IOException {
+			BufferedInputStream in = new BufferedInputStream(this.client.getInputStream());
+			int i = in.read();
+			if (i == 0) {
+				//he wants to check
+				return true;
+			} else {
+				//he searches for hosts
+				return false;
+			}
+		}
+
 		private void sentIDToClient() throws IOException {
 			// sent the id to the client, so he knows who he is
 			ObjectOutputStream out = new ObjectOutputStream(this.client.getOutputStream());
@@ -266,14 +312,20 @@ public class Server {
 					while (true) {
 						// read a network message from the input stream
 						NetworkMessage message = (NetworkMessage) in.readObject();
-						if (message.getID() == NetworkMessage.requestingConnectionStopID) {
-							break;
-						}
+						//if (message.getID() == NetworkMessage.requestingConnectionStopID) {
+						//	break;
+						//}
 						synchronized (this.inMessages) {
 							this.inMessages.offer(message);
 							this.inMessages.notifyAll();
+							if (message == NetworkMessage.CLOSE_MESSAGE) {
+								Server.log.info("Client #" + Handler.this.assoziatedID + "\nWants to disconnect");
+								Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing InputHandler");
+								break;
+							} else {
+								Server.log.finest("Client #" + Handler.this.assoziatedID + "\nReceived message");
+							}
 						}
-						Server.log.finest("Client #" + Handler.this.assoziatedID + "\nReceived message");
 					}
 				} catch (IOException e) {
 					Server.log.severe("Client #" + Handler.this.assoziatedID + "\nConnection cut without sending close message.\n" + e.getMessage());
@@ -281,7 +333,7 @@ public class Server {
 					Server.log.severe("Client #" + Handler.this.assoziatedID + "\nNot recognized Object was sent.");
 					//e.printStackTrace();
 				} finally {
-					if (!this.client.isClosed()) {
+					/*if (!this.client.isClosed()) {
 						Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing the client");
 						try {
 							this.in.close();
@@ -290,6 +342,11 @@ public class Server {
 							Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close client.\n" + e.getMessage());
 							//e.printStackTrace();
 						}
+					}*/
+					try {
+						this.in.close();
+					} catch (IOException e) {
+						Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close the Inputstream.\n" + e.getMessage());
 					}
 				}
 			}
@@ -317,6 +374,14 @@ public class Server {
 							if (!outMessages.isEmpty()) {
 								NetworkMessage message = outMessages.poll();
 								this.out.writeObject(message);
+								if (message == NetworkMessage.CLOSE_MESSAGE) {
+									Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing OutputHandler");
+									synchronized(outMessages) {
+										// tell the Handler that we send the acknowledgment of the disconnect
+										this.outMessages.notifyAll();
+									}
+									break;
+								}
 								Server.log.finest("Client #" + Handler.this.assoziatedID + "\nSent a message!.");
 							}
 							this.out.flush();
@@ -333,7 +398,7 @@ public class Server {
 					Server.log.warning("Client #" + Handler.this.assoziatedID + "\nConnection cut without sending close message.\n" + e.getMessage());
 					//e.printStackTrace();
 				} finally {
-					if (!this.client.isClosed()) {
+					/*if (!this.client.isClosed()) {
 						Server.log.info("Client #" + Handler.this.assoziatedID + "\nClosing the client.");
 						try {
 							this.out.close();
@@ -342,7 +407,13 @@ public class Server {
 							Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close client.\n" + e.getMessage());
 							//e.printStackTrace();
 						}
+					}*/
+					try {
+						this.out.close();
+					} catch (IOException e) {
+						Server.log.severe("Client #" + Handler.this.assoziatedID + "\nCould not close the Outputstream.\n" + e.getMessage());
 					}
+					
 				}
 			}
 		}
