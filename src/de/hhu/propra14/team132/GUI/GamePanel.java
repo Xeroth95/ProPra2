@@ -45,6 +45,7 @@ public class GamePanel extends JPanel {
     double mouseClickX, mouseClickY;
     double bouncingValue;
     double actualTicksPerSecond, possibleTicksPerSecond;
+    double t1, t2, deltaT, FramesPerSecond;
     boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
@@ -86,6 +87,8 @@ public class GamePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        t1=System.nanoTime();
+
         super.paintComponent(g);
         this.requestFocus();
         if(gameManager.gameMap.getCurrentPlayer().getPlayerID()==1) {
@@ -137,7 +140,7 @@ public class GamePanel extends JPanel {
         g2d.drawString("Ticks per Second: "+Math.round(actualTicksPerSecond), 0 + hbar.getValue(), 54+vbar.getValue());
         g2d.drawString("Possible ticks per Second: "+Math.round(possibleTicksPerSecond), 0 + hbar.getValue(), 72+vbar.getValue());
         if (percentage > 0) {
-            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 90 + vbar.getValue());
+            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 108 + vbar.getValue());
         }
 
 
@@ -164,6 +167,13 @@ public class GamePanel extends JPanel {
                 vbar.setValue(vbar.getValue() - 1);//scroll up
             }
         }
+
+        if(gameManager.getCurrentTick()%120==0) {
+            t2 = System.nanoTime();
+            deltaT = t2 - t1;
+            FramesPerSecond = (gameManager.LENGTH_OF_A_SECOND_IN_NANOSECONDS / deltaT);
+        }
+        g2d.drawString("Frames per Second: " + String.valueOf((int) FramesPerSecond), 0 + hbar.getValue(), 90 + vbar.getValue());
     }
 
     public void setTickCounts(double actualTicksPerSecond, double possibleTicksPerSecond) {
@@ -178,9 +188,7 @@ public class GamePanel extends JPanel {
 
     public void nextTick() {
         //this method is called by the GameManager, so that the panel is repainted every tick
-        this.refresh();
-        //this.repaint();
-        this.mainGamePanel.scrollPane.repaint();
+        this.repaint();
     }
 
     public void scroll(JScrollBar hbar, JScrollBar vbar, int targetX, int targetY) {
