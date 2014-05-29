@@ -33,9 +33,9 @@ public class StartGamePanel extends JPanel {
         button_local_game=new JButton("Start local game");
         button_local_game.addActionListener(new LocalGameListener());
         button_network_game_host=new JButton("Start network game as host");
-        button_network_game_host.addActionListener(new NetworkGameListener());
+        button_network_game_host.addActionListener(new NetworkGameHostListener());
         button_network_game_client=new JButton("Start network game as client");
-        button_network_game_client.addActionListener(new NetworkGameListener());
+        button_network_game_client.addActionListener(new NetworkGameClientListener());
         button_go_back=new JButton("Go back to Main Menu");
         button_go_back.addActionListener(new GoBackListener());
 
@@ -53,11 +53,19 @@ public class StartGamePanel extends JPanel {
         }
     }
 
-    class NetworkGameListener implements ActionListener {
+    class NetworkGameHostListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
-            StartGamePanel.this.mainPanel.showPanel("9");
+            StartGamePanel.this.mainPanel.showPanel("13");
+        }
+    }
+
+    class NetworkGameClientListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+            StartGamePanel.this.mainPanel.showPanel("14");
         }
     }
 

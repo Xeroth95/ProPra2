@@ -31,6 +31,8 @@ public class LobbyPanel extends JPanel {
     JButton button_start_game;
     JButton button_go_back;
 
+    String playerName;
+
     public LobbyPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
         this.mainPanel=mainPanel;
         this.soundEngine=soundEngine;
@@ -64,6 +66,10 @@ public class LobbyPanel extends JPanel {
         this.add(panel1, BorderLayout.SOUTH);
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName=playerName;
+    }
+
     class SendListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
@@ -72,9 +78,8 @@ public class LobbyPanel extends JPanel {
                 LobbyPanel.this.msgField.setText(null);
             }
             else {
-                LobbyPanel.this.chatArea.append(">" + LobbyPanel.this.msgField.getText() + "\n");
+                LobbyPanel.this.chatArea.append(">" + playerName + ": " + LobbyPanel.this.msgField.getText() + "\n");
                 LobbyPanel.this.msgField.setText(null);
-                System.out.println(LobbyPanel.this.msgField.getText());
             }
         }
     }
