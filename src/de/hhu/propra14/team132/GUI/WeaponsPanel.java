@@ -17,20 +17,15 @@ import java.util.ArrayList;
 /**
  * Created by fabian on 03.05.14.
  */
-public class WeaponsPanel extends JPanel {
+public class WeaponsPanel extends JPanel{
     MainPanel mainPanel;
     GameManager gameManager;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     ArrayList<JButton> weapons;
 
-    public WeaponsPanel(MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) {
+    public WeaponsPanel(MainPanel mainPanel, GameManager gameManager) {
         this.mainPanel=mainPanel;
         this.gameManager=gameManager;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
-
         weapons=new ArrayList<JButton>();
 
         weapons.add(new JButton("Bazooka"));
@@ -59,20 +54,20 @@ public class WeaponsPanel extends JPanel {
     class WeaponsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            WeaponsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+            SoundEngine.playClick(mainPanel.options.getFxVolume());
             String pressed=((JButton)e.getSource()).getText();
             switch (pressed) {
                 case "Bazooka":
-                    gameManager.sendMessage(new WeaponSelectMessage(Bazooka.class));
+                    gameManager.sendMessage(new WeaponSelectMessage(Bazooka.class, null));
                     break;
                 case "Pistol":
-                    gameManager.sendMessage(new WeaponSelectMessage(Pistol.class));
+                    gameManager.sendMessage(new WeaponSelectMessage(Pistol.class, null));
                     break;
                 case "Machine Gun":
-                    gameManager.sendMessage(new WeaponSelectMessage(MachineGun.class));
+                    gameManager.sendMessage(new WeaponSelectMessage(MachineGun.class, null));
                     break;
                 case "Skip":
-                    gameManager.sendMessage(new WeaponSelectMessage(Skip.class));
+                    gameManager.sendMessage(new WeaponSelectMessage(Skip.class, null));
                     break;
             }
         }

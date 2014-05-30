@@ -1,9 +1,14 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.Network.Client;
+import de.hhu.propra14.team132.gameSystem.Communicable;
+import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.gameSystem.MessageType;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,12 +19,11 @@ import java.io.File;
 /**
  * Created by fabian on 06.05.14.
  */
-public class LobbyPanel extends JPanel {
+public class LobbyPanel extends JPanel implements Communicable {
+	
     //this panel contains the chat lobby for a network game
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
 
     JPanel panel1;//contains msgField and button_send
@@ -33,17 +37,15 @@ public class LobbyPanel extends JPanel {
 
     String playerName;
 
-    public LobbyPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public LobbyPanel(MainPanel mainPanel) {
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new BorderLayout());
 
         panel1=new JPanel(new BorderLayout());
         panel2=new JPanel(new GridLayout(1,2));
         chatArea=new JTextArea();
-        chatArea.setEditable(true);
+        chatArea.setEditable(false);
         chatAreaCaret=(DefaultCaret) chatArea.getCaret();
         chatAreaCaret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         msgField=new JTextField();
@@ -64,6 +66,8 @@ public class LobbyPanel extends JPanel {
 
         this.add(new JScrollPane(chatArea),BorderLayout.CENTER);
         this.add(panel1, BorderLayout.SOUTH);
+        
+        this.mainPanel.manager.register(this, MessageType.CHAT);
     }
 
     public void setPlayerName(String playerName) {
@@ -72,13 +76,15 @@ public class LobbyPanel extends JPanel {
 
     class SendListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             if(LobbyPanel.this.msgField.getText().equals("clear")) {
                 chatArea.setText(null);//clear chatArea on 'clear'-command
                 LobbyPanel.this.msgField.setText(null);
             }
             else {
-                LobbyPanel.this.chatArea.append(">" + playerName + ": " + LobbyPanel.this.msgField.getText() + "\n");
+            	String message = ">" + playerName + ": " + LobbyPanel.this.msgField.getText() + "\n";
+                LobbyPanel.this.chatArea.append(message);
+                LobbyPanel.this.mainPanel.manager.sendMessage(new ChatMessage(message, LobbyPanel.this));
                 LobbyPanel.this.msgField.setText(null);
             }
         }
@@ -86,14 +92,14 @@ public class LobbyPanel extends JPanel {
 
     class StartGameListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             LobbyPanel.this.mainPanel.showPanel("2");
         }
     }
 
     class GoBackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            LobbyPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             LobbyPanel.this.mainPanel.showPanel("1");
         }
     }
@@ -114,4 +120,11 @@ public class LobbyPanel extends JPanel {
 
         }
     }
+
+	@Override
+	public void receiveMessage(Message m) {
+		if (m.getMessageType() != MessageType.CHAT) return;
+		ChatMessage cm = (ChatMessage) m;
+		this.chatArea.append(cm.getMessage());
+	}
 }

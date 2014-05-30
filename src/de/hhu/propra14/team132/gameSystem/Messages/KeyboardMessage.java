@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameSystem.Messages;
 
+import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
@@ -17,8 +18,8 @@ public class KeyboardMessage extends Message {
     }
     MessageType messageType;
     Command command;
-    public KeyboardMessage(Command command) {
-        super(MessageType.KEYBOARD);
+    public KeyboardMessage(Command command, Communicable sender) {
+        super(MessageType.KEYBOARD, sender);
         this.command=command;
     }
 

@@ -21,7 +21,7 @@ public strictfp class RoundRule extends PassiveRule{
 		currentRoundStart=0;
 		numberOfPlayers=playerCount;
 		this.roundLengthInSeconds = roundLengthInSeconds;
-		roundLengthInTicks=(int)Math.round(GameManager.ticksPerSecond*roundLengthInSeconds);
+		roundLengthInTicks=(int)Math.round(GameManager.TICKS_PER_SECOND*roundLengthInSeconds);
 	}
 
 	@Override

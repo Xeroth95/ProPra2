@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.gameSystem.Message;
+import de.hhu.propra14.team132.gameSystem.MessageType;
 
 /**
  * This class is used to communicate with the {@link Sever} class.
@@ -32,7 +33,7 @@ public class Client implements Communicable {
 	 * 3) In that thread the whole communication takes place.
 	 */
 	 
-	 public static void main(String[] args) {	
+	 public static void main2(String[] args) {	
 		try {
 			Client client = new Client(null, args[0], 3141);
 			final Queue<String> list = new LinkedList<String>();
@@ -65,7 +66,7 @@ public class Client implements Communicable {
 				if (in == "exit") {
 					break;
 				}
-				client.receiveMessage(new ExampleNetworkMessage(in));
+				client.receiveMessage(new ExampleNetworkMessage(in, client));
 			} while (!in.equals("exit"));
 			client.close();
 		} catch (Exception e) {
@@ -82,6 +83,7 @@ public class Client implements Communicable {
 	 private final Queue<NetworkMessage> messageOutBuffer;
 	 private Socket server;
 	 private int clientID;
+	 private final GameManager manager;
 	 
 	 /**
 	  * Creates a client that tries to connect to a server.
@@ -98,6 +100,7 @@ public class Client implements Communicable {
 		this.server 				= new Socket(serverIP, port);
 		this.sendThread 			= new Thread(new Sender(server, messageOutBuffer));
 		this.receiveThread 			= new Thread(new Receiver(server, messageInBuffer));
+		this.manager				= g;
 		try {
 			this.clientID		= getClientID();
 			System.out.println("My ID : " + this.clientID);
@@ -219,7 +222,7 @@ public class Client implements Communicable {
 	 }
 	 
 	public void register() {
-		// TODO Auto-generated method stub
+		this.manager.register(this, MessageType.values());
 	}
 	 
 	 private int getClientID() throws IOException {
@@ -277,7 +280,7 @@ public class Client implements Communicable {
 		private final Queue<NetworkMessage> inBuffer;
 		
 		public Receiver(Socket server, Queue<NetworkMessage> inBuffer) {
-			this.server	= server;
+			this.server		= server;
 			this.inBuffer	= inBuffer;
 		}
 		
@@ -287,8 +290,10 @@ public class Client implements Communicable {
 				while (true) {
 					synchronized (this.inBuffer) {
 						NetworkMessage message = (NetworkMessage) in.readObject();
+						message.getMessage().setSender(Client.this);
 						if (this.inBuffer.offer(message)) {
 							this.inBuffer.notifyAll();
+							Client.this.manager.sendMessage(message.getMessage());
 						}
 						if (message == NetworkMessage.CLOSE_MESSAGE) {
 							break;

@@ -16,16 +16,12 @@ public class VideoSettingsPanel extends JPanel{
     //but for now it is just a placeholder
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JButton GoBackButton;
 
-    public VideoSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile)
+    public VideoSettingsPanel(MainPanel mainPanel)
     {
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(1,1,10,10));
 
@@ -38,7 +34,7 @@ public class VideoSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            VideoSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             VideoSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

@@ -16,17 +16,13 @@ public class MainGamePanel extends JPanel{
     public GamePanel gamePanel;
     WeaponsPanel weaponsPanel;
     JScrollPane scrollPane;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
-    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) {
+    public MainGamePanel(MainFrame mainFrame, MainPanel mainPanel, GameManager gameManager) {
         //this panel contains all in-game related panels
         //for now that would be scrollPane(GamePanel) and WeaponsPanel
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
-        weaponsPanel=new WeaponsPanel(mainPanel, gameManager, soundEngine, klickSoundFile);
+        weaponsPanel=new WeaponsPanel(mainPanel, gameManager);
         gamePanel=new GamePanel(mainFrame, mainPanel, this, weaponsPanel, gameManager);
         scrollPane=new JScrollPane(gamePanel, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum());

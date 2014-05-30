@@ -17,8 +17,6 @@ public class MainPanel extends JPanel {
     //and because it uses a CardLayout it is easy to switch between all these panels
 
     public MainGamePanel mainGamePanel;
-    public SoundEngine soundEngine;
-    File klickSoundFile;
     MenuPanel menuPanel;
     SettingsPanel settingsPanel;
     AboutPanel aboutPanel;
@@ -40,27 +38,29 @@ public class MainPanel extends JPanel {
     FileWriter optionsFileWriter;
     Gson gson;
 
+    GameManager manager;
+    
     public MainPanel(MainFrame mainFrame, GameManager gameManager) {
         loadOptions();
-        soundEngine=new SoundEngine();
-        klickSoundFile=new File("res/audio/klick.wav");
+        
+        manager = gameManager;
 
         //all other panels get this panel as parameter for their constructors
         //so that they can use the showPanel method to switch to another panel
-        mainGamePanel=new MainGamePanel(mainFrame, this, gameManager, soundEngine, klickSoundFile);
-        menuPanel=new MenuPanel(gameManager, this, soundEngine, klickSoundFile);
-        settingsPanel=new SettingsPanel(this, options, soundEngine, klickSoundFile);
-        aboutPanel=new AboutPanel(this, soundEngine, klickSoundFile);
-        videoSettingsPanel=new VideoSettingsPanel(this, soundEngine, klickSoundFile);
-        audioSettingsPanel=new AudioSettingsPanel(this, soundEngine, klickSoundFile);
-        controlSettingsPanel=new ControlSettingsPanel(this, soundEngine, klickSoundFile);
-        gameSettingsPanel=new GameSettingsPanel(this, soundEngine, klickSoundFile);
-        startGamePanel=new StartGamePanel(this, soundEngine, klickSoundFile);
-        lobbyPanel=new LobbyPanel(this, soundEngine, klickSoundFile);
-        inGameMenuPanel=new InGameMenuPanel(this, gameManager, soundEngine, klickSoundFile);
-        beforeGamePanel=new BeforeGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
-        beforeNetworkHostGamePanel=new BeforeNetworkHostGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
-        beforeNetworkClientGamePanel=new BeforeNetworkClientGamePanel(this, gameManager, options, soundEngine, klickSoundFile);
+        mainGamePanel=new MainGamePanel(mainFrame, this, gameManager);
+        menuPanel=new MenuPanel(gameManager, this);
+        settingsPanel=new SettingsPanel(this, options);
+        aboutPanel=new AboutPanel(this);
+        videoSettingsPanel=new VideoSettingsPanel(this);
+        audioSettingsPanel=new AudioSettingsPanel(this);
+        controlSettingsPanel=new ControlSettingsPanel(this);
+        gameSettingsPanel=new GameSettingsPanel(this);
+        startGamePanel=new StartGamePanel(this);
+        lobbyPanel=new LobbyPanel(this);
+        inGameMenuPanel=new InGameMenuPanel(this, gameManager);
+        beforeGamePanel=new BeforeGamePanel(this, gameManager, options);
+        beforeNetworkHostGamePanel=new BeforeNetworkHostGamePanel(this, gameManager, options);
+        beforeNetworkClientGamePanel=new BeforeNetworkClientGamePanel(this, gameManager, options);
 
         applyOptions();
 

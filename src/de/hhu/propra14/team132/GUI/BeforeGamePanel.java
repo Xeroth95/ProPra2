@@ -20,8 +20,6 @@ public class BeforeGamePanel extends JPanel {
     GameManager gameManager;
     MainPanel mainPanel;
     Options options;
-    SoundEngine soundEngine;
-    File klickSoundFile;
     PreviewPanel previewPanel;
 
     String[] colors;
@@ -44,12 +42,10 @@ public class BeforeGamePanel extends JPanel {
 
     ArrayList <ArrayList <Weapon>> playerWeapons;
 
-    public BeforeGamePanel(MainPanel mainPanel, GameManager gameManager, Options options, SoundEngine soundEngine, File klickSoundFile) {
+    public BeforeGamePanel(MainPanel mainPanel, GameManager gameManager, Options options) {
         this.gameManager=gameManager;
         this.mainPanel=mainPanel;
         this.options=options;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new BorderLayout());
 
@@ -169,7 +165,7 @@ public class BeforeGamePanel extends JPanel {
     class StartGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            BeforeGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             if(BeforeGamePanel.this.player1ColorBox.getSelectedIndex()==BeforeGamePanel.this.player2ColorBox.getSelectedIndex()) {
                 JOptionPane.showMessageDialog(null,"The players must have different colors!", "Error", JOptionPane.ERROR_MESSAGE);
             }

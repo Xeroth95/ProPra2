@@ -15,8 +15,6 @@ import java.io.File;
 public class InGameMenuPanel extends JPanel {
     MainPanel mainPanel;
     GameManager gameManager;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JButton buttonNewGame;
     JButton buttonSaveGame;
@@ -26,11 +24,9 @@ public class InGameMenuPanel extends JPanel {
     String pathToSavedGame;
 
 
-    public InGameMenuPanel(MainPanel mainPanel, GameManager gameManager, SoundEngine soundEngine, File klickSoundFile) {
+    public InGameMenuPanel(MainPanel mainPanel, GameManager gameManager) {
         this.mainPanel=mainPanel;
         this.gameManager=gameManager;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(4,1,10,10));
 
@@ -52,7 +48,7 @@ public class InGameMenuPanel extends JPanel {
     class NewGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             InGameMenuPanel.this.gameManager.restart();
             InGameMenuPanel.this.gameManager.restart();
             InGameMenuPanel.this.gameManager.setBeforeStart(true);
@@ -73,7 +69,7 @@ public class InGameMenuPanel extends JPanel {
     class LoadGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             try {
                 chooser=new JFileChooser("res/savegames");
                 chooser.showOpenDialog(null);
@@ -96,7 +92,7 @@ public class InGameMenuPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            InGameMenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             InGameMenuPanel.this.mainPanel.showPanel("2");
             gameManager.setStopped(false);
         }

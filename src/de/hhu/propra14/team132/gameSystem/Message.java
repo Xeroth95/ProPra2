@@ -7,18 +7,23 @@ import java.io.Serializable;
  */
 public abstract class Message implements Serializable {
     //with Message-Object one can exchange messages between the Objects
-    MessageType messageType;
+    private final MessageType messageType;
     private int sentAtTick;
-    public Message(MessageType type) {
+    private int sender;
+    public Message(MessageType type, Communicable sender) {
         this.messageType=type;
+        if (sender == null)
+        	this.sender = -1;
+        else
+        	this.sender = sender.hashCode();
     }
 
     public MessageType getMessageType() {
         return messageType;
     }
-
-    public void setMessageType(MessageType type) {
-        this.messageType = type;
+    
+    public void setSender(Communicable sender) {
+    	this.sender = sender.hashCode();
     }
 
     public int getSentAtTick() {
@@ -27,5 +32,9 @@ public abstract class Message implements Serializable {
 
     public void setSentAtTick(int sentAtTick) {
         this.sentAtTick = sentAtTick;
+    }
+    
+    public int getSender() {
+    	return this.sender;
     }
 }

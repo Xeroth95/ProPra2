@@ -8,8 +8,16 @@ import de.hhu.propra14.team132.gameSystem.Messages.StopMessage;
 import de.hhu.propra14.team132.physics.util.Vector2D;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.MouseInfo;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -17,6 +25,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by fabian on 02.05.14.
@@ -34,7 +43,7 @@ public class GamePanel extends JPanel {
     JScrollBar vbar;
     Graphics2D g2d;
     GameObject[] gameObjects;
-    ArrayList<Integer> objectIDs;
+    List<Integer> objectIDs;
     Font displayFont;
     Thread mousePressedThread;
     Image arrow;
@@ -133,7 +142,7 @@ public class GamePanel extends JPanel {
         g2d.setColor(Color.RED);
         g2d.setFont(displayFont);
         g2d.drawString(String.valueOf(gameManager.gameMap.getCurrentPlayer().getName()), 0 + hbar.getValue(), 18 + vbar.getValue());
-        g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / gameManager.ticksPerSecond + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
+        g2d.drawString("Time left: " + (gameManager.gameMap.getTimeLeftInTicks() / GameManager.TICKS_PER_SECOND + 1), 0 + hbar.getValue(), 36 + vbar.getValue());
         g2d.drawString("Ticks per Second: "+Math.round(actualTicksPerSecond), 0 + hbar.getValue(), 54+vbar.getValue());
         g2d.drawString("Possible ticks per Second: "+Math.round(possibleTicksPerSecond), 0 + hbar.getValue(), 72+vbar.getValue());
         if (percentage > 0) {
@@ -222,10 +231,10 @@ public class GamePanel extends JPanel {
                     @Override
                     public void run() {
                         int startedAtTick = GamePanel.this.gameManager.getCurrentTick();
-                        int ticksPerSecond = GamePanel.this.gameManager.ticksPerSecond;
+                        int ticksPerSecond = GameManager.TICKS_PER_SECOND;
                         while (!mousePressedThread.isInterrupted()) {
                             int currentTick = GamePanel.this.gameManager.getCurrentTick();
-                            GamePanel.this.percentage = (float) (currentTick - startedAtTick) / (float) (gameManager.ticksPerSecond*3);
+                            GamePanel.this.percentage = (float) (currentTick - startedAtTick) / (float) (GameManager.TICKS_PER_SECOND*3);
                             if (GamePanel.this.percentage > 1) {
                                 GamePanel.this.percentage = 1;
                             }
@@ -246,7 +255,7 @@ public class GamePanel extends JPanel {
                 mouseClickX=e.getX();
                 mouseClickY=height-e.getY();
                 GamePanel.this.mousePressedThread.interrupt();
-                GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, new Vector2D(mouseClickX, mouseClickY)));
+                GamePanel.this.gameManager.sendMessage(new ShootMessage(GamePanel.this.percentage, new Vector2D(mouseClickX, mouseClickY), null));
             }
             percentage = 0;
         }
@@ -269,18 +278,18 @@ public class GamePanel extends JPanel {
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 GamePanel.this.mainPanel.showPanel("11");
-                gameManager.sendMessage(new StopMessage());
+                gameManager.sendMessage(new StopMessage(null));
             } else if (GamePanel.this.mainPanel.options.getControls() == GamePanel.this.mainPanel.options.ARROWS && alreadySent==false) {
                 alreadySent=true;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_UP:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP, null));
                         break;
                     case KeyEvent.VK_LEFT:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT, null));
                         break;
                     case KeyEvent.VK_RIGHT:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT, null));
                         break;
                 }
 
@@ -288,13 +297,13 @@ public class GamePanel extends JPanel {
                 alreadySent=true;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.JUMP, null));
                         break;
                     case KeyEvent.VK_A:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT, null));
                         break;
                     case KeyEvent.VK_D:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT, null));
                         break;
                 }
             }
@@ -306,10 +315,10 @@ public class GamePanel extends JPanel {
                 alreadySent=false;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP, null));
                         break;
                     case KeyEvent.VK_RIGHT:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP, null));
                         break;
                 }
             }
@@ -318,10 +327,10 @@ public class GamePanel extends JPanel {
                 alreadySent=false;
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_A:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_LEFT_STOP, null));
                         break;
                     case KeyEvent.VK_D:
-                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP));
+                        GamePanel.this.gameManager.sendMessage(new KeyboardMessage(KeyboardMessage.Command.MOVE_RIGHT_STOP, null));
                         break;
                 }
             }

@@ -16,8 +16,6 @@ public class ControlSettingsPanel extends JPanel {
     //but for now it is just a placeholder
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JPanel panelMoveControls;
     JButton GoBackButton;
@@ -25,10 +23,8 @@ public class ControlSettingsPanel extends JPanel {
     JRadioButton buttonArrowControls;
     JRadioButton buttonWasdControls;
 
-    public ControlSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public ControlSettingsPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(2, 1, 10, 10));
 
@@ -62,7 +58,7 @@ public class ControlSettingsPanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            ControlSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             ControlSettingsPanel.this.mainPanel.showPanel("3");//switch back to setting menu
         }
     }

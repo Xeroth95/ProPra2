@@ -16,8 +16,6 @@ public class AudioSettingsPanel extends JPanel{
     //but for now it is just a placeholder
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JPanel volumePanel;
     JLabel bgVolumeLabel;
@@ -27,10 +25,8 @@ public class AudioSettingsPanel extends JPanel{
     JSlider fxVolumeSlider;
     JButton GoBackButton;
 
-    public AudioSettingsPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public AudioSettingsPanel(MainPanel mainPanel) {
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(2,1,10,10));
 
@@ -65,7 +61,7 @@ public class AudioSettingsPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AudioSettingsPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             AudioSettingsPanel.this.mainPanel.showPanel("3");//switch back to settings menu
         }
     }

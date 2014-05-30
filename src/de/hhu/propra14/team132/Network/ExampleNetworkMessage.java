@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.Network;
 
+import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
@@ -7,16 +8,9 @@ public class ExampleNetworkMessage extends Message {
 
 	private final char[] message;
 	
-	public ExampleNetworkMessage(String message) {
-		super(MessageType.CHAT);  //changed consructor, had to add an integer; change to currentTick when possible
+	public ExampleNetworkMessage(String message, Communicable sender) {
+		super(MessageType.CHAT, sender);
 		this.message = message.toCharArray();
-	}
-	
-	// do not use this method
-	public ExampleNetworkMessage(MessageType type, int tick, String message) {
-		super(type);
-		this.message = null;
-		throw new RuntimeException();
 	}
 
 	public char[] getData() {

@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameSystem.Messages;
 
+import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
@@ -9,8 +10,8 @@ import de.hhu.propra14.team132.gameSystem.MessageType;
 public class WeaponSelectMessage extends Message {
 	Class<?> weaponClass;
 
-    public WeaponSelectMessage(Class<?> weaponClass) {
-        super(MessageType.WEAPONSELECT);
+    public WeaponSelectMessage(Class<?> weaponClass, Communicable sender) {
+        super(MessageType.WEAPONSELECT, sender);
         this.weaponClass=weaponClass;
     }
 

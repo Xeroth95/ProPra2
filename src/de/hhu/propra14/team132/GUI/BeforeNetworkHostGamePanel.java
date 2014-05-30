@@ -1,11 +1,13 @@
 package de.hhu.propra14.team132.GUI;
 
+import de.hhu.propra14.team132.Network.Server;
 import de.hhu.propra14.team132.gameObjects.Weapons.*;
 import de.hhu.propra14.team132.gameSystem.GameManager;
 import de.hhu.propra14.team132.sound.SoundEngine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +21,6 @@ public class BeforeNetworkHostGamePanel extends JPanel {
     GameManager gameManager;
     MainPanel mainPanel;
     Options options;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     String[] colors;
     JPanel configPanel;
@@ -30,7 +30,7 @@ public class BeforeNetworkHostGamePanel extends JPanel {
     JLabel player1Label;
     JLabel player1TeamNameLabel;
     JTextField player1TeamNameField;
-    JComboBox player1ColorBox;
+    JComboBox<String> player1ColorBox;
     JButton startGameButton;
     JLabel previewLabel;
     Image previewImage;
@@ -38,12 +38,10 @@ public class BeforeNetworkHostGamePanel extends JPanel {
 
     ArrayList<Weapon> playerWeapons;
 
-    public BeforeNetworkHostGamePanel(MainPanel mainPanel, GameManager gameManager, Options options, SoundEngine soundEngine, File klickSoundFile) {
+    public BeforeNetworkHostGamePanel(MainPanel mainPanel, GameManager gameManager, Options options) {
         this.gameManager=gameManager;
         this.mainPanel=mainPanel;
         this.options=options;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new BorderLayout());
 
@@ -63,7 +61,7 @@ public class BeforeNetworkHostGamePanel extends JPanel {
         player1Label=new JLabel("<HTML><U>Player 1</U></HTML>");
         player1TeamNameLabel=new JLabel("Teamname:");
         player1TeamNameField=new JTextField("Player 1");
-        player1ColorBox=new JComboBox(colors);
+        player1ColorBox=new JComboBox<String>(colors);
         player1ColorBox.setSelectedIndex(0);
         player1ColorBox.addActionListener(new ColorBoxListener());
         startGameButton=new JButton("Start Game");
@@ -143,7 +141,7 @@ public class BeforeNetworkHostGamePanel extends JPanel {
     class StartGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            BeforeNetworkHostGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
                 if(BeforeNetworkHostGamePanel.this.player1TeamNameField.getText().equals("")) {
                     JOptionPane.showMessageDialog(null,"Please enter a name!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -154,9 +152,10 @@ public class BeforeNetworkHostGamePanel extends JPanel {
                     else {
                        generateWeaponsLists();
                        BeforeNetworkHostGamePanel.this.mainPanel.lobbyPanel.setPlayerName(BeforeNetworkHostGamePanel.this.player1TeamNameField.getText());
+                       BeforeNetworkHostGamePanel.this.gameManager.createServer();
                        BeforeNetworkHostGamePanel.this.mainPanel.showPanel("9");
                     }
                 }
             }
         }
-    }
+}

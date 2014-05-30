@@ -17,8 +17,6 @@ public class MenuPanel extends JPanel{
 
     GameManager gameManager;
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JButton newGameButton;
     JButton loadGameButton;
@@ -28,11 +26,9 @@ public class MenuPanel extends JPanel{
     JFileChooser chooser;
     String pathToSavedGame;
 
-    public MenuPanel(GameManager gameManager,MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public MenuPanel(GameManager gameManager,MainPanel mainPanel) {
         this.gameManager=gameManager;
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         newGameButton=new JButton("New Game");
         newGameButton.addActionListener(new NewGameListener());
@@ -58,7 +54,7 @@ public class MenuPanel extends JPanel{
     {
 
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+            SoundEngine.playClick(mainPanel.options.getFxVolume());
             MenuPanel.this.mainPanel.showPanel("8");//switch to GamePanel
         }
 
@@ -68,7 +64,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             try {
                 chooser=new JFileChooser("res/savegames");
                 chooser.showOpenDialog(null);
@@ -93,7 +89,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             MenuPanel.this.mainPanel.showPanel("3");//switch to SettingsPanel
         }
 
@@ -103,7 +99,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             MenuPanel.this.mainPanel.showPanel("4");//switch to AboutPanel
         }
 
@@ -113,7 +109,7 @@ public class MenuPanel extends JPanel{
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-            MenuPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             System.exit(0);
         }
 

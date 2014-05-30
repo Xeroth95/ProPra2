@@ -19,9 +19,7 @@ public class BeforeNetworkClientGamePanel extends JPanel {
     GameManager gameManager;
     MainPanel mainPanel;
     Options options;
-    SoundEngine soundEngine;
-    File klickSoundFile;
-
+    
     String[] colors;
     JPanel configPanel;
     JPanel player1TeamNamePanel;
@@ -41,12 +39,10 @@ public class BeforeNetworkClientGamePanel extends JPanel {
 
     ArrayList<Weapon> playerWeapons;
 
-    public BeforeNetworkClientGamePanel(MainPanel mainPanel, GameManager gameManager, Options options, SoundEngine soundEngine, File klickSoundFile) {
+    public BeforeNetworkClientGamePanel(MainPanel mainPanel, GameManager gameManager, Options options) {
         this.gameManager=gameManager;
         this.mainPanel=mainPanel;
         this.options=options;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new BorderLayout());
 
@@ -153,7 +149,7 @@ public class BeforeNetworkClientGamePanel extends JPanel {
     class StartGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            BeforeNetworkClientGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             if(BeforeNetworkClientGamePanel.this.player1TeamNameField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null,"Please enter a name!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -164,6 +160,7 @@ public class BeforeNetworkClientGamePanel extends JPanel {
                 else {
                     generateWeaponsLists();
                     BeforeNetworkClientGamePanel.this.mainPanel.lobbyPanel.setPlayerName(BeforeNetworkClientGamePanel.this.player1TeamNameField.getText());
+                    BeforeNetworkClientGamePanel.this.mainPanel.manager.createClient(BeforeNetworkClientGamePanel.this.ipAddressField.getText());
                     BeforeNetworkClientGamePanel.this.mainPanel.showPanel("9");
                 }
             }

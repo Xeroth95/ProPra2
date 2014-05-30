@@ -1,5 +1,6 @@
 package de.hhu.propra14.team132.gameSystem.Messages;
 
+import de.hhu.propra14.team132.gameSystem.Communicable;
 import de.hhu.propra14.team132.gameSystem.Message;
 import de.hhu.propra14.team132.gameSystem.MessageType;
 
@@ -13,8 +14,8 @@ public class MouseMessage extends Message {
         MIDDLE
     }
     Button button;
-    public MouseMessage(Button button) {
-        super(MessageType.MOUSE);
+    public MouseMessage(Button button, Communicable sender) {
+        super(MessageType.MOUSE, sender);
         this.button=button;
     }
 

@@ -15,18 +15,14 @@ public class StartGamePanel extends JPanel {
     //this panel lets the player choose wether he wants to start a local or a network game
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JButton button_local_game;
     JButton button_network_game_host;
     JButton button_network_game_client;
     JButton button_go_back;
 
-    public StartGamePanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile) {
+    public StartGamePanel(MainPanel mainPanel) {
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(4,1,10,10));
 
@@ -48,7 +44,7 @@ public class StartGamePanel extends JPanel {
     class LocalGameListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("12");
         }
     }
@@ -56,7 +52,7 @@ public class StartGamePanel extends JPanel {
     class NetworkGameHostListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("13");
         }
     }
@@ -64,7 +60,7 @@ public class StartGamePanel extends JPanel {
     class NetworkGameClientListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("14");
         }
     }
@@ -72,7 +68,7 @@ public class StartGamePanel extends JPanel {
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            StartGamePanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             StartGamePanel.this.mainPanel.showPanel("1");
         }
     }

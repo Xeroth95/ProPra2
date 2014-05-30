@@ -17,18 +17,14 @@ public class AboutPanel extends JPanel{
     //therefore, it should be pretty self explanatory
 
     MainPanel mainPanel;
-    SoundEngine soundEngine;
-    File klickSoundFile;
 
     JLabel about_label1;
     JLabel about_label2;
     JButton button_go_back;
 
-    public AboutPanel(MainPanel mainPanel, SoundEngine soundEngine, File klickSoundFile)
+    public AboutPanel(MainPanel mainPanel)
     {
         this.mainPanel=mainPanel;
-        this.soundEngine=soundEngine;
-        this.klickSoundFile=klickSoundFile;
 
         this.setLayout(new GridLayout(3,1));
 
@@ -48,7 +44,7 @@ public class AboutPanel extends JPanel{
     class GoBackListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AboutPanel.this.soundEngine.play(klickSoundFile, mainPanel.options.getFxVolume());
+        	SoundEngine.playClick(mainPanel.options.getFxVolume());
             AboutPanel.this.mainPanel.showPanel("1");//switch back to main menu
         }
     }

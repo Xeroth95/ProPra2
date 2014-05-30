@@ -2,6 +2,8 @@ package de.hhu.propra14.team132.gameMechanics;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
@@ -16,7 +18,7 @@ import de.hhu.propra14.team132.physics.CollisionSystem;
 public class Map implements Serializable{ 
 	
 	transient CollisionSystem collsys;
-	ArrayList<Integer> objectIds;
+	List<Integer> objectIds;
 
 	int IdCounter;
     ArrayList<Integer> aviableIds;
@@ -68,7 +70,7 @@ public class Map implements Serializable{
 		
 		IdCounter=1; // zero is reserved!
 
-		objectIds=new ArrayList<Integer>(MAX_OBJECT_COUNT/2);		
+		objectIds=Collections.synchronizedList(new ArrayList<Integer>(MAX_OBJECT_COUNT/2));		
 		
 		currentTick = 0;
 		
@@ -101,10 +103,12 @@ public class Map implements Serializable{
 		}
 	}
 	private strictfp void moveAllObjects() {
-		for(int i:this.objectIds){
-			this.mapObjects[i].getSpeed().multiplyWith(0.9999);
-			this.mapObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
-			this.mapObjects[i].move();
+		synchronized(this.objectIds) {
+			for(int i:this.objectIds){
+				this.mapObjects[i].getSpeed().multiplyWith(0.9999);
+				this.mapObjects[i].setLastCollidedWith(-1);//somewhere this has to be done...
+				this.mapObjects[i].move();
+			}
 		}
 	}
 	public void detectCollision(){//delegate
@@ -168,7 +172,7 @@ public class Map implements Serializable{
 	public GameObject[] getMapObjects() {
 		return mapObjects;
 	}
-    public ArrayList<Integer> getObjectIds() {
+    public List<Integer> getObjectIds() {
         return objectIds;
     }
     public void setMapObjects(GameObject[] mapObjects) {
