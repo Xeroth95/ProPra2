@@ -54,14 +54,11 @@ public class GamePanel extends JPanel {
     double mouseClickX, mouseClickY;
     double bouncingValue;
     double actualTicksPerSecond, possibleTicksPerSecond;
-    double t1, t2, deltaT, FramesPerSecond;
     boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
     boolean firstRun;
     boolean repainting;
-    boolean refreshFps;
-
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
         this.mainFrame = mainFrame;
@@ -77,7 +74,6 @@ public class GamePanel extends JPanel {
         alreadySent=false;
         firstRun=true;
         repainting=false;
-        refreshFps=false;
         percentage = 0;
         bouncingValue=0;
         actualTicksPerSecond=0;
@@ -101,7 +97,6 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         repainting=true;
-        t1=System.nanoTime();
 
         super.paintComponent(g);
         this.requestFocus();
@@ -169,35 +164,18 @@ public class GamePanel extends JPanel {
             //only scroll if WeaponsPanel is invisible and the panel is not autoscrolling
             if (mouseLocationX >= mainGamePanel.scrollPane.getViewport().getWidth() - 50) {
                 hbar.setValue(hbar.getValue() + 1);//scroll to the right
-                showFps();
             }
             else if (mouseLocationX <= 50) {
                 hbar.setValue(hbar.getValue() - 1);//scroll to the left
-                showFps();
             }
             else if (mouseLocationY >= mainGamePanel.scrollPane.getViewport().getHeight() - 50) {
                 vbar.setValue(vbar.getValue() + 1);//scroll down
-                showFps();
             }
             else if (mouseLocationY <= 50) {
                 vbar.setValue(vbar.getValue() - 1);//scroll up
-                showFps();
-            }
-            else {
-                showFps();
             }
         }
         repainting=false;
-    }
-
-    public void showFps() {
-        if(refreshFps) {
-            t2 = System.nanoTime();
-            deltaT = t2 - t1;
-            FramesPerSecond = (gameManager.SECOND_LENGTH / deltaT);
-            refreshFps=false;
-        }
-        g2d.drawString("Frames per Second: " + String.valueOf((int) FramesPerSecond), 0 + hbar.getValue(), 90 + vbar.getValue());
     }
 
     public void setTickCounts(double actualTicksPerSecond, double possibleTicksPerSecond) {
@@ -212,7 +190,7 @@ public class GamePanel extends JPanel {
 
     public void nextTick() {
         //this method is called by the GameManager, so that the panel is repainted every tick
-        if (repainting==false) {
+        if (!isRepainting()) {
             this.repaint();
         }
     }
@@ -243,10 +221,6 @@ public class GamePanel extends JPanel {
 
     public boolean isRepainting() {
         return repainting;
-    }
-
-    public void setRefreshFps(boolean refreshFps) {
-        this.refreshFps = refreshFps;
     }
 
     class GameMouseListener implements MouseListener {

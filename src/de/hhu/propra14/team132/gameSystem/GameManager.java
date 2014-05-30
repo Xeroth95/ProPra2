@@ -248,7 +248,6 @@ public class GameManager implements Communicable{
                 }
                 if((currentTick%(TICKS_PER_SECOND/2))==0) {
                     mainFrame.mainPanel.mainGamePanel.gamePanel.setTickCounts(actualTicksPerSecond, possibleTicksPerSecond);
-                    mainFrame.mainPanel.mainGamePanel.gamePanel.setRefreshFps(true);
                 }
             }
          } catch (Exception e) {
