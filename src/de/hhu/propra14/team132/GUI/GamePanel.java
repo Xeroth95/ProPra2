@@ -194,7 +194,7 @@ public class GamePanel extends JPanel {
         if(refreshFps) {
             t2 = System.nanoTime();
             deltaT = t2 - t1;
-            FramesPerSecond = (gameManager.LENGTH_OF_A_SECOND_IN_NANOSECONDS / deltaT);
+            FramesPerSecond = (gameManager.SECOND_LENGTH / deltaT);
             refreshFps=false;
         }
         g2d.drawString("Frames per Second: " + String.valueOf((int) FramesPerSecond), 0 + hbar.getValue(), 90 + vbar.getValue());
