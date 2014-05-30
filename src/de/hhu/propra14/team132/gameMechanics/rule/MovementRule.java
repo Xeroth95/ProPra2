@@ -14,7 +14,6 @@ public class MovementRule extends RuntimeRule {
 
 	public MovementRule(Map gameMap) {
 		super(gameMap);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,7 +23,6 @@ public class MovementRule extends RuntimeRule {
 
 	@Override
 	public void applyRule() {
-		//TODO: put this somewhere appropriate
 		
 	}
 

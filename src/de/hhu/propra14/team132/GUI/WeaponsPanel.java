@@ -70,6 +70,7 @@ public class WeaponsPanel extends JPanel{
                     gameManager.sendMessage(new WeaponSelectMessage(Skip.class, null));
                     break;
             }
+            WeaponsPanel.this.setVisible(false);
         }
     }
 }

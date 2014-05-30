@@ -134,15 +134,19 @@ public class Map implements Serializable{
 	}
 	
 	public void setUpAfterLoading(){
-		this.collsys=new BadCollisionSystem(this);/*new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds)*/;
+		this.collsys=new BadCollisionSystem(this);/*new WGrid(Math.pow(2, 13), Math.pow(2, 13), 10, this, this.objectIds)*/
+		this.ruleset.setGameMap(this);
 		for(Rule r:this.ruleset.getPassiveRules()){
 			r.setGameMap(this);
+			if(r.getMessageTypesToReactTo()!=null)this.manager.register(r,r.getMessageTypesToReactTo());
 		}
 		for(Rule r:this.ruleset.getRuntimeRules()){
 			r.setGameMap(this);
+			if(r.getMessageTypesToReactTo()!=null)this.manager.register(r,r.getMessageTypesToReactTo());
 		}
 		for(Rule r:this.ruleset.getStartUpRules()){
 			r.setGameMap(this);
+			if(r.getMessageTypesToReactTo()!=null)this.manager.register(r,r.getMessageTypesToReactTo());
 		}
 	}
 	

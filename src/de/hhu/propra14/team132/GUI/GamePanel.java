@@ -54,10 +54,13 @@ public class GamePanel extends JPanel {
     double mouseClickX, mouseClickY;
     double bouncingValue;
     double actualTicksPerSecond, possibleTicksPerSecond;
+    double t1, t2, deltaT, FramesPerSecond;
     boolean bounce10;
     boolean autoscrolling;
     boolean alreadySent;
     boolean firstRun;
+    boolean repainting;
+    boolean refreshFps;
 
 
     public GamePanel(MainFrame mainFrame, MainPanel mainPanel, MainGamePanel mainGamePanel, WeaponsPanel weaponsPanel, GameManager gameManager) {
@@ -73,6 +76,8 @@ public class GamePanel extends JPanel {
         autoscrolling = false;
         alreadySent=false;
         firstRun=true;
+        repainting=false;
+        refreshFps=false;
         percentage = 0;
         bouncingValue=0;
         actualTicksPerSecond=0;
@@ -95,6 +100,9 @@ public class GamePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        repainting=true;
+        t1=System.nanoTime();
+
         super.paintComponent(g);
         this.requestFocus();
         if(gameManager.gameMap.getCurrentPlayer().getPlayerID()==1) {
@@ -146,7 +154,7 @@ public class GamePanel extends JPanel {
         g2d.drawString("Ticks per Second: "+Math.round(actualTicksPerSecond), 0 + hbar.getValue(), 54+vbar.getValue());
         g2d.drawString("Possible ticks per Second: "+Math.round(possibleTicksPerSecond), 0 + hbar.getValue(), 72+vbar.getValue());
         if (percentage > 0) {
-            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 90 + vbar.getValue());
+            g2d.drawString("Power: " + String.valueOf((int) (percentage * 100)) + "%", 0 + hbar.getValue(), 108 + vbar.getValue());
         }
 
 
@@ -161,18 +169,35 @@ public class GamePanel extends JPanel {
             //only scroll if WeaponsPanel is invisible and the panel is not autoscrolling
             if (mouseLocationX >= mainGamePanel.scrollPane.getViewport().getWidth() - 50) {
                 hbar.setValue(hbar.getValue() + 1);//scroll to the right
+                showFps();
             }
-            if (mouseLocationX <= 50) {
+            else if (mouseLocationX <= 50) {
                 hbar.setValue(hbar.getValue() - 1);//scroll to the left
+                showFps();
             }
-
-            if (mouseLocationY >= mainGamePanel.scrollPane.getViewport().getHeight() - 50) {
+            else if (mouseLocationY >= mainGamePanel.scrollPane.getViewport().getHeight() - 50) {
                 vbar.setValue(vbar.getValue() + 1);//scroll down
+                showFps();
             }
-            if (mouseLocationY <= 50) {
+            else if (mouseLocationY <= 50) {
                 vbar.setValue(vbar.getValue() - 1);//scroll up
+                showFps();
+            }
+            else {
+                showFps();
             }
         }
+        repainting=false;
+    }
+
+    public void showFps() {
+        if(refreshFps) {
+            t2 = System.nanoTime();
+            deltaT = t2 - t1;
+            FramesPerSecond = (gameManager.LENGTH_OF_A_SECOND_IN_NANOSECONDS / deltaT);
+            refreshFps=false;
+        }
+        g2d.drawString("Frames per Second: " + String.valueOf((int) FramesPerSecond), 0 + hbar.getValue(), 90 + vbar.getValue());
     }
 
     public void setTickCounts(double actualTicksPerSecond, double possibleTicksPerSecond) {
@@ -187,9 +212,9 @@ public class GamePanel extends JPanel {
 
     public void nextTick() {
         //this method is called by the GameManager, so that the panel is repainted every tick
-        this.refresh();
-        //this.repaint();
-        this.mainGamePanel.scrollPane.repaint();
+        if (repainting==false) {
+            this.repaint();
+        }
     }
 
     public void scroll(JScrollBar hbar, JScrollBar vbar, int targetX, int targetY) {
@@ -214,6 +239,14 @@ public class GamePanel extends JPanel {
             }
         }
         autoscrolling = false;
+    }
+
+    public boolean isRepainting() {
+        return repainting;
+    }
+
+    public void setRefreshFps(boolean refreshFps) {
+        this.refreshFps = refreshFps;
     }
 
     class GameMouseListener implements MouseListener {
